@@ -7,7 +7,7 @@ const Tracklist = ({
   imgUrl,
 }: {
   [key: string]: any;
-  imgUrl: string;
+  imgUrl?: string;
 }) => {
   const { currentSong, setCurrentSong } = useCurrentSongContext();
   const { trackStack, setTrackStack } = useTrackstackContext();
@@ -37,6 +37,7 @@ const Tracklist = ({
     setTrackStack(newTrackStack);
   }
   console.log("current trackStack: ", trackStack);
+  console.log("the list of tracks passed to me: ", tracks)
   return (
     <div>
       <h2>tracklist</h2>

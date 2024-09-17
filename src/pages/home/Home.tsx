@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useCurrentSongContext, useTokenContext } from "../../App";
 import { fetchWebApi } from "../../config/spotify";
 import { Link } from "react-router-dom";
+import Tracklist from "../../components/tracklist/Tracklist";
 
 const Home = () => {
   const { token, setToken } = useTokenContext();
@@ -19,7 +20,11 @@ const Home = () => {
           console.log("error in top tracks", res.error);
         } else {
           console.log("top tracks res", res);
-          setUserTopTracks(res.items.slice(0, 10));
+          const topTracks = res.items.slice(0, 10);
+          const topTracksWithImage = topTracks.map((track:  { [key: string]: any })=>{
+            return {...track, imgUrl: track.album.images[0].url}
+          })
+          setUserTopTracks(topTracksWithImage);
         }
       });
     }
@@ -53,7 +58,8 @@ const Home = () => {
     <>
       <div className="home-container">
         <h1>Your top tracks</h1>
-        {userTopTracks.map((track: { [index: string]: any }, index: number) => {
+        <Tracklist tracks={userTopTracks} />
+        {/* {userTopTracks.map((track: { [index: string]: any }, index: number) => {
           return (
             <div key={index}>
               <p>{track.name}</p>
@@ -71,7 +77,7 @@ const Home = () => {
               </button>
             </div>
           );
-        })}
+        })} */}
         <h1>New releases</h1>
         {newAlbums.map((album: { [index: string]: any }, index) => {
           return (

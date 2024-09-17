@@ -1,11 +1,13 @@
 import "./player.css";
 import { useCurrentSongContext, useTrackstackContext } from "../../App";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const Player = () => {
   const { currentSong, setCurrentSong } = useCurrentSongContext();
   const { trackStack, setTrackStack } = useTrackstackContext();
   const audioRef = useRef<any>();
+
+  const playAnimationRef = useRef<number | null>(null);
 
   const [volume, setVolume] = useState<number>(100);
   const [songProgress, setSongProgress] = useState<number>(0);
@@ -15,6 +17,20 @@ const Player = () => {
     setSongProgress(0);
     setIsPlaying(true);
   }, [currentSong]);
+
+  // const updateProgress = useCallback(()=>{
+  //   const currentTime
+  // })
+
+  // const startAnimation = useCallback(()=>{
+  //   const animate = () =>{
+  //     updateProgress()
+  //     playAnimationRef.current = requestAnimationFrame(animate)
+  //   }
+  //   playAnimationRef.current = requestAnimationFrame(animate);
+  // })
+
+  
 
   // useEffect(() => {
   //   setIsPlaying(true);
