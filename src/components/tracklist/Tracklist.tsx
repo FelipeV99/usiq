@@ -17,10 +17,18 @@ const Tracklist = ({
     songUrl: string,
     imgUrl: string,
     name: string,
-    artist: string
+    artist: string,
+    trackDurationMs: number
   ) {
     console.log("index form stack", indexInStack);
-    setCurrentSong({ indexInStack, songUrl, imgUrl, name, artist });
+    setCurrentSong({
+      indexInStack,
+      songUrl,
+      imgUrl,
+      name,
+      artist,
+      trackDurationMs,
+    });
     const newTrackStack = tracks.map((track: { [key: string]: any }) => {
       const active = track.preview_url === songUrl;
       //   console.log("returning obj: ", { ...track, isActive: active });
@@ -42,9 +50,10 @@ const Tracklist = ({
                   handleOnPlay(
                     index,
                     track.preview_url,
-                    imgUrl,
+                    track.imgUrl,
                     track.name,
-                    track.artists[0].name
+                    track.artists[0].name,
+                    track.duration_ms
                   )
                 }
               >

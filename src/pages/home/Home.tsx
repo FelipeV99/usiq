@@ -1,3 +1,5 @@
+import "./home.css";
+
 import { useEffect, useState } from "react";
 import { useCurrentSongContext, useTokenContext } from "../../App";
 import { fetchWebApi } from "../../config/spotify";
@@ -49,7 +51,7 @@ const Home = () => {
   }
   return (
     <>
-      <div>
+      <div className="home-container">
         <h1>Your top tracks</h1>
         {userTopTracks.map((track: { [index: string]: any }, index: number) => {
           return (

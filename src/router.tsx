@@ -3,6 +3,10 @@ import App from "./App";
 import Login from "./pages/auth/Login";
 import Home from "./pages/home/Home";
 import Album, { albumLoader } from "./pages/album/Album";
+import MySongs from "./pages/my songs/MySongs";
+import MyAlbums, { myAlbumsLoader } from "./pages/my albums/MyAlbums";
+import MyArtists from "./pages/my artists/MyArtists";
+import Discover from "./pages/discover/Discover";
 
 export const router = createBrowserRouter([
   {
@@ -15,9 +19,26 @@ export const router = createBrowserRouter([
         element: <Login />,
       },
       {
+        path: "disover",
+        element: <Discover />,
+      },
+      {
         path: "album/:id",
         element: <Album />,
         loader: albumLoader,
+      },
+      {
+        path: "my-songs",
+        element: <MySongs />,
+      },
+      {
+        path: "my-albums",
+        element: <MyAlbums />,
+        loader: myAlbumsLoader,
+      },
+      {
+        path: "my-artists",
+        element: <MyArtists />,
       },
       //   {
       //     errorElement: <h1>error</h1>,

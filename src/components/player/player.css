@@ -15,7 +15,7 @@
 }
 
 .song-info {
-  width: 120px;
+  /* width: 120px; */
   height: 100%;
   display: flex;
   gap: 4px;
@@ -40,4 +40,35 @@
 .player-main-btns {
   display: flex;
   gap: 4px;
+}
+
+.volume-slider {
+  padding: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.slider {
+  position: relative;
+  width: 200px;
+  height: 20px;
+}
+
+.slider input {
+  position: absolute;
+  left: -6px;
+  top: 0px;
+  width: 200px;
+  height: 20px;
+  -webkit-appearance: none;
+  background-color: transparent;
+  z-index: 10;
+}
+
+.slider input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border: 1px black solid;
 }

@@ -3,6 +3,7 @@ import { fetchWebApi } from "./config/spotify";
 import { Outlet } from "react-router-dom";
 import Player from "./components/player/Player";
 import Login from "./pages/auth/Login";
+import Sidebar from "./components/sidebar/Sidebar";
 // import axios from "axios";
 // import { setClientToken } from "./config/spotify";
 
@@ -68,14 +69,26 @@ function App() {
   }>({});
 
   useEffect(() => {
-    let _token = window.localStorage.getItem("token") || "undefined";
-    if (_token === "undefined") {
-      const hash = window.location.hash;
-      _token = hash.split("&")[0].split("=")[1];
+    const thereIsHash = window.location.hash;
+    let _token = "";
+
+    if (thereIsHash) {
+      console.log("there is hash, and it's:", thereIsHash);
+      _token = thereIsHash.split("&")[0].split("=")[1];
+      setToken(_token);
       window.localStorage.setItem("token", _token);
-      setToken(_token);
+      window.location.hash = "";
     } else {
-      setToken(_token);
+      _token = window.localStorage.getItem("token") || "undefined";
+      if (_token === "undefined") {
+        const hash = window.location.hash;
+        _token = hash.split("&")[0].split("=")[1];
+        window.localStorage.setItem("token", _token);
+        setToken(_token);
+      } else {
+        console.log("pullin token up from local storage");
+        setToken(_token);
+      }
     }
 
     // console.log("token from dash", _token);
@@ -121,6 +134,7 @@ function App() {
             ) : (
               <>
                 {" "}
+                <Sidebar />
                 <Outlet />
                 {/* <div>
                 <h1>Playlists</h1>
