@@ -20,7 +20,7 @@ const Tracklist = ({
     artist: string,
     trackDurationMs: number
   ) {
-    console.log("index form stack", indexInStack);
+    // console.log("index form stack", indexInStack);
     setCurrentSong({
       indexInStack,
       songUrl,
@@ -36,8 +36,8 @@ const Tracklist = ({
     });
     setTrackStack(newTrackStack);
   }
-  console.log("current trackStack: ", trackStack);
-  console.log("the list of tracks passed to me: ", tracks)
+  // console.log("current trackStack: ", trackStack);
+  // console.log("the list of tracks passed to me: ", tracks)
   return (
     <div>
       <h2>tracklist</h2>

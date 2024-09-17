@@ -56,7 +56,7 @@
 
 .slider input {
   position: absolute;
-  left: -6px;
+  /* left: -6px; */
   top: 0px;
   width: 200px;
   height: 20px;
@@ -64,6 +64,11 @@
   background-color: transparent;
   z-index: 10;
 }
+
+.slider progress {
+width: 200px;
+}
+
 
 .slider input::-webkit-slider-thumb {
   -webkit-appearance: none;

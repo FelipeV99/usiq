@@ -11,26 +11,45 @@ const Player = () => {
 
   const [volume, setVolume] = useState<number>(100);
   const [songProgress, setSongProgress] = useState<number>(0);
-  const [isPlaying, setIsPlaying] = useState<boolean>(() => true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   useEffect(() => {
-    setSongProgress(0);
-    setIsPlaying(true);
+    // console.log("gonna set is playing to true")
+    // console.log("current song is:", currentSong)
+    const isObjEmpty = Object.keys(currentSong).length === 0;
+    if(!isObjEmpty){
+      setSongProgress(0);
+      setIsPlaying(true);
+      startAnimation()
+    }
+
   }, [currentSong]);
 
-  // const updateProgress = useCallback(()=>{
-  //   const currentTime
-  // })
+  const updateProgress = useCallback(()=>{
+    // console.log("isplaying?", isPlaying)
+    // if(isPlaying){
+    //   console.log("updating progress...", new Date())
+    //   const currentTime = audioRef.current.currentTime
+    //   setSongProgress(currentTime)
+    // }
+          // console.log("updating progress...", new Date())
+      const currentTime = audioRef.current.currentTime
+      setSongProgress(currentTime)
 
-  // const startAnimation = useCallback(()=>{
-  //   const animate = () =>{
-  //     updateProgress()
-  //     playAnimationRef.current = requestAnimationFrame(animate)
-  //   }
-  //   playAnimationRef.current = requestAnimationFrame(animate);
-  // })
 
-  
+  },[isPlaying])
+
+  const startAnimation = useCallback(()=>{
+    console.log("started animation")
+    const animate = () =>{
+      updateProgress()
+      playAnimationRef.current = requestAnimationFrame(animate)
+    }
+    playAnimationRef.current = requestAnimationFrame(animate);
+  },[isPlaying])
+
+
+
 
   // useEffect(() => {
   //   setIsPlaying(true);
@@ -43,18 +62,59 @@ const Player = () => {
   // }, [isPlaying]);
 
   function handleOnPlayPause() {
-    console.log("audioref current!", audioRef.current);
-    if (audioRef.current.paused) {
-      setIsPlaying(true);
+    // console.log("audioref current!", audioRef.current);
+    // setIsPlaying((currentValue =>{
+    //   return currentValue
+    // }))
+    // if(isPlaying){
+    //   startAnimation()
+    // }else{
+    //   if (playAnimationRef.current !== null) {
+    //     console.log("cancel animation")
+    //     cancelAnimationFrame(playAnimationRef.current);
+    //     playAnimationRef.current = null;
+    //   }
+    // }
+    // if (audioRef.current.paused) {
+    //   audioRef.current.play();
+    // } else {
+    //   audioRef.current.pause();
+
+    // }
+
+    if (isPlaying === false) {
+      setIsPlaying(true)
       audioRef.current.play();
+      startAnimation()
     } else {
-      setIsPlaying(false);
+      setIsPlaying(false)
       audioRef.current.pause();
+      console.log("trying to cancel animation")
+      if (playAnimationRef.current !== null) {
+        console.log("cancel animation")
+        cancelAnimationFrame(playAnimationRef.current);
+        playAnimationRef.current = null;
+      }
     }
-    console.log("is on pause?!", audioRef.current.paused);
+    // if (isPlaying) {
+    //   setIsPlaying(true);
+    //   audioRef.current.play();
+    //   startAnimation()
+    // } else {
+    //   setIsPlaying(false);
+    //   audioRef.current.pause();
+
+    //   if (playAnimationRef.current !== null) {
+    //     console.log("cancel animation")
+    //     cancelAnimationFrame(playAnimationRef.current);
+    //     playAnimationRef.current = null;
+    //   }
+    // }
   }
 
   function handleOnPlayPrevious() {
+    setSongProgress(0);
+
     //maybe i need the current track index and from there i can substract 1 to it and get the repvious track
     if (currentSong.indexInStack !== 0) {
       const previousTrack = trackStack.filter(
@@ -62,7 +122,7 @@ const Player = () => {
           return index === currentSong.indexInStack - 1;
         }
       )[0];
-      console.log("this is the previous track", previousTrack);
+      // console.log("this is the previous track", previousTrack);
       const newCurrentSong: { [key: string]: any } = {
         indexInStack: currentSong.indexInStack - 1,
         songUrl: previousTrack.preview_url,
@@ -98,13 +158,16 @@ const Player = () => {
   }
 
   function handleOnPlayNext() {
+
     if (currentSong.indexInStack !== trackStack.length - 1) {
+      setSongProgress(0);
+
       const nextTrack = trackStack.filter(
         (track: { [key: string]: any }, index: number) => {
           return index === currentSong.indexInStack + 1;
         }
       )[0];
-      console.log("this is the next track", nextTrack);
+      // console.log("this is the next track", nextTrack);
       const newCurrentSong: { [key: string]: any } = {
         indexInStack: currentSong.indexInStack + 1,
         songUrl: nextTrack.preview_url,
@@ -142,35 +205,19 @@ const Player = () => {
   }
 
   function handleOnVolumeChange(e: React.FormEvent<HTMLInputElement>) {
-    console.log("handling volume change");
-    console.log(
-      "volume event",
-      Number(e.currentTarget.value),
-      typeof e.currentTarget.value
-    );
     setVolume(Number(e.currentTarget.value));
     audioRef.current.volume = Number(e.currentTarget.value) / 100;
-    console.log(audioRef.current);
   }
 
   function handleOnProgressChange(e: React.FormEvent<HTMLInputElement>) {
     //what i need to do is set the max value of the progress tag to whatever the current song lasts
-    console.log("current song progress: ", audioRef.current);
-    console.log(
-      "gonna set the track progress to the second: ",
-      Number(e.currentTarget.value)
-    );
     setSongProgress(Number(e.currentTarget.value));
 
     audioRef.current.currentTime = Number(e.currentTarget.value);
   }
-  function handlePlayingProgress() {
-    console.log("playing progress");
-    setSongProgress(Number(audioRef.current.currentTime));
-  }
 
-  console.log("currnt song ", currentSong);
-  console.log("current track stack", trackStack);
+  // console.log("currnt song ", currentSong);
+  // console.log("current track stack", trackStack);
 
   return (
     <div className="player-container">
@@ -219,8 +266,6 @@ const Player = () => {
             ref={audioRef}
             style={{ display: "none" }}
             onEnded={handleOnPlayNext}
-            // onPlaying={handlePlayingProgress}
-            onChange={handlePlayingProgress}
           />
         </div>
       </div>
