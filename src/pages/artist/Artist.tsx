@@ -20,8 +20,10 @@ const Artist = () => {
                   isError = true;
                 } else {
                     topTracksReq = res;
-                    console.log("top tracks",topTracksReq.tracks)
-                    setTopTracks(topTracksReq.tracks)
+                     const topTracksWithImage = topTracksReq.tracks.map((track:  { [key: string]: any })=>{
+                        return {...track, imgUrl: track.album.images[0].url}
+                      })
+                    setTopTracks(topTracksWithImage)
                 }
               });
         }
@@ -30,7 +32,10 @@ const Artist = () => {
   return (
     <div className="artist-container">
         <h1>{artist.name}</h1>
-        <img src={artist.images[0].url} alt="" />
+        <div>
+        <img src={artist.images[0].url} alt="" className="img-fit" />
+
+        </div>
         <h2>popular songs</h2>
         <Tracklist tracks={topTracks} />
     </div>
