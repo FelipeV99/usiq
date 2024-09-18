@@ -17,39 +17,33 @@ const Player = () => {
     // console.log("gonna set is playing to true")
     // console.log("current song is:", currentSong)
     const isObjEmpty = Object.keys(currentSong).length === 0;
-    if(!isObjEmpty){
+    if (!isObjEmpty) {
       setSongProgress(0);
       setIsPlaying(true);
-      startAnimation()
+      startAnimation();
     }
-
   }, [currentSong]);
 
-  const updateProgress = useCallback(()=>{
+  const updateProgress = useCallback(() => {
     // console.log("isplaying?", isPlaying)
     // if(isPlaying){
     //   console.log("updating progress...", new Date())
     //   const currentTime = audioRef.current.currentTime
     //   setSongProgress(currentTime)
     // }
-          // console.log("updating progress...", new Date())
-      const currentTime = audioRef.current.currentTime
-      setSongProgress(currentTime)
+    // console.log("updating progress...", new Date())
+    const currentTime = audioRef.current.currentTime;
+    setSongProgress(currentTime);
+  }, [isPlaying]);
 
-
-  },[isPlaying])
-
-  const startAnimation = useCallback(()=>{
-    console.log("started animation")
-    const animate = () =>{
-      updateProgress()
-      playAnimationRef.current = requestAnimationFrame(animate)
-    }
+  const startAnimation = useCallback(() => {
+    console.log("started animation");
+    const animate = () => {
+      updateProgress();
+      playAnimationRef.current = requestAnimationFrame(animate);
+    };
     playAnimationRef.current = requestAnimationFrame(animate);
-  },[isPlaying])
-
-
-
+  }, [isPlaying]);
 
   // useEffect(() => {
   //   setIsPlaying(true);
@@ -62,54 +56,20 @@ const Player = () => {
   // }, [isPlaying]);
 
   function handleOnPlayPause() {
-    // console.log("audioref current!", audioRef.current);
-    // setIsPlaying((currentValue =>{
-    //   return currentValue
-    // }))
-    // if(isPlaying){
-    //   startAnimation()
-    // }else{
-    //   if (playAnimationRef.current !== null) {
-    //     console.log("cancel animation")
-    //     cancelAnimationFrame(playAnimationRef.current);
-    //     playAnimationRef.current = null;
-    //   }
-    // }
-    // if (audioRef.current.paused) {
-    //   audioRef.current.play();
-    // } else {
-    //   audioRef.current.pause();
-
-    // }
-
     if (isPlaying === false) {
-      setIsPlaying(true)
+      setIsPlaying(true);
       audioRef.current.play();
-      startAnimation()
+      startAnimation();
     } else {
-      setIsPlaying(false)
+      setIsPlaying(false);
       audioRef.current.pause();
-      console.log("trying to cancel animation")
+      console.log("trying to cancel animation");
       if (playAnimationRef.current !== null) {
-        console.log("cancel animation")
+        console.log("cancel animation");
         cancelAnimationFrame(playAnimationRef.current);
         playAnimationRef.current = null;
       }
     }
-    // if (isPlaying) {
-    //   setIsPlaying(true);
-    //   audioRef.current.play();
-    //   startAnimation()
-    // } else {
-    //   setIsPlaying(false);
-    //   audioRef.current.pause();
-
-    //   if (playAnimationRef.current !== null) {
-    //     console.log("cancel animation")
-    //     cancelAnimationFrame(playAnimationRef.current);
-    //     playAnimationRef.current = null;
-    //   }
-    // }
   }
 
   function handleOnPlayPrevious() {
@@ -158,7 +118,6 @@ const Player = () => {
   }
 
   function handleOnPlayNext() {
-
     if (currentSong.indexInStack !== trackStack.length - 1) {
       setSongProgress(0);
 
@@ -219,6 +178,30 @@ const Player = () => {
   // console.log("currnt song ", currentSong);
   // console.log("current track stack", trackStack);
 
+  function formatTime(time: number) {
+    console.log(typeof audioRef.current.duration, audioRef.current.duration);
+    // if (!isNaN(audioRef.current.duration)) {
+    //   // const seconds = audioRef.current.duration.toString().split(".")[1];
+    //   // console.log(seconds[0]);
+    //   console.log(Math.round(audioRef.current.duration));
+    //   return Math.round(audioRef.current.duration);
+    // }
+
+    // const seconds = audioRef.current.duration.toString().split(".")[1];
+    // console.log(seconds[0]);
+    return `0:${Math.round(time)}`;
+
+    // const formattedSeconds = seconds
+  }
+  if (audioRef.current) {
+    // formatTime();
+    console.log(typeof audioRef.current.duration);
+    console.log(audioRef.current.duration);
+    if (!isNaN(audioRef.current.duration)) {
+      console.log("formatted time: ", formatTime(audioRef.current.duration));
+    }
+  }
+
   return (
     <div className="player-container">
       <div className="song-info">
@@ -240,6 +223,15 @@ const Player = () => {
           <button onClick={handleOnPlayNext}>next</button>
         </div>
         <div className="player-main-btns-bottom">
+          {/* <p>{audioRef?.current?.currentTime}</p> */}
+          <p>
+            {audioRef.current
+              ? !isNaN(audioRef.current.currentTime)
+                ? formatTime(audioRef.current.currentTime)
+                : 0
+              : 0}
+          </p>
+
           <div className="song-progress-slider">
             <div className="slider">
               <input
@@ -256,6 +248,14 @@ const Player = () => {
               ></progress>
             </div>
           </div>
+          {/* <p>{audioRef?.current?.duration}</p> */}
+          <p>
+            {audioRef.current
+              ? !isNaN(audioRef.current.duration)
+                ? formatTime(audioRef.current.duration)
+                : 0
+              : 0}
+          </p>
         </div>
 
         <div>

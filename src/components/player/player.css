@@ -39,6 +39,7 @@
 
 .player-main-btns {
   display: flex;
+  flex-direction: column;
   gap: 4px;
 }
 
@@ -66,9 +67,8 @@
 }
 
 .slider progress {
-width: 200px;
+  width: 200px;
 }
-
 
 .slider input::-webkit-slider-thumb {
   -webkit-appearance: none;
