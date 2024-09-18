@@ -40,7 +40,6 @@ const Tracklist = ({
   // console.log("the list of tracks passed to me: ", tracks)
   return (
     <div>
-      <h2>tracklist</h2>
       <div>
         {tracks.map((track: { [key: string]: any }, index: number) => {
           return (

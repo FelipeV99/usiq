@@ -37,7 +37,6 @@ export async function albumLoader({ params }: { [key: string]: any }) {
   if (isError) {
     return redirect("http://localhost:3000/login");
   } else {
-    console.log("returning album:", album);
     return album;
   }
 }
