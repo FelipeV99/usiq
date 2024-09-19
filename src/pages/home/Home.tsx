@@ -57,7 +57,7 @@ const Home = () => {
   return (
     <>
       <div className="home-container">
-        <h1>Your top tracks</h1>
+        <h2>Your top tracks</h2>
         <Tracklist tracks={userTopTracks} />
         {/* {userTopTracks.map((track: { [index: string]: any }, index: number) => {
           return (
@@ -78,7 +78,7 @@ const Home = () => {
             </div>
           );
         })} */}
-        <h1>New releases</h1>
+        <h2>New releases</h2>
         {newAlbums.map((album: { [index: string]: any }, index) => {
           return (
             <div key={index}>

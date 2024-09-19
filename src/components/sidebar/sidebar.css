@@ -1,0 +1,30 @@
+.sidebar-container{
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.logo-container{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.sidebar-menu{
+    display: flex;
+    flex-direction: column;
+    gap:24px
+}
+
+.sidebar-section{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-options{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}

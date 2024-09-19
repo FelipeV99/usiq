@@ -2,7 +2,9 @@ import "./player.css";
 import { useCurrentSongContext, useTrackstackContext } from "../../App";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const Player = () => {
+const Player = (
+  // {isQueueVisible, setIsQueueVisible}: {isQueueVisible: boolean, setIsQueueVisible: React.Dispatch<React.SetStateAction<boolean>>}
+) => {
   const { currentSong, setCurrentSong } = useCurrentSongContext();
   const { trackStack, setTrackStack } = useTrackstackContext();
   const audioRef = useRef<any>();
@@ -12,6 +14,8 @@ const Player = () => {
   const [volume, setVolume] = useState<number>(100);
   const [songProgress, setSongProgress] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
+  // const [isQueueVisible, setIsQueueVisible] = useState<boolean>(false)
 
   useEffect(() => {
     // console.log("gonna set is playing to true")
@@ -158,8 +162,10 @@ const Player = () => {
   function handleOnMuteUnmute() {
     if (audioRef.current.volume === 0) {
       audioRef.current.volume = volume / 100;
+      setIsMuted(false)
     } else {
       audioRef.current.volume = 0;
+      setIsMuted(true)
     }
   }
 
@@ -169,48 +175,33 @@ const Player = () => {
   }
 
   function handleOnProgressChange(e: React.FormEvent<HTMLInputElement>) {
-    //what i need to do is set the max value of the progress tag to whatever the current song lasts
     setSongProgress(Number(e.currentTarget.value));
 
     audioRef.current.currentTime = Number(e.currentTarget.value);
   }
 
-  // console.log("currnt song ", currentSong);
-  // console.log("current track stack", trackStack);
-
   function formatTime(time: number) {
-    console.log(typeof audioRef.current.duration, audioRef.current.duration);
-    // if (!isNaN(audioRef.current.duration)) {
-    //   // const seconds = audioRef.current.duration.toString().split(".")[1];
-    //   // console.log(seconds[0]);
-    //   console.log(Math.round(audioRef.current.duration));
-    //   return Math.round(audioRef.current.duration);
-    // }
+    const roundedTime = Math.round(time);
+    const isSingleDigit = roundedTime.toString().length <= 1
 
-    // const seconds = audioRef.current.duration.toString().split(".")[1];
-    // console.log(seconds[0]);
-    return `0:${Math.round(time)}`;
-
-    // const formattedSeconds = seconds
-  }
-  if (audioRef.current) {
-    // formatTime();
-    console.log(typeof audioRef.current.duration);
-    console.log(audioRef.current.duration);
-    if (!isNaN(audioRef.current.duration)) {
-      console.log("formatted time: ", formatTime(audioRef.current.duration));
+    if(isSingleDigit){
+      return `0:0${roundedTime}`
     }
+    return `0:${roundedTime}`;
   }
 
   return (
+    <div className="player-outer-container">
+
+    
     <div className="player-container">
       <div className="song-info">
         <div className="song-info-left">
           <img className="img-fit" src={currentSong.imgUrl} alt="" />
         </div>
         <div className="song-info-right">
-          <p>{currentSong.name}</p>
-          <p>{currentSong.artist}</p>
+          <p className="bold">{currentSong.name}</p>
+          <p className="other-p">{currentSong.artist}</p>
         </div>
       </div>
 
@@ -232,17 +223,15 @@ const Player = () => {
               : 0}
           </p>
 
-          <div className="song-progress-slider">
-            <div className="slider">
+          <div className="song-progress-container">
+            <div className="song-progress-slider slider">
               <input
                 type="range"
-                // max={currentSong.trackDurationMs}
                 max={30.0}
                 value={songProgress}
                 onChange={handleOnProgressChange}
               />
               <progress
-                // max={currentSong.trackDurationMs}
                 max={30.0}
                 value={songProgress}
               ></progress>
@@ -270,9 +259,11 @@ const Player = () => {
         </div>
       </div>
       <div className="player-other-btns">
-        {/* <button>queue</button> */}
-        <div className="volume-slider">
-          <div className="slider">
+        {/* <button onClick={()=>setIsQueueVisible((currentValue)=>!currentValue)}>queue</button> */}
+        <button onClick={handleOnMuteUnmute}>{isMuted ? "Unmute" : "Mute"}</button>
+
+        <div className="volume-slider-container">
+          <div className="volume-slider slider">
             <input
               type="range"
               value={volume}
@@ -281,11 +272,11 @@ const Player = () => {
             <progress max={100} value={volume}></progress>
           </div>
         </div>
-        <button onClick={handleOnMuteUnmute}>mute/unmute</button>
       </div>
 
       {/* <p>{song}</p>
       <p>{artist}</p> */}
+    </div>
     </div>
   );
 };

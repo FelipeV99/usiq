@@ -4,6 +4,8 @@ import { Outlet } from "react-router-dom";
 import Player from "./components/player/Player";
 import Login from "./pages/auth/Login";
 import Sidebar from "./components/sidebar/Sidebar";
+import Queue from "./components/queue/Queue";
+import Topbar from "./components/topbar/Topbar";
 // import axios from "axios";
 // import { setClientToken } from "./config/spotify";
 
@@ -67,6 +69,8 @@ function App() {
     name?: string;
     artist?: string;
   }>({});
+  const [isQueueVisible, setIsQueueVisible] = useState<boolean>(false)
+
 
   useEffect(() => {
     const thereIsHash = window.location.hash;
@@ -128,14 +132,26 @@ function App() {
     <TokenContext.Provider value={{ token, setToken }}>
       <CurrentSongContext.Provider value={{ currentSong, setCurrentSong }}>
         <TrackStackContext.Provider value={{ trackStack, setTrackStack }}>
-          <div>
+          <div className="page-container">
             {token === "expired" ? (
               <Login />
             ) : (
               <>
                 {" "}
-                <Sidebar />
-                <Outlet />
+                <Sidebar 
+                // isQueueVisible={isQueueVisible} 
+                // setIsQueueVisible={setIsQueueVisible} 
+                />
+                <div>
+                  <div>
+<Topbar />
+                  </div>
+                  <div>
+                  <Outlet />
+                <Queue />
+                  </div>
+                </div>
+
                 {/* <div>
                 <h1>Playlists</h1>
                 {userPlaylists.map((playlist: Playlist, index: number) => {

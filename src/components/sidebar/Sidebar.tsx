@@ -1,18 +1,34 @@
-import React from "react";
+import "./sidebar.css"
 import { Link } from "react-router-dom";
 import Searchbar from "../searchbar/Searchbar";
 
 const Sidebar = () => {
   return (
-    <div>
-      <p>menu</p>
-      <Link to="/">Home</Link>
+    <div className="sidebar-container">
+      <div className="logo-container">
+      <img src={require("../../assets/usic logo.svg").default} alt="" />
+
+      </div>
+      <div className="sidebar-menu">
+        <div className="sidebar-section">
+        <p className="subheader">MENU</p>
+        <div  className="sidebar-options">
+        <Link to="/">Home</Link>
       <Link to="/">Discover</Link>
-      <p>library</p>
-      <Link to="/my-songs">Songs</Link>
+        </div>
+
+        </div>
+<div  className="sidebar-section">
+<p className="subheader">LIBRARY</p>
+<div  className="sidebar-options">
+<Link to="/my-songs">Songs</Link>
       <Link to="/my-albums">Albums</Link>
       <Link to="/my-artists">Artists</Link>
-      <Searchbar />
+
+</div>
+
+</div>
+      </div>
     </div>
   );
 };

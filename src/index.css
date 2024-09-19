@@ -2,3 +2,75 @@
   box-sizing: border-box;
   margin: 0;
 }
+
+:root{
+  --dark-blue-900: #12151C;
+  --dark-blue-600: #363A44;
+
+  --light-blue-500: #99ECF2:
+
+  --grey-100: #ffffff;
+  --grey-200: #D3D3D5;
+  --grey-300: #A7A8AA;
+  --grey-400: #8A8C8F;
+}
+
+#root{
+  background-color: var(--dark-blue-900);
+}
+
+@font-face {
+  font-family: "CenturyGothic";
+  src: url("../src/assets/GOTHIC.TTF") format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CenturyGothic";
+  src: url("../src/assets/GOTHICB.TTF") format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+
+p{
+  color: var(--grey-200);
+  font-family: "CenturyGothic";
+}
+
+a{
+  color: var(--grey-200);
+  font-family: "CenturyGothic";
+  text-decoration: none;
+}
+
+h2{
+  color: var(--grey-300);
+  font-family: "CenturyGothic";
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 1px;
+
+}
+
+.page-container{
+  display: flex;
+  min-height: 100vh;
+}
+
+.subheader{
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: var(--grey-300);
+}
+
+.bold{
+  font-family: "CenturyGothic";
+  font-weight: 800;
+}
+
+.other-p{
+  color: var(--grey-400);
+  font-size: 14px;
+}
