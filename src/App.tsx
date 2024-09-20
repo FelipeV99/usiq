@@ -1,10 +1,10 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { fetchWebApi } from "./config/spotify";
 import { Outlet } from "react-router-dom";
 import Player from "./components/player/Player";
 import Login from "./pages/auth/Login";
 import Sidebar from "./components/sidebar/Sidebar";
-import Queue from "./components/queue/Queue";
+// import Queue from "./components/queue/Queue";
 import Topbar from "./components/topbar/Topbar";
 // import axios from "axios";
 // import { setClientToken } from "./config/spotify";
@@ -69,8 +69,7 @@ function App() {
     name?: string;
     artist?: string;
   }>({});
-  const [isQueueVisible, setIsQueueVisible] = useState<boolean>(false)
-
+  const [isQueueVisible, setIsQueueVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const thereIsHash = window.location.hash;
@@ -138,32 +137,19 @@ function App() {
             ) : (
               <>
                 {" "}
-                <Sidebar 
-                // isQueueVisible={isQueueVisible} 
-                // setIsQueueVisible={setIsQueueVisible} 
+                <Sidebar
+                // isQueueVisible={isQueueVisible}
+                // setIsQueueVisible={setIsQueueVisible}
                 />
-                <div>
+                <div className="right-container">
                   <div>
-<Topbar />
+                    <Topbar />
                   </div>
-                  <div>
-                  <Outlet />
-                <Queue />
+                  <div className="content-container">
+                    <Outlet />
+                    {/* <Queue /> */}
                   </div>
                 </div>
-
-                {/* <div>
-                <h1>Playlists</h1>
-                {userPlaylists.map((playlist: Playlist, index: number) => {
-                  return <div key={index}>playlist {playlist.name}</div>;
-                })}
-              </div>
-              <div>
-                <h1>Artists</h1>
-                {userTopArtists.map((artist: Artist, index: number) => {
-                  return <div key={index}>{artist.name}</div>;
-                })}
-              </div> */}
                 <Player />
               </>
             )}

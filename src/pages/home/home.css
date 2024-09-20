@@ -1,3 +1,104 @@
 .home-container {
   padding-bottom: 100px;
+  width: 100%;
+}
+
+.banners-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.home-bottom {
+  display: flex;
+  gap: 24px;
+  padding-top: 24px;
+}
+
+.home-bottom-left {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.favorite-artists-outer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.favorite-artists-container {
+  display: flex;
+  gap: 16px;
+}
+
+.artist-home-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.artist-home-card p {
+  text-align: center;
+}
+
+.artist-img-container {
+  display: flex;
+  width: 140px;
+  height: 140px;
+}
+
+.artist-img-container img {
+  border-radius: 100px;
+  object-fit: fill;
+  min-width: 100%;
+  height: auto;
+  object-fit: cover;
+  /* min-width: 140px;
+  min-height: 140px; */
+}
+
+.recently-played-outer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.new-releases-outer-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.new-releases-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.new-releases-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.new-release-img-container {
+  width: 68px;
+  height: 68px;
+  display: flex;
+}
+
+.new-release-img-container img {
+  border-radius: 12px;
+}
+
+.nr-row-left {
+  display: flex;
+  gap: 4px;
+  align-items: center;
 }

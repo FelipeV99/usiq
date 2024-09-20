@@ -3,74 +3,143 @@
   margin: 0;
 }
 
-:root{
-  --dark-blue-900: #12151C;
-  --dark-blue-600: #363A44;
+:root {
+  --dark-blue-900: #12151c;
+  --dark-blue-800: #292c31;
+  --dark-blue-600: #363a44;
+  --dark-blue-500: #414651;
 
-  --light-blue-500: #99ECF2:
+  --light-blue-400: #81c4ca;
+  --light-blue-500: #99ecf2;
 
   --grey-100: #ffffff;
-  --grey-200: #D3D3D5;
-  --grey-300: #A7A8AA;
-  --grey-400: #8A8C8F;
+  --grey-200: #d3d3d5;
+  --grey-300: #a7a8aa;
+  --grey-400: #8a8c8f;
 }
 
-#root{
+body {
   background-color: var(--dark-blue-900);
 }
 
 @font-face {
   font-family: "CenturyGothic";
-  src: url("../src/assets/GOTHIC.TTF") format('truetype');
+  src: url("../src/assets/GOTHIC.TTF") format("truetype");
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CenturyGothic";
-  src: url("../src/assets/GOTHICB.TTF") format('truetype');
+  src: url("../src/assets/GOTHICB.TTF") format("truetype");
   font-weight: 800;
   font-style: normal;
 }
+@font-face {
+  font-family: "IDG";
+  src: url("../src/assets/IDGrotesk-Semibold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
 
-
-p{
+p {
   color: var(--grey-200);
   font-family: "CenturyGothic";
 }
 
-a{
+a {
   color: var(--grey-200);
   font-family: "CenturyGothic";
   text-decoration: none;
 }
 
-h2{
-  color: var(--grey-300);
-  font-family: "CenturyGothic";
+h1 {
+  color: var(--grey-100);
   text-transform: uppercase;
-  font-size: 1rem;
-  letter-spacing: 1px;
-
+  font-size: 42px;
+  font-family: "IDG";
+  /* letter-spacing: 1px; */
 }
 
-.page-container{
+h2 {
+  color: var(--grey-100);
+  font-size: 32px;
+  text-transform: uppercase;
+  font-family: "IDG";
+  letter-spacing: 1px;
+}
+
+h4 {
+  color: var(--grey-300);
+  font-family: "CenturyGothic";
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 2%;
+}
+
+input {
+  background-color: transparent;
+  color: var(--grey-300);
+  /* padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px; */
+  border: none;
+}
+
+input:focus {
+  border: none;
+}
+
+.page-container {
   display: flex;
   min-height: 100vh;
 }
 
-.subheader{
+.subheader {
   font-size: 14px;
   letter-spacing: 1px;
   color: var(--grey-300);
 }
 
-.bold{
+.bold {
   font-family: "CenturyGothic";
   font-weight: 800;
 }
 
-.other-p{
+.other-p {
   color: var(--grey-400);
   font-size: 14px;
+}
+
+/* .small- */
+
+.btn-primary {
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+
+  font-family: "CenturyGothic";
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--dark-blue-900);
+  text-transform: uppercase;
+  background-color: var(--light-blue-400);
+  border: none;
+  border-radius: 12px;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  width: 162px;
+}
+
+.right-container {
+  width: 100%;
+  padding-right: 38px;
+}
+.content-container {
+  width: 100%;
 }

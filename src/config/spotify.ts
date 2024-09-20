@@ -9,7 +9,8 @@ const scope = [
   "user-modify-playback-state",
   "user-read-playback-state",
   "user-top-read",
-  "user-follow-read"
+  "user-follow-read",
+  "user-read-recently-played",
 ];
 
 export const loginEndpoint = `${authEndpoint}client_id=${clientID}&redirect_uri=${redirectURI}&scope=${scope.join(

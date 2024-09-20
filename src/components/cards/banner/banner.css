@@ -1,0 +1,53 @@
+.border-gradient {
+  padding: 1px;
+  background: linear-gradient(
+    to right,
+    var(--dark-blue-500),
+    var(--dark-blue-600)
+  );
+  border-radius: 16px;
+}
+
+.banner-container {
+  display: flex;
+  /* background-color: var(--dark-blue-600); */
+  background: radial-gradient(
+    circle at left,
+    var(--dark-blue-600) 0,
+    var(--dark-blue-800) 100%
+  );
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  border-radius: 16px;
+  gap: 32px;
+  min-width: 596px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.banner-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.banner-left h1 {
+  padding-top: 38px;
+}
+
+.banner-left h2 {
+  padding-top: 38px;
+}
+
+.banner-right {
+  width: 225px;
+  height: 225px;
+  display: flex;
+  /* border-radius: 8px; */
+}
+
+.banner-right img {
+  border-radius: 12px;
+}

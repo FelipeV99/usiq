@@ -1,31 +1,41 @@
-import React from 'react'
-import { fetchWebApi } from '../../config/spotify'
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+// import { fetchWebApi } from '../../config/spotify'
+import "./searchbar.css";
+import { useNavigate } from "react-router-dom";
 
 const Searchbar = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    async function handleOnSearch(e: React.FormEvent<HTMLInputElement>){
-        console.log(e.currentTarget.value)
-        navigate("search/"+e.currentTarget.value)
-        // const token = window.localStorage.getItem("token") || "";
-        // let isError = false
-        // await fetchWebApi("v1/search?q=black&type=track,artist,album", "GET", token).then((res) => {
-        //     if (res.error) {
-        //       window.localStorage.setItem("token", "undefined");
-        //       isError = true;
-        //     } else {
-        //         console.log("search results", res)
-        //     }
-        //     // console.log("search results", res)
+  async function handleOnSearch(e: React.FormEvent<HTMLInputElement>) {
+    console.log(e.currentTarget.value);
+    navigate("search/" + e.currentTarget.value);
+    // const token = window.localStorage.getItem("token") || "";
+    // let isError = false
+    // await fetchWebApi("v1/search?q=black&type=track,artist,album", "GET", token).then((res) => {
+    //     if (res.error) {
+    //       window.localStorage.setItem("token", "undefined");
+    //       isError = true;
+    //     } else {
+    //         console.log("search results", res)
+    //     }
+    //     // console.log("search results", res)
 
-        //   })
-    }
+    //   })
+  }
   return (
-    <div>
-        <input type="text" placeholder='search songs, albums and artists' onChange={handleOnSearch} />
-    </div>
-  )
-}
+    <div className="searchbar-border">
+      <div className="search-container">
+        <img src={require("../../assets/Icons/search.svg").default} alt="" />
 
-export default Searchbar
+        <input
+          className="search-input"
+          type="text"
+          placeholder="search songs, albums and artists"
+          onChange={handleOnSearch}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default Searchbar;

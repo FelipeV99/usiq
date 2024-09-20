@@ -1,5 +1,4 @@
-
-.player-outer-container{
+.player-outer-container {
   width: 100vw;
   position: fixed;
   bottom: 0;
@@ -39,9 +38,8 @@
   height: 50px;
 }
 
-.song-info-left img{
+.song-info-left img {
   border-radius: 8px;
-
 }
 
 .song-info-right {
@@ -62,13 +60,29 @@
   align-items: center;
 }
 
+.player-main-btns-top {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.play-pause-container {
+  border-radius: 100px;
+  padding: 8px;
+  background-color: var(--dark-blue-600);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .player-main-btns-bottom {
   display: flex;
   gap: 8px;
-
 }
 
-.player-other-btns{
+.player-other-btns {
   display: flex;
   gap: 4px;
 }
@@ -86,13 +100,11 @@
   height: 20px;
 }
 
-.song-progress-slider{
+.song-progress-slider {
   width: 250px;
   /* color:red;
   background-color: red; */
-
 }
-
 
 .slider input {
   position: absolute;
@@ -105,14 +117,13 @@
   z-index: 10;
   /* color:red; */
   /* background-color: red; */
-  
 }
 
-.song-progress-slider input{
+.song-progress-slider input {
   width: 250px;
 }
 
-.volume-slider input{
+.volume-slider input {
   width: 100px;
 }
 
@@ -122,13 +133,9 @@
   appearance: none; */
   background: var(--dark-blue-600);
   height: 16px;
-    /* color:red;
+  /* color:red;
   background-color: red; */
 }
-
-
-
-
 
 /* progress::-moz-progress-bar { background: red;
 boreder:none } */
@@ -144,4 +151,9 @@ boreder:none } */
   height: 20px;
   cursor: pointer;
   border: 1px black solid;
+}
+
+.play-pause-container img {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%)
+    contrast(103%);
 }
