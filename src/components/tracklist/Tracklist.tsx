@@ -36,6 +36,31 @@ const Tracklist = ({
     });
     setTrackStack(newTrackStack);
   }
+
+  function formatTime(timeMS: number) {
+    const timeS = Math.round(timeMS / 1000);
+    const minutes = (timeS / 60).toString().split(".")[0];
+    const seconds = (Number((timeS / 60).toString().split(".")[1]) * 60) / 100;
+    console.log(timeS);
+    console.log(minutes);
+    // console.log(
+    //   "seoncd",
+    //   Math.round(seconds).toString().split("")[0],
+    //   Math.round(seconds).toString().split("")[1]
+    // );
+
+    if (timeMS < 10000) {
+      console.log("track is only single digits seconds long");
+    }
+    if (timeMS < 60000 && timeMS > 10000) {
+      console.log("track is only seconds long");
+    }
+    if (timeMS > 60000) {
+      console.log("track has minutes");
+    }
+  }
+  formatTime(67419);
+
   // console.log("current trackStack: ", trackStack);
   console.log("the list of tracks passed to me: ", tracks);
   return (

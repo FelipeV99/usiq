@@ -7,18 +7,24 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  background-color: var(--dark-blue-900);
+  border-radius: 12px;
 }
 
 .search-input {
   width: 100%;
 }
 
+.search-input:focus {
+  border: none;
+  outline: none;
+}
 .searchbar-border {
   padding: 1px;
-  /* background: linear-gradient(
+  background: linear-gradient(
     to right,
     var(--dark-blue-500),
     var(--dark-blue-600)
-  ); */
+  );
   border-radius: 12px;
 }

@@ -49,7 +49,7 @@ const Home = () => {
     }
 
     async function getFavoriteArtists() {
-      await fetchWebApi("v1/me/top/artists?limit=6", "GET", token).then(
+      await fetchWebApi("v1/me/top/artists?limit=5", "GET", token).then(
         (res) => {
           console.log("favorite artists", res);
           if (!res.error) {
@@ -111,9 +111,12 @@ const Home = () => {
                       className="artist-home-card"
                       onClick={() => handleOnclickArtist(artist.id)}
                     >
-                      <div className="artist-img-container">
-                        <img src={artist.images[0].url} alt="" />
+                      <div className="artist-border">
+                        <div className="artist-img-container">
+                          <img src={artist.images[0].url} alt="" />
+                        </div>
                       </div>
+
                       <p className="bold">{artist.name}</p>
                     </div>
                   );

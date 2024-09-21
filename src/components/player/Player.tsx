@@ -234,7 +234,7 @@ const Player = () =>
             </div>
             <div className="player-main-btns-bottom">
               {/* <p>{audioRef?.current?.currentTime}</p> */}
-              <p>
+              <p className="other-p">
                 {audioRef.current
                   ? !isNaN(audioRef.current.currentTime)
                     ? formatTime(audioRef.current.currentTime)
@@ -249,12 +249,17 @@ const Player = () =>
                     max={30.0}
                     value={songProgress}
                     onChange={handleOnProgressChange}
+                    className="song-progress-input"
                   />
-                  <progress max={30.0} value={songProgress}></progress>
+                  <progress
+                    className="song-progress-progress"
+                    max={30.0}
+                    value={songProgress}
+                  ></progress>
                 </div>
               </div>
               {/* <p>{audioRef?.current?.duration}</p> */}
-              <p>
+              <p className="other-p">
                 {audioRef.current
                   ? !isNaN(audioRef.current.duration)
                     ? formatTime(audioRef.current.duration)
@@ -286,8 +291,13 @@ const Player = () =>
                   type="range"
                   value={volume}
                   onChange={handleOnVolumeChange}
+                  className="volume-input"
                 />
-                <progress max={100} value={volume}></progress>
+                <progress
+                  max={100}
+                  value={volume}
+                  className="volume-progress"
+                ></progress>
               </div>
             </div>
           </div>

@@ -11,16 +11,61 @@ const Sidebar = () => {
         <div className="sidebar-section">
           <p className="subheader">MENU</p>
           <div className="sidebar-options">
-            <Link to="/">Home</Link>
-            <Link to="/">Discover</Link>
+            <Link to="/" className="sidebar-optn active">
+              <div className="sidebar-optn-left">
+                <img
+                  src={require("../../assets/Icons/home.svg").default}
+                  alt=""
+                />
+                <p>Home</p>
+              </div>
+              <div className="dot"></div>
+            </Link>
+            <Link to="/" className="sidebar-optn">
+              <div className="sidebar-optn-left">
+                <img
+                  src={require("../../assets/Icons/compass.svg").default}
+                  alt=""
+                />
+                <p>Discover</p>
+              </div>
+              {/* <div className="dot"></div> */}
+            </Link>
           </div>
         </div>
         <div className="sidebar-section">
           <p className="subheader">LIBRARY</p>
           <div className="sidebar-options">
-            <Link to="/my-songs">Songs</Link>
-            <Link to="/my-albums">Albums</Link>
-            <Link to="/my-artists">Artists</Link>
+            <Link to="/my-artists" className="sidebar-optn">
+              <div className="sidebar-optn-left">
+                <img
+                  src={require("../../assets/Icons/artist.svg").default}
+                  alt=""
+                />
+                <p>Artists</p>
+              </div>
+              {/* <div className="dot"></div> */}
+            </Link>
+            <Link to="/my-album" className="sidebar-optn">
+              <div className="sidebar-optn-left">
+                <img
+                  src={require("../../assets/Icons/disc.svg").default}
+                  alt=""
+                />
+                <p>Albums</p>
+              </div>
+              {/* <div className="dot"></div> */}
+            </Link>
+            <Link to="/my-songs" className="sidebar-optn">
+              <div className="sidebar-optn-left">
+                <img
+                  src={require("../../assets/Icons/music.svg").default}
+                  alt=""
+                />
+                <p>Songs</p>
+              </div>
+              {/* <div className="dot"></div> */}
+            </Link>
           </div>
         </div>
       </div>
