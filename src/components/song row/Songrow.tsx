@@ -1,29 +1,77 @@
-import React from "react";
-// import { useCurrentSongContext, useTrackstackContext } from "../../App";
+import "./song-row.css";
 
-const Songrow = () => {
-  //   const { currentSong, setCurrentSong } = useCurrentSongContext();
-  //   const { trackStack, setTrackStack } = useTrackstackContext();
-  //   function handleOnPlay(
-  //     indexInStack: number,
-  //     songUrl: string,
-  //     imgUrl: string,
-  //     name: string,
-  //     artist: string
-  //   ) {
-  //     console.log("index form stack", indexInStack);
-  //     setCurrentSong({ indexInStack, songUrl, imgUrl, name, artist });
-  //     const newTrackStack = tracks.map((track: { [key: string]: any }) => {
-  //       const active = track.preview_url === songUrl;
-  //       //   console.log("returning obj: ", { ...track, isActive: active });
-  //       return { ...track, isActive: active };
-  //     });
-  //     setTrackStack(newTrackStack);
-  //   }
+import { useState } from "react";
+
+const Songrow = ({
+  id,
+  previewUrl,
+  imgUrl,
+  name,
+  albumName,
+  artistName,
+  durationMS,
+  index,
+  handleOnPlay,
+  isActive,
+}: {
+  id: string;
+  previewUrl: string;
+  imgUrl: string;
+  name: string;
+  albumName: string;
+  artistName: string;
+  durationMS: number;
+  index: number;
+  isActive: boolean;
+  handleOnPlay: (
+    indexInStack: number,
+    songUrl: string,
+    imgUrl: string,
+    name: string,
+    artist: string,
+    trackDurationMs: number
+  ) => void;
+}) => {
+  const [isHover, setIsHover] = useState<boolean>(false);
+
+  function msToHMS(ms: number) {
+    const minutes = Math.floor((ms / 60000) % 60);
+
+    const seconds = Math.floor((ms / 1000) % 60);
+
+    const timeResult = [
+      minutes.toString().padStart(2, "0"),
+      seconds.toString().padStart(2, "0"),
+    ].join(":");
+
+    return timeResult;
+  }
+
+  console.log("is ", name, "active? ", isActive);
+
   return (
-    <div className="track-row">
-      <p>track name</p>
-      <button>play</button>
+    <div
+      // className={`track-row ${isHover ? "hover" : ""}`}
+      className={`track-row ${isActive ? "active" : isHover ? "hover" : ""}`}
+      onClick={() =>
+        handleOnPlay(index, previewUrl, imgUrl, name, artistName, durationMS)
+      }
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+    >
+      <div className="track-row-left">
+        <div className="track-img-container">
+          <img src={imgUrl} alt="" />
+        </div>
+        <div className="track-row-info">
+          <p className="bold">{name}</p>
+          <p>{artistName}</p>
+        </div>
+        <p className="other-p">{albumName}</p>
+      </div>
+      <div className="track-row-right">
+        <p className="other-p">{msToHMS(durationMS)}</p>
+      </div>
     </div>
   );
 };

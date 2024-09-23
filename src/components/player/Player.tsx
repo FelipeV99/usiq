@@ -16,6 +16,8 @@ const Player = () =>
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [isMuted, setIsMuted] = useState<boolean>(false);
     // const [isQueueVisible, setIsQueueVisible] = useState<boolean>(false)
+    const [isSongBarHover, setIsSongBarHover] = useState<boolean>(false);
+    const [isVolumeBarHover, setIsVolumeBarHover] = useState<boolean>(false);
 
     useEffect(() => {
       // console.log("gonna set is playing to true")
@@ -182,9 +184,8 @@ const Player = () =>
 
     function formatTime(time: number) {
       const roundedTime = Math.round(time);
-      const isSingleDigit = roundedTime.toString().length <= 1;
 
-      if (isSingleDigit) {
+      if (roundedTime < 10) {
         return `0:0${roundedTime}`;
       }
       return `0:${roundedTime}`;
@@ -195,7 +196,11 @@ const Player = () =>
         <div className="player-container">
           <div className="song-info">
             <div className="song-info-left">
-              <img className="img-fit" src={currentSong.imgUrl} alt="" />
+              {currentSong.imgUrl ? (
+                <img className="img-fit" src={currentSong.imgUrl} alt="" />
+              ) : (
+                <></>
+              )}
             </div>
             <div className="song-info-right">
               <p className="bold">{currentSong.name}</p>
@@ -205,7 +210,10 @@ const Player = () =>
 
           <div className="player-main-btns">
             <div className="player-main-btns-top">
-              <div onClick={handleOnPlayPrevious}>
+              <div
+                onClick={handleOnPlayPrevious}
+                className="skip-back-container"
+              >
                 <img
                   src={require("../../assets/Icons/skip-back.svg").default}
                   alt=""
@@ -225,27 +233,39 @@ const Player = () =>
                 )}
               </div>
 
-              <div onClick={handleOnPlayNext}>
+              <div
+                onClick={handleOnPlayNext}
+                className="skip-forward-container"
+              >
                 <img
                   src={require("../../assets/Icons/skip-forward.svg").default}
                   alt=""
                 />
               </div>
             </div>
-            <div className="player-main-btns-bottom">
+            <div
+              className="player-main-btns-bottom"
+              onMouseEnter={() => setIsSongBarHover(true)}
+              onMouseLeave={() => setIsSongBarHover(false)}
+            >
               {/* <p>{audioRef?.current?.currentTime}</p> */}
               <p className="other-p">
                 {audioRef.current
                   ? !isNaN(audioRef.current.currentTime)
                     ? formatTime(audioRef.current.currentTime)
-                    : 0
-                  : 0}
+                    : "0:00"
+                  : "0:00"}
               </p>
 
               <div className="song-progress-container">
-                <div className="song-progress-slider slider">
+                <div
+                  className={`song-progress-slider slider ${
+                    isSongBarHover ? "hover" : ""
+                  }`}
+                >
                   <input
                     type="range"
+                    // min={0}
                     max={30.0}
                     value={songProgress}
                     onChange={handleOnProgressChange}
@@ -263,30 +283,46 @@ const Player = () =>
                 {audioRef.current
                   ? !isNaN(audioRef.current.duration)
                     ? formatTime(audioRef.current.duration)
-                    : 0
-                  : 0}
+                    : "0:00"
+                  : "0:00"}
               </p>
             </div>
 
-            <div>
-              <audio
-                src={currentSong.songUrl}
-                autoPlay={true}
-                controls
-                ref={audioRef}
-                style={{ display: "none" }}
-                onEnded={handleOnPlayNext}
-              />
-            </div>
+            <audio
+              src={currentSong.songUrl}
+              autoPlay={true}
+              controls
+              ref={audioRef}
+              style={{ display: "none" }}
+              onEnded={handleOnPlayNext}
+            />
           </div>
           <div className="player-other-btns">
             {/* <button onClick={()=>setIsQueueVisible((currentValue)=>!currentValue)}>queue</button> */}
-            <button onClick={handleOnMuteUnmute}>
-              {isMuted ? "Unmute" : "Mute"}
-            </button>
+            <div onClick={handleOnMuteUnmute} className="mute-unmute-container">
+              {isMuted ? (
+                <img
+                  src={require("../../assets/Icons/volume-x.svg").default}
+                  alt=""
+                />
+              ) : (
+                <img
+                  src={require("../../assets/Icons/volume.svg").default}
+                  alt=""
+                />
+              )}
+            </div>
 
-            <div className="volume-slider-container">
-              <div className="volume-slider slider">
+            <div
+              className="volume-slider-container"
+              onMouseEnter={() => setIsVolumeBarHover(true)}
+              onMouseLeave={() => setIsVolumeBarHover(false)}
+            >
+              <div
+                className={`volume-slider slider ${
+                  isVolumeBarHover ? "hover" : ""
+                }`}
+              >
                 <input
                   type="range"
                   value={volume}

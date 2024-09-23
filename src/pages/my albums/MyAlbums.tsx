@@ -1,4 +1,5 @@
-import React from "react";
+import "./my-albums.css";
+
 import { fetchWebApi } from "../../config/spotify";
 import { Link, redirect, useLoaderData } from "react-router-dom";
 
@@ -6,17 +7,24 @@ const MyAlbums = () => {
   const myAlbums: any = useLoaderData();
   console.log("my albums from component", myAlbums);
   return (
-    <div>
-      my albums
-      <div>
+    <div className="my-albums-outer-container">
+      <h2>My Albums</h2>
+      <div className="my-albums-container">
         {myAlbums.items.map((albumObj: { [key: string]: any }) => {
           return (
-            <div key={albumObj.album.id}>
-              {" "}
-              <Link to={"/album/" + albumObj.album.id}>
-                {albumObj.album.name}
-              </Link>
-            </div>
+            <Link
+              to={"/album/" + albumObj.album.id}
+              key={albumObj.album.id}
+              className="album-card"
+            >
+              <div className="ac-img-container">
+                <img src={albumObj.album.images[0].url} alt="" />
+              </div>
+              <div className="ac-info">
+                <p className="bold">{albumObj.album.name}</p>
+                <p className="other-p">{albumObj.album.artists[0].name}</p>
+              </div>
+            </Link>
           );
         })}
       </div>

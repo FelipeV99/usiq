@@ -1,0 +1,24 @@
+.search-results-container {
+  padding-bottom: 124px;
+}
+
+.artists-results-container {
+  display: flex;
+  gap: 24px;
+}
+
+.artist-result {
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.artist-result img {
+  border-radius: 1000px;
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+}

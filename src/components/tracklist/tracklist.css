@@ -4,34 +4,3 @@
   gap: 16px;
   width: 100%;
 }
-
-.track-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-}
-
-.track-row-left {
-  display: flex;
-  /* justify-content: center; */
-  align-items: center;
-  gap: 8px;
-}
-
-.track-row-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  width: 400px;
-}
-
-.track-img-container {
-  width: 52px;
-  height: 52px;
-  display: flex;
-}
-
-.track-img-container img {
-  border-radius: 8px;
-}

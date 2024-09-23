@@ -1,0 +1,43 @@
+.track-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+.track-row.hover {
+  background-color: var(--dark-blue-800);
+  transition: all 0.3s ease-in-out;
+}
+
+.track-row.active {
+  background-color: var(--dark-blue-600);
+  transition: all 0.2s ease-in-out;
+}
+
+.track-row-left {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 8px;
+}
+
+.track-row-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 400px;
+}
+
+.track-img-container {
+  width: 52px;
+  height: 52px;
+  display: flex;
+}
+
+.track-img-container img {
+  border-radius: 2px;
+}

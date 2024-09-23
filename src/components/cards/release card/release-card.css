@@ -1,0 +1,31 @@
+.new-releases-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  transition: all 0.2s ease-in-out;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.new-releases-row.hover {
+  background-color: var(--dark-blue-800);
+  transition: all 0.3s ease-in-out;
+}
+
+.new-release-img-container {
+  width: 68px;
+  height: 68px;
+  display: flex;
+}
+
+.new-release-img-container img {
+  border-radius: 2px;
+}
+
+.nr-row-left {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}

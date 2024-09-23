@@ -11,41 +11,45 @@
   /* height: 90px; */
   display: flex;
   justify-content: space-between;
-  background-color: rgba(34, 36, 42, 0.5);
+  background-color: rgba(34, 36, 42, 0.7);
   backdrop-filter: blur(10px);
-  border: 1px solid var(--dark-blue-600);
-  border-radius: 16px;
+  border: 1px solid var(--dark-blue-800);
+  border-radius: 4px;
   /* align-content: center; */
   align-items: center;
   padding-left: 12px;
   padding-right: 12px;
   padding-top: 8px;
   padding-bottom: 8px;
+  position: relative;
 }
 
 .song-info {
   /* width: 120px; */
   height: 100%;
   display: flex;
-  gap: 8px;
+  gap: 12px;
   align-items: center;
 }
 
 .song-info-left {
   display: flex;
   flex-direction: column;
-  width: 68px;
-  height: 68px;
+  width: 62px;
+  height: 62px;
+  background-color: var(--dark-blue-900);
+  /* border-radius: 2px; */
 }
 
 .song-info-left img {
-  border-radius: 8px;
+  border-radius: 2px;
 }
 
 .song-info-right {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  max-width: 260px;
 }
 
 .img-fit {
@@ -58,6 +62,11 @@
   flex-direction: column;
   gap: 4px;
   align-items: center;
+  position: absolute;
+  /* top: 0;
+  bottom: 0; */
+  left: 0;
+  right: 0;
 }
 
 .player-main-btns-top {
@@ -76,6 +85,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .player-main-btns-bottom {
@@ -83,6 +93,7 @@
   gap: 8px;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .player-other-btns {
@@ -109,11 +120,11 @@
 }
 
 .song-progress-slider {
-  width: 250px;
+  width: 420px;
 }
 
 .song-progress-slider input {
-  width: 250px;
+  width: 420px;
   appearance: none;
   background: none;
   cursor: pointer;
@@ -121,11 +132,21 @@
 
 /* customize the ball */
 .song-progress-input::-moz-range-thumb {
-  height: 16px;
-  width: 16px;
-  background: white;
+  height: 12px;
+  width: 12px;
+  background: transparent;
   border-radius: 50%;
   border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.song-progress-slider.hover .song-progress-input::-moz-range-thumb {
+  background: white;
+  transition: all 0.1s ease-in-out;
+}
+
+.song-progress-slider.hover progress[value]::-moz-progress-bar {
+  background-color: var(--light-blue-500);
 }
 
 .song-progress-progress[value] {
@@ -142,7 +163,7 @@
 }
 
 .song-progress-slider progress {
-  width: 250px;
+  width: 420px;
   background: var(--dark-blue-600);
   height: 16px;
 }
@@ -155,17 +176,26 @@
   width: 100px;
 }
 
+.volume-slider.hover progress[value]::-moz-progress-bar {
+  background-color: var(--light-blue-500);
+}
+
 .volume-input {
   width: 100px;
 }
 
 /* customize the ball */
 .volume-input::-moz-range-thumb {
-  height: 16px;
-  width: 16px;
-  background: white;
+  height: 12px;
+  width: 12px;
+  background: none;
   border-radius: 50%;
   border: none;
+}
+
+.volume-slider.hover .volume-input::-moz-range-thumb {
+  background: white;
+  transition: all 0.1s ease-in-out;
 }
 
 .volume-progress {
@@ -184,10 +214,36 @@
 
 /* customize progress bar to the left of the ball */
 progress[value]::-moz-progress-bar {
-  background-color: var(--light-blue-500);
+  /* background-color: var(--light-blue-500); */
+  background-color: var(--grey-100);
 }
 
 .play-pause-container img {
+  height: 18px;
+  width: 18px;
   filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%)
     contrast(103%);
+  cursor: pointer;
+}
+
+.skip-back-container {
+  cursor: pointer;
+}
+
+.skip-forward-container {
+  cursor: pointer;
+}
+
+.mute-unmute-container img {
+  height: 18px;
+  width: 18px;
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%)
+    contrast(103%);
+  cursor: pointer;
+}
+
+.mute-unmute-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

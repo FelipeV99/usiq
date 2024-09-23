@@ -7,10 +7,10 @@ const Album = () => {
   //   console.log("album from laoder data", album);
   const albumWithImg = album.tracks.items.map(
     (track: { [key: string]: any }) => {
-      return { ...track, imgUrl: album.images[0].url };
+      return { ...track, imgUrl: album.images[0].url, album: album.name };
     }
   );
-  //   console.log("album with images link: ", albumWithImg);
+  console.log("album with images link: ", albumWithImg);
 
   return (
     <div>
@@ -26,10 +26,11 @@ export async function albumLoader({ params }: { [key: string]: any }) {
   let isError = false;
   await fetchWebApi("v1/albums/" + params.id, "GET", token).then((res) => {
     if (res.error) {
-      // console.log("there was an error retrieving the album", res.error);
+      console.log("there was an error retrieving the album", res.error);
       window.localStorage.setItem("token", "undefined");
       isError = true;
     } else {
+      console.log("returning album", res);
       album = res;
     }
   });

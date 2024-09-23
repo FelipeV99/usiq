@@ -1,30 +1,61 @@
 .border-gradient {
-  padding: 1px;
+  /* padding: 1px;
   background: linear-gradient(
     to right bottom,
-    var(--dark-blue-500),
-    var(--dark-blue-600)
+    var(--dark-blue-600),
+    var(--dark-blue-800)
   );
-  border-radius: 16px;
-  width: 100%;
+  border-radius: 16px; */
+  background-color: transparent;
+  width: 55%;
+}
+
+.border-gradient.banner-small {
+  width: 43%;
 }
 
 .banner-container {
   display: flex;
   background: radial-gradient(
     circle at left,
-    var(--dark-blue-600) 0,
-    var(--dark-blue-800) 100%
+    var(--dark-blue-800) 0,
+    var(--dark-blue-900) 100%
   );
   padding-left: 24px;
   padding-right: 24px;
   padding-top: 18px;
   padding-bottom: 18px;
-  border-radius: 16px;
+  border-radius: 4px;
   gap: 32px;
-  min-width: 596px;
+  /* min-width: 596px; */
   width: 100%;
   justify-content: space-between;
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
+
+  border: 1px solid var(--dark-blue-800);
+}
+
+.banner-small .banner-container {
+  padding-left: 18px;
+  padding-right: 18px;
+  gap: 24px;
+}
+
+.banner-container.hover {
+  /* background: rgba(0, 128, 0, 0.6); */
+  transition: all 0.4s ease-in-out;
+}
+
+.banner-container.hover .btn-primary {
+  background-color: var(--light-blue-500);
+  transition: all 0.3s ease-in-out;
+}
+
+.banner-container.hover img {
+  box-shadow: 0 0 20px rgba(211, 210, 218, 0.2);
+
+  transition: all 0.3s ease-in-out;
 }
 
 .banner-left {
@@ -42,12 +73,13 @@
 }
 
 .banner-right {
-  width: 225px;
-  height: 225px;
+  width: 200px;
+  height: 200px;
   display: flex;
   /* border-radius: 8px; */
 }
 
 .banner-right img {
-  border-radius: 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
 }

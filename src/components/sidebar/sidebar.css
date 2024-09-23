@@ -1,9 +1,10 @@
 .sidebar-container {
   padding: 32px;
+  padding-top: 24px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  width: 242px;
+  gap: 48px;
+  width: 282px;
   /* position: fixed; */
 }
 
@@ -11,11 +12,12 @@
   display: flex;
   align-content: center;
   justify-content: center;
+  cursor: pointer;
 }
 
-.logo-container img {
+/* .logo-container img {
   height: 32px;
-}
+} */
 
 .sidebar-menu {
   display: flex;
@@ -55,23 +57,39 @@
   opacity: 0.7;
   filter: invert(90%) sepia(91%) saturate(3%) hue-rotate(48deg) brightness(107%)
     contrast(100%);
+  transition: all 0.3s ease-in-out;
 }
 
 .sidebar-optn.active img {
   opacity: 1;
   filter: invert(100%) sepia(34%) saturate(3904%) hue-rotate(159deg)
     brightness(93%) contrast(104%);
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar-optn.hover img {
+  opacity: 1;
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(91deg) brightness(103%)
+    contrast(105%);
+
+  transition: all 0.3s ease-in-out;
 }
 
 .sidebar-optn.active p {
-  /* opacity: 0.8; */
   color: var(--light-blue-500);
   font-weight: 800;
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar-optn.hover p {
+  color: var(--grey-100);
+  /* font-weight: 800; */
 }
 
 .sidebar-optn p {
   font-size: 14px;
   opacity: 0.8;
+  transition: all 0.3s ease-in-out;
 }
 
 .dot-container {
@@ -82,12 +100,28 @@
   justify-content: center;
 }
 
+.sidebar-optn.hover .dot {
+  background-color: var(--grey-100);
+  box-shadow: 0 0 12px 8px rgba(224, 224, 224, 0.2);
+
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar-optn.active .dot {
+  background-color: var(--light-blue-500);
+  box-shadow: 0 0 12px 8px rgba(171, 231, 232, 0.2);
+
+  transition: all 0.3s ease-in-out;
+}
+
 .dot {
   width: 4px;
   height: 4px;
   border-radius: 100px;
-  background-color: var(--light-blue-500);
-  box-shadow: 0 0 20px 12px rgba(119, 201, 207, 0.8);
+  /* background-color: rgba(255, 255, 255, 0); */
+  /* box-shadow: 0 0 12px 8px rgba(119, 201, 207, 0.8); */
+
+  transition: all 0.3s ease-in-out;
 }
 /* 
 .sidebar-optn.active{

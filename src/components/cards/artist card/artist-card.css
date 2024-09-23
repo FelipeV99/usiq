@@ -1,0 +1,45 @@
+.artist-home-card.hover .artist-border {
+  box-shadow: 0 0 20px rgba(211, 210, 218, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.artist-border {
+  padding: 1px;
+  background: linear-gradient(
+    to right bottom,
+    var(--dark-blue-500),
+    var(--dark-blue-600)
+  );
+  border-radius: 100px;
+  width: 100%;
+  /* box-shadow: 0 0 20px rgba(126, 124, 134, 0.2); */
+  transition: all 0.2s ease-in-out;
+}
+
+.artist-home-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.artist-home-card p {
+  text-align: center;
+}
+
+.artist-img-container {
+  display: flex;
+  width: 120px;
+  height: 120px;
+}
+
+.artist-img-container img {
+  border-radius: 100px;
+  object-fit: fill;
+  min-width: 100%;
+  height: auto;
+  object-fit: cover;
+  /* min-width: 140px;
+    min-height: 140px; */
+}
