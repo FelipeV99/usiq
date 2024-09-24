@@ -50,7 +50,7 @@ const Home = () => {
     }
 
     async function getNewAlbumReleases() {
-      await fetchWebApi("v1/browse/new-releases?offset=11", "GET", token).then(
+      await fetchWebApi("v1/browse/new-releases?offset=13", "GET", token).then(
         (res) => {
           if (res.error) {
             console.log("error in new albums", res.error);

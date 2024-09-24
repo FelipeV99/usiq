@@ -1,0 +1,44 @@
+.my-artists-container {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(220px, auto));
+  gap: 22px;
+  margin-top: 22px;
+}
+
+.artist-card-2 {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px;
+  background: radial-gradient(
+    circle at top,
+    var(--dark-blue-700) 0,
+    var(--dark-blue-800) 100%
+  );
+
+  border: 1px solid var(--dark-blue-600);
+  border-radius: 4px;
+  min-width: 220px;
+  cursor: pointer;
+}
+
+.artist-card-2 p {
+  text-align: center;
+}
+
+.ac2-img-container {
+  display: flex;
+  width: 100%;
+  max-width: 180px;
+  max-height: 180px;
+  min-width: 120px;
+  min-height: 120px;
+  height: 100%;
+}
+
+.ac2-img-container img {
+  width: 100%;
+  border-radius: 1000px;
+  object-fit: cover;
+  min-width: 100%;
+}

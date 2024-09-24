@@ -47,7 +47,7 @@ const Songrow = ({
     return timeResult;
   }
 
-  console.log("is ", name, "active? ", isActive);
+  // console.log("is ", name, "active? ", isActive);
 
   return (
     <div

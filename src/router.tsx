@@ -3,12 +3,14 @@ import App from "./App";
 import Login from "./pages/auth/Login";
 import Home from "./pages/home/Home";
 import Album, { albumLoader } from "./pages/album/Album";
-import MySongs from "./pages/my songs/MySongs";
+import MySongs, { mySongsLoader } from "./pages/my songs/MySongs";
 import MyAlbums, { myAlbumsLoader } from "./pages/my albums/MyAlbums";
 import MyArtists, { myArtistsLoader } from "./pages/my artists/MyArtists";
 import Discover from "./pages/discover/Discover";
 import Artist, { artistLoader } from "./pages/artist/Artist";
-import SearchResults, { searchResultsLoader } from "./pages/search results/SearchResults";
+import SearchResults, {
+  searchResultsLoader,
+} from "./pages/search results/SearchResults";
 
 export const router = createBrowserRouter([
   {
@@ -32,11 +34,12 @@ export const router = createBrowserRouter([
       {
         path: "artist/:id",
         element: <Artist />,
-        loader: artistLoader
+        loader: artistLoader,
       },
       {
         path: "my-songs",
         element: <MySongs />,
+        loader: mySongsLoader,
       },
       {
         path: "my-albums",
@@ -46,13 +49,13 @@ export const router = createBrowserRouter([
       {
         path: "my-artists",
         element: <MyArtists />,
-        loader: myArtistsLoader
+        loader: myArtistsLoader,
       },
       {
         path: "search/:queryTerm",
         element: <SearchResults />,
-        loader: searchResultsLoader
-      }
+        loader: searchResultsLoader,
+      },
       //   {
       //     errorElement: <h1>error</h1>,
       //     children: [

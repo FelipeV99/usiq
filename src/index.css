@@ -134,7 +134,7 @@ input:focus {
   text-transform: uppercase;
   background-color: var(--light-blue-400);
   border: none;
-  border-radius: 4px;
+  border-radius: 100px;
 
   display: flex;
   justify-content: space-between;
@@ -142,6 +142,39 @@ input:focus {
   width: 162px;
 
   transition: all 0.2s ease-in-out;
+}
+
+.btn-secondary {
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+
+  font-family: "CenturyGothic";
+  font-weight: 800;
+  font-size: 14px;
+  border-radius: 100px;
+  background-color: var(--dark-blue-900) 0.7;
+  color: var(--grey-100);
+  border: 1px var(--grey-100) solid;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-round {
+  background-color: var(--light-blue-500);
+  border-radius: 1000px;
+  border: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .right-container {

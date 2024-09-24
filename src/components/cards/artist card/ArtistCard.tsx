@@ -14,7 +14,7 @@ const ArtistCard = ({
   const navigate = useNavigate();
   const [isHover, setIsHover] = useState<boolean>(false);
   function handleOnclickArtist(artistID: string) {
-    navigate("artist/" + artistID);
+    navigate("/artist/" + artistID);
   }
   return (
     <div

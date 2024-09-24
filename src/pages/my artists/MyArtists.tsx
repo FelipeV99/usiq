@@ -1,23 +1,39 @@
-import { Link, redirect, useLoaderData } from "react-router-dom";
+import { Link, redirect, useLoaderData, useNavigate } from "react-router-dom";
 import { fetchWebApi } from "../../config/spotify";
 import "./my-artists.css";
+import ArtistCard from "../../components/cards/artist card/ArtistCard";
 const MyArtists = () => {
   const myArtists: any = useLoaderData();
+  const navigate = useNavigate();
   console.log("my artists from component", myArtists);
   return (
     <div>
-      my artists
-      <div>
-        {myArtists.items.map((artistObj: { [key: string]: any }) => {
+      <h2>My Artists</h2>
+      <div className="my-artists-container">
+        {myArtists.items.map((artist: { [key: string]: any }) => {
           return (
-            <div key={artistObj.id}>
-              {" "}
-              <Link to={"/artist/" + artistObj.id}>
-                {artistObj.name}
-              </Link>
+            <div
+              key={artist.id}
+              className="artist-card-2"
+              onClick={() => navigate("/artist/" + artist.id)}
+            >
+              <div className="ac2-img-container">
+                <img src={artist.images[0].url} alt="" />
+              </div>
+              <p className="bold">{artist.name}</p>
             </div>
           );
         })}
+        {/* {myArtists.items.map((artistObj: { [key: string]: any }) => {
+          return (
+            <ArtistCard
+              key={artistObj.id}
+              name={artistObj.name}
+              ID={artistObj.id}
+              imgUrl={artistObj.images[0].url}
+            />
+          );
+        })} */}
       </div>
     </div>
   );
