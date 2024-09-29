@@ -19,7 +19,7 @@ const Sidebar = () => {
               text="Home"
             />
             <SidebarOptn
-              linkTo="/"
+              linkTo="/discover"
               iconUrl="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fcompass.svg?alt=media&token=9d729622-9007-4364-8b52-946237d4da1d"
               text="Discover"
             />

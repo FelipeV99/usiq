@@ -6,11 +6,12 @@ import Album, { albumLoader } from "./pages/album/Album";
 import MySongs, { mySongsLoader } from "./pages/my songs/MySongs";
 import MyAlbums, { myAlbumsLoader } from "./pages/my albums/MyAlbums";
 import MyArtists, { myArtistsLoader } from "./pages/my artists/MyArtists";
-import Discover from "./pages/discover/Discover";
+import Discover, { discoverLoader } from "./pages/discover/Discover";
 import Artist, { artistLoader } from "./pages/artist/Artist";
 import SearchResults, {
   searchResultsLoader,
 } from "./pages/search results/SearchResults";
+import Playlist, { playlistLoader } from "./pages/playlist/Playlist";
 
 export const router = createBrowserRouter([
   {
@@ -23,8 +24,9 @@ export const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "disover",
+        path: "discover",
         element: <Discover />,
+        loader: discoverLoader,
       },
       {
         path: "album/:id",
@@ -35,6 +37,11 @@ export const router = createBrowserRouter([
         path: "artist/:id",
         element: <Artist />,
         loader: artistLoader,
+      },
+      {
+        path: "playlist/:id",
+        element: <Playlist />,
+        loader: playlistLoader,
       },
       {
         path: "my-songs",

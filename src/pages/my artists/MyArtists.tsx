@@ -1,7 +1,7 @@
-import { Link, redirect, useLoaderData, useNavigate } from "react-router-dom";
+import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 import { fetchWebApi } from "../../config/spotify";
 import "./my-artists.css";
-import ArtistCard from "../../components/cards/artist card/ArtistCard";
+import AsyncImg from "../../components/async img/AsyncImg";
 const MyArtists = () => {
   const myArtists: any = useLoaderData();
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const MyArtists = () => {
               onClick={() => navigate("/artist/" + artist.id)}
             >
               <div className="ac2-img-container">
-                <img src={artist.images[0].url} alt="" />
+                <AsyncImg src={artist.images[0].url} proportions={1} />
               </div>
               <p className="bold">{artist.name}</p>
             </div>
@@ -43,13 +43,15 @@ export async function myArtistsLoader() {
   const token = window.localStorage.getItem("token") || "";
   let myArtists: { [key: string]: any } = {};
   let isError = false;
-  await fetchWebApi("v1/me/following?type=artist", "GET", token).then((res) => {
-    if (res.error) {
-      isError = true;
-    } else {
-      myArtists = res;
+  await fetchWebApi("v1/me/following?type=artist&limit=18", "GET", token).then(
+    (res) => {
+      if (res.error) {
+        isError = true;
+      } else {
+        myArtists = res;
+      }
     }
-  });
+  );
   if (isError) {
     return redirect("http://localhost:3000/login");
   } else {

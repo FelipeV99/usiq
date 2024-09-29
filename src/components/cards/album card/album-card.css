@@ -1,0 +1,22 @@
+.album-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.ac-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 182px;
+}
+
+.ac-img-container {
+  display: flex;
+}
+
+.ac-img-container img {
+  border-radius: 2px;
+  width: 100%;
+}

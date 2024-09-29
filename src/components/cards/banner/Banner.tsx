@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./banner.css";
 import { useNavigate } from "react-router-dom";
+import AsyncImg from "../../async img/AsyncImg";
 // import ourLoveImg from "../../../assets/our-love.png";
 
 const Banner = ({
@@ -18,11 +19,8 @@ const Banner = ({
 }) => {
   const [isHover, setIsHover] = useState<boolean>(false);
   const navigate = useNavigate();
+
   return (
-    // <div
-    //   className={`border-gradient ${size === "small" ? "banner-small" : ""}`}
-    //   onClick={() => navigate("/album/" + albumUrl)}
-    // >
     <div
       className={`banner-container ${isHover ? "hover" : ""} ${
         size === "small" ? "banner-small" : ""
@@ -49,10 +47,9 @@ const Banner = ({
         </div>
       </div>
       <div className="banner-right">
-        <img src={imgUrl} alt="" />
+        <AsyncImg src={imgUrl} proportions={1} />
       </div>
     </div>
-    // </div>
   );
 };
 

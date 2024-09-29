@@ -100,6 +100,7 @@ input:focus {
 .page-container {
   display: flex;
   min-height: 100vh;
+  justify-content: center;
 }
 
 .subheader {
@@ -179,10 +180,13 @@ input:focus {
 
 .right-container {
   width: 100%;
-  padding-right: 38px;
+  margin-right: 38px;
+  min-width: 1032px;
+  max-width: 1440px;
 }
 .content-container {
   width: 100%;
+  min-width: 1032px;
 }
 
 .bg {

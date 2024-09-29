@@ -1,5 +1,5 @@
 .home-container {
-  padding-bottom: 100px;
+  padding-bottom: 122px;
   width: 100%;
 }
 
@@ -11,15 +11,16 @@
 
 .home-bottom {
   display: flex;
+  flex-direction: column;
   gap: 24px;
   padding-top: 24px;
 }
-
+/* 
 .home-bottom-left {
   display: flex;
   flex-direction: column;
   gap: 24px;
-}
+} */
 
 .home-bottom-right {
   width: 100%;
@@ -29,13 +30,15 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: 760px;
-  overflow-x: hidden;
+  width: 100%;
+  min-width: 960px;
+  /* overflow: hidden; */
 }
 
 .favorite-artists-container {
   display: flex;
   gap: 16px;
+  justify-content: space-between;
 }
 
 .recently-played-outer-container {
@@ -53,7 +56,81 @@
 
 .new-releases-container {
   width: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(182px, auto));
+  column-gap: 22px;
+  row-gap: 22px;
+}
+
+/* Recent Tracks CSS */
+
+.rt-container {
   display: flex;
-  flex-direction: column;
-  gap: 18px;
+  gap: 32px;
+}
+
+.rt-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(320px, auto));
+  row-gap: 16px;
+  column-gap: 32px;
+}
+
+.song-row-2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sr2-left {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.sr2-img-container {
+  width: 50px;
+  height: 50px;
+  display: flex;
+}
+
+.sr2-img-container img {
+  border-radius: 2px;
+}
+
+.sr2-info .bold.skeleton {
+  background-color: var(--dark-blue-800);
+  height: 22px;
+  width: 232px;
+  border-radius: 2px;
+}
+
+.sr2-info .other-p.skeleton {
+  background-color: var(--dark-blue-800);
+  height: 17px;
+  width: 180px;
+  margin-top: 2px;
+  border-radius: 2px;
+}
+
+.sr2-right .other-p.skeleton {
+  background-color: var(--dark-blue-800);
+  height: 17px;
+  width: 32px;
+  border-radius: 2px;
+}
+
+h4.skeleton {
+  height: 19px;
+  width: 180px;
+  background-color: var(--dark-blue-800);
+  border-radius: 2px;
+}
+
+@media (max-width: 1500px) {
+  .new-releases-container {
+    grid-template-columns: repeat(5, minmax(182px, auto));
+  }
 }

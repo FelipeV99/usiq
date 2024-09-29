@@ -1,0 +1,44 @@
+.img-container {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  width: 100%;
+  height: 100%;
+  /* this is giving me problems on the border */
+  display: flex;
+  /* position: relative; */
+}
+
+.img-overlay {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(14, 14, 14, 0.074);
+  /* transform: ; */
+  transition: all 0.2s ease-in-out;
+}
+
+.img-overlay-trans {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  /* transform: ; */
+  transition: all 0.2s ease-in-out;
+}
+
+.async-skeleton {
+  content: "";
+  width: 100%;
+  z-index: 10;
+  background: var(--dark-blue-800);
+}
+
+.async-skeleton.img-container {
+  display: block;
+}
+
+/* .async-img {
+  width: 100%;
+} */

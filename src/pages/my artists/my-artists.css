@@ -1,25 +1,20 @@
 .my-artists-container {
   display: grid;
-  grid-template-columns: repeat(5, minmax(220px, auto));
-  gap: 22px;
+  grid-template-columns: repeat(6, minmax(180px, auto));
+  gap: 24px;
+  row-gap: 32px;
   margin-top: 22px;
+  padding-bottom: 120px;
 }
 
 .artist-card-2 {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 22px;
-  background: radial-gradient(
-    circle at top,
-    var(--dark-blue-700) 0,
-    var(--dark-blue-800) 100%
-  );
-
-  border: 1px solid var(--dark-blue-600);
-  border-radius: 4px;
-  min-width: 220px;
+  /* min-width: 180px; */
   cursor: pointer;
+  justify-content: center;
+  align-items: center;
 }
 
 .artist-card-2 p {
@@ -31,9 +26,11 @@
   width: 100%;
   max-width: 180px;
   max-height: 180px;
-  min-width: 120px;
-  min-height: 120px;
+  min-width: 180px;
+  min-height: 180px;
   height: 100%;
+  border-radius: 1000px;
+  overflow: hidden;
 }
 
 .ac2-img-container img {

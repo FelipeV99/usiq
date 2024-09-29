@@ -1,0 +1,88 @@
+.discover-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.featured-playlists-container {
+  display: flex;
+  /* gap: 22px; */
+  justify-content: space-between;
+}
+
+.featured-playlist-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 300px;
+  width: 300px;
+  border-radius: 4px;
+  padding: 22px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.featured-playlist-card.fpc1 {
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg.svg?alt=media&token=a289cf8c-a745-4f70-b6dd-36777a5e14fb");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.featured-playlist-card.fpc2 {
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg2.svg?alt=media&token=cba2b0f4-3e4f-4eaf-8af0-580c93ab77b4");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.featured-playlist-card.fpc3 {
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg3.svg?alt=media&token=91ff1a56-3e3c-44dd-8f73-27edee4740a7");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.featured-playlist-card.fpc4 {
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg4.svg?alt=media&token=1609b761-aa0c-45b0-8953-07952c434b02");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.fpc-top {
+  /* padding-left: 8px;
+  padding-top: 8px; */
+  display: flex;
+  width: 50px;
+  height: 50px;
+}
+
+.fpc-top img {
+  filter: invert(4%) sepia(4%) saturate(7293%) hue-rotate(184deg)
+    brightness(91%) contrast(90%);
+  width: 100%;
+  height: 100%;
+}
+
+.fpc-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.featured-playlist-card h2 {
+  color: var(--dark-blue-900);
+  line-height: 40px;
+}
+
+.featured-playlist-card p {
+  color: var(--dark-blue-500);
+  opacity: 0.8;
+}
+
+.recommended-tracks-outer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.recommended-tracks-container {
+  width: 100%;
+}

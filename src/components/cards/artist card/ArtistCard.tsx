@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./artist-card.css";
 import { useState } from "react";
+import AsyncImg from "../../async img/AsyncImg";
 
 const ArtistCard = ({
   ID,
@@ -18,16 +19,14 @@ const ArtistCard = ({
   }
   return (
     <div
-      key={ID}
       className={`artist-home-card ${isHover ? "hover" : ""}`}
       onClick={() => handleOnclickArtist(ID)}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <div className="artist-border">
-        <div className="artist-img-container">
-          <img src={imgUrl} alt="" />
-        </div>
+      <div className="artist-img-container">
+        {/* <img src={imgUrl} alt="" /> */}
+        <AsyncImg src={imgUrl} proportions={1} />
       </div>
 
       <p className="bold">{name}</p>

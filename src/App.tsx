@@ -1,10 +1,15 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigation } from "react-router-dom";
 import Player from "./components/player/Player";
 import Login from "./pages/auth/Login";
 import Sidebar from "./components/sidebar/Sidebar";
 // import Queue from "./components/queue/Queue";
 import Topbar from "./components/topbar/Topbar";
+import HomeSkeleton from "./pages/home/HomeSkeleton";
+import DiscoverSkeleton from "./pages/discover/DiscoverSkeleton";
+import MyArtistsSkeleton from "./pages/my artists/MyArtistsSkeleton";
+import MyAlbumsSkeleton from "./pages/my albums/MyAlbumsSkeleton";
+import MySongsSkeleton from "./pages/my songs/MySongsSkeleton";
 // import axios from "axios";
 // import { setClientToken } from "./config/spotify";
 
@@ -80,6 +85,7 @@ function App() {
     artist?: string;
   }>({});
   const [currentPage, setCurrentPage] = useState<string>("Home");
+  const { state } = useNavigation();
   // const [isQueueVisible, setIsQueueVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -99,11 +105,28 @@ function App() {
         window.localStorage.setItem("token", _token);
         setToken(_token);
       } else {
-        console.log("pullin token up from local storage");
+        // console.log("pullin token up from local storage");
         setToken(_token);
       }
     }
   }, []);
+
+  function loadSkeleton() {
+    switch (currentPage) {
+      case "Home":
+        return <HomeSkeleton />;
+      case "Discover":
+        return <DiscoverSkeleton />;
+      case "Artists":
+        return <MyArtistsSkeleton />;
+      case "Albums":
+        return <MyAlbumsSkeleton />;
+      case "Songs":
+        return <MySongsSkeleton />;
+    }
+  }
+
+  console.log("state!", state, "and current page = ", currentPage);
 
   return (
     <TokenContext.Provider value={{ token, setToken }}>
@@ -115,18 +138,13 @@ function App() {
                 <Login />
               ) : (
                 <>
-                  {" "}
-                  <Sidebar
-                  // isQueueVisible={isQueueVisible}
-                  // setIsQueueVisible={setIsQueueVisible}
-                  />
+                  <Sidebar />
                   <div className="right-container">
                     <div>
                       <Topbar />
                     </div>
                     <div className="content-container">
-                      <Outlet />
-                      {/* <Queue /> */}
+                      {state === "loading" ? loadSkeleton() : <Outlet />}
                     </div>
                   </div>
                   <Player />
