@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./banner.css";
 import { useNavigate } from "react-router-dom";
 import AsyncImg from "../../async img/AsyncImg";
+import { useCurrentPageContext } from "../../../App";
 // import ourLoveImg from "../../../assets/our-love.png";
 
 const Banner = ({
@@ -19,13 +20,18 @@ const Banner = ({
 }) => {
   const [isHover, setIsHover] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { setCurrentPage } = useCurrentPageContext();
 
+  function handleOnClickBanner() {
+    setCurrentPage("Album");
+    navigate("/album/" + albumUrl, { state: { autoplay: true } });
+  }
   return (
     <div
       className={`banner-container ${isHover ? "hover" : ""} ${
         size === "small" ? "banner-small" : ""
       }`}
-      onClick={() => navigate("/album/" + albumUrl)}
+      onClick={() => handleOnClickBanner()}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >

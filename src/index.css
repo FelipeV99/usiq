@@ -21,6 +21,7 @@
 
 body {
   background-color: var(--dark-blue-900);
+  /* overflow-x: hidden; */
 }
 
 @font-face {
@@ -98,9 +99,11 @@ input:focus {
 }
 
 .page-container {
+  position: relative;
   display: flex;
   min-height: 100vh;
   justify-content: center;
+  min-width: 1256px;
 }
 
 .subheader {
@@ -176,13 +179,15 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .right-container {
   width: 100%;
-  margin-right: 38px;
+  padding-right: 38px;
   min-width: 1032px;
   max-width: 1440px;
+  margin-left: 224px;
 }
 .content-container {
   width: 100%;
@@ -234,4 +239,32 @@ input:focus {
   height: 1px;
   overflow: visible;
   box-shadow: 0 0 160px 30px rgb(142, 151, 159);
+}
+
+.bold.skeleton {
+  height: 22px;
+  min-width: 80px;
+  background-color: var(--dark-blue-800);
+  border-radius: 2px;
+}
+
+p.skeleton {
+  height: 22px;
+  min-width: 80px;
+  background-color: var(--dark-blue-800);
+  border-radius: 2px;
+}
+
+h1.skeleton {
+  height: 48px;
+  min-width: 180px;
+  background-color: var(--dark-blue-800);
+  border-radius: 2px;
+}
+
+h2.skeleton {
+  height: 44px;
+  min-width: 180px;
+  background-color: var(--dark-blue-800);
+  border-radius: 2px;
 }

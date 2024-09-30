@@ -11,6 +11,7 @@ const scope = [
   "user-top-read",
   "user-follow-read",
   "user-read-recently-played",
+  "user-follow-modify",
 ];
 
 export const loginEndpoint = `${authEndpoint}client_id=${clientID}&redirect_uri=${redirectURI}&scope=${scope.join(
@@ -23,8 +24,8 @@ export async function fetchWebApi(
   token: string,
   body?: {}
 ) {
-  //   console.log("body", body);
-  //   console.log("bbody stringified", JSON.stringify(body));
+  // console.log("body", body);
+  // console.log("bbody stringified", JSON.stringify(body));
   const res = await fetch(`https://api.spotify.com/${endpoint}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -32,5 +33,11 @@ export async function fetchWebApi(
     method,
     body: JSON.stringify(body),
   });
+  // console.log("response to request", method, endpoint, res);
+  // console.log("type of response", typeof res);
+  // console.log(res.status);
+  if (res.status === 204) {
+    return;
+  }
   return await res.json();
 }

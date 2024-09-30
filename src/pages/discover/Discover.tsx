@@ -1,59 +1,43 @@
-import { useEffect, useState } from "react";
 import "./discover.css";
 import { fetchWebApi } from "../../config/spotify";
-import { useTokenContext } from "../../App";
 import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 import RecentTracks from "../home/RecentTracks";
-const Discover = () => {
-  const { token, setToken } = useTokenContext();
-  const navigate = useNavigate();
-  // const [recommendedTracks, setRecommendedTracks] = useState<{}[]>([]);
+import AsyncImg from "../../components/async img/AsyncImg";
+import { useCurrentPageContext } from "../../App";
 
+const Discover = () => {
+  const navigate = useNavigate();
+  const { setCurrentPage } = useCurrentPageContext();
   const { playlist1, playlist2, playlist3, playlist4, recommendedTracks }: any =
     useLoaderData();
 
-  // useEffect(() => {
-  //   async function getRecommendedTracks() {
-  //     await fetchWebApi(
-  //       "v1/me/player/recently-played?limit=6",
-  //       "GET",
-  //       token
-  //     ).then((res) => {
-  //       if (!res.error) {
-  //         const recentTracksFormatted = res.items.map(
-  //           (item: { [key: string]: any }) => {
-  //             return {
-  //               ...item.track,
-  //               imgUrl: item.track.album.images[0].url,
-  //             };
-  //           }
-  //         );
-  //         setRecommendedTracks(recentTracksFormatted);
-  //         // console.log("recently played", recentTracksFormatted);
-  //       } else {
-  //         // console.log("there was an error getitng recent tracks");
-  //       }
-  //     });
-  //   }
-  //   getRecommendedTracks();
-  // }, []);
+  function handleOnClickPlaylist(playlistID: string) {
+    setCurrentPage("Playlist");
+    navigate("/playlist/" + playlistID);
+  }
+
   return (
     <div className="discover-container">
       <div className="featured-playlists-container">
         <div
           className="featured-playlist-card fpc1"
           onClick={() => {
-            navigate("/playlist/" + playlist1.id);
+            handleOnClickPlaylist(playlist1.id);
           }}
         >
           <div className="fpc-top">
-            <div className="fpc-bg"></div>
-            <div className="fpc-bg-bubble"></div>
+            <div className="fpc-bg">
+              <AsyncImg
+                src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg.svg?alt=media&token=a289cf8c-a745-4f70-b6dd-36777a5e14fb"
+                proportions={1}
+              />
+            </div>
             <img
               src={
                 "https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fasterisk.svg?alt=media&token=f84978b2-4804-4021-8220-09678afdc5e0"
               }
               alt=""
+              className="symbol"
             />
           </div>
           <div className="fpc-bottom">
@@ -64,17 +48,22 @@ const Discover = () => {
         <div
           className="featured-playlist-card fpc2"
           onClick={() => {
-            navigate("/playlist/" + playlist2.id);
+            handleOnClickPlaylist(playlist2.id);
           }}
         >
           <div className="fpc-top">
-            <div className="fpc-bg"></div>
-            <div className="fpc-bg-bubble"></div>
+            <div className="fpc-bg">
+              <AsyncImg
+                src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg2.svg?alt=media&token=cba2b0f4-3e4f-4eaf-8af0-580c93ab77b4"
+                proportions={1}
+              />
+            </div>
             <img
               src={
                 "https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-shape3.svg?alt=media&token=a4774387-ea07-455f-9508-b3316728cf99"
               }
               alt=""
+              className="symbol"
             />
           </div>
           <div className="fpc-bottom">
@@ -85,17 +74,22 @@ const Discover = () => {
         <div
           className="featured-playlist-card fpc3"
           onClick={() => {
-            navigate("/playlist/" + playlist3.id);
+            handleOnClickPlaylist(playlist3.id);
           }}
         >
           <div className="fpc-top">
-            <div className="fpc-bg"></div>
-            <div className="fpc-bg-bubble"></div>
+            <div className="fpc-bg">
+              <AsyncImg
+                src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg3.svg?alt=media&token=91ff1a56-3e3c-44dd-8f73-27edee4740a7"
+                proportions={1}
+              />
+            </div>
             <img
               src={
                 "https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-shape.svg?alt=media&token=d9458b9d-294b-49c1-835d-4f4ec774461f"
               }
               alt=""
+              className="symbol"
             />
           </div>
           <div className="fpc-bottom">
@@ -106,17 +100,22 @@ const Discover = () => {
         <div
           className="featured-playlist-card fpc4"
           onClick={() => {
-            navigate("/playlist/" + playlist4.id);
+            handleOnClickPlaylist(playlist4.id);
           }}
         >
           <div className="fpc-top">
-            <div className="fpc-bg"></div>
-            <div className="fpc-bg-bubble"></div>
+            <div className="fpc-bg">
+              <AsyncImg
+                src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg4.svg?alt=media&token=1609b761-aa0c-45b0-8953-07952c434b02"
+                proportions={1}
+              />
+            </div>
             <img
               src={
                 "https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-shape2.svg?alt=media&token=eb93653c-aecc-4b1f-80bb-712f1b8502b7"
               }
               alt=""
+              className="symbol"
             />
           </div>
           <div className="fpc-bottom">

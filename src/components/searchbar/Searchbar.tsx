@@ -8,7 +8,10 @@ const Searchbar = () => {
   const [isActive, setIsActive] = useState<boolean>(false);
 
   async function handleOnSearch(e: React.FormEvent<HTMLInputElement>) {
-    navigate("search/" + e.currentTarget.value);
+    const query = e.currentTarget.value || "";
+    if (query !== "") {
+      navigate("search/" + query);
+    }
   }
   return (
     <div className={`searchbar-border`}>

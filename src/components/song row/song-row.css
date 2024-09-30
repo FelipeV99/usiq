@@ -41,3 +41,8 @@
 .track-img-container img {
   border-radius: 2px;
 }
+
+.track-row.skeleton {
+  background-color: var(--dark-blue-800);
+  height: 68px;
+}

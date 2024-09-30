@@ -14,9 +14,23 @@
 
 .ac-img-container {
   display: flex;
+  width: 100%;
+  min-height: 182px;
 }
 
 .ac-img-container img {
   border-radius: 2px;
   width: 100%;
+}
+
+.ac-info p.skeleton {
+  background-color: var(--dark-blue-800);
+  border-radius: 2px;
+  width: 120px;
+}
+
+.ac-info .bold.skeleton {
+  background-color: var(--dark-blue-800);
+  border-radius: 2px;
+  width: 180px;
 }

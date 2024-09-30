@@ -7,18 +7,22 @@ import Banner from "../../components/cards/banner/Banner";
 import ArtistCard from "../../components/cards/artist card/ArtistCard";
 import RecentTracks from "./RecentTracks";
 import AlbumCard from "../../components/cards/album card/AlbumCard";
-// import { redirect, useLoaderData } from "react-router-dom";
+import AsyncImg from "../../components/async img/AsyncImg";
 
 const Home = () => {
   const { token, setToken } = useTokenContext();
-  // const { favoriteArtists, recentTracks }: any = useLoaderData();
 
   const [newAlbums, setNewAlbums] = useState<{}[]>([]);
   const [recentTracks, setRecentTracks] = useState<{}[]>([]);
+  const [isRecentTracksLoading, setIsRecentTracksLoading] =
+    useState<boolean>(false);
   const [favoriteArtists, setFavoriteArtists] = useState<{}[]>([]);
+  const [isFavoriteArtistsLoading, setIsFavoriteArtistsLoading] =
+    useState<boolean>(false);
 
   useEffect(() => {
     async function getRecentlyPlayedTracks() {
+      setIsRecentTracksLoading(true);
       await fetchWebApi(
         "v1/me/player/recently-played?limit=6",
         "GET",
@@ -34,14 +38,16 @@ const Home = () => {
             }
           );
           setRecentTracks(recentTracksFormatted);
-          console.log("recently played", recentTracksFormatted);
+          setIsRecentTracksLoading(false);
         } else {
           console.log("there was an error getitng recent tracks");
+          setIsRecentTracksLoading(false);
         }
       });
     }
 
     async function getFavoriteArtists() {
+      setIsFavoriteArtistsLoading(true);
       await fetchWebApi(
         "v1/me/top/artists?limit=9&offset=8",
         "GET",
@@ -50,6 +56,7 @@ const Home = () => {
         if (!res.error) {
           setFavoriteArtists(res.items);
         }
+        setIsFavoriteArtistsLoading(false);
       });
     }
 
@@ -74,6 +81,46 @@ const Home = () => {
       getFavoriteArtists();
     }
   }, [token]);
+
+  function placeRecentTracksSkeleton() {
+    const recentCards = [];
+    for (let index = 0; index < 6; index++) {
+      recentCards.push(
+        <div className="song-row-2">
+          <div className="sr2-left">
+            <div className="sr2-img-container">
+              {/* <img src={track.imgUrl} alt="" /> */}
+              <AsyncImg src={""} proportions={1} />
+            </div>
+            <div className="sr2-info">
+              <p className="bold skeleton"></p>
+              <p className="other-p skeleton"></p>
+            </div>
+          </div>
+          <div className="sr2-right">
+            <p className="other-p skeleton"></p>
+          </div>
+        </div>
+      );
+    }
+    return recentCards;
+  }
+
+  function placeFavoriteArtistsSkeleton() {
+    const favCards = [];
+    for (let index = 0; index < 9; index++) {
+      favCards.push(
+        <div className={`artist-home-card`}>
+          <div className="artist-img-container">
+            <AsyncImg src={""} proportions={1} />
+          </div>
+
+          <p className="bold skeleton"></p>
+        </div>
+      );
+    }
+    return favCards;
+  }
   return (
     <div className="home-container">
       <div className="banners-container">
@@ -96,22 +143,30 @@ const Home = () => {
         <div className="favorite-artists-outer-container">
           <h4>Your favorite artists</h4>
           <div className="favorite-artists-container">
-            {favoriteArtists.map((artist: { [key: string]: any }) => {
-              return (
-                <ArtistCard
-                  key={artist.id}
-                  ID={artist.id}
-                  imgUrl={artist.images[0].url}
-                  name={artist.name}
-                />
-              );
-            })}
+            {isFavoriteArtistsLoading
+              ? placeFavoriteArtistsSkeleton()
+              : favoriteArtists.map((artist: { [key: string]: any }) => {
+                  return (
+                    <ArtistCard
+                      key={artist.id}
+                      ID={artist.id}
+                      imgUrl={artist.images[0].url}
+                      name={artist.name}
+                    />
+                  );
+                })}
           </div>
         </div>
 
         <div className="recently-played-outer-container">
           <h4>Recently played tracks</h4>
-          <RecentTracks tracks={recentTracks} />
+          {isRecentTracksLoading ? (
+            <div className="rt-container">
+              <div className="rt-grid">{placeRecentTracksSkeleton()}</div>
+            </div>
+          ) : (
+            <RecentTracks tracks={recentTracks} />
+          )}
         </div>
         <div className="home-bottom-right">
           <div className="new-releases-outer-container">
@@ -156,6 +211,7 @@ const Home = () => {
 //   });
 //   const data = await Promise.all(promises);
 //   if (error !== "") {
+//     console.log("error on home loader, redirecting...");
 //     return redirect("/login");
 //   } else {
 //     const recentTracksFormatted = data[1].items.map(

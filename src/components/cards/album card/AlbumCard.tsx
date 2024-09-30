@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./album-card.css";
 import AsyncImg from "../../async img/AsyncImg";
+import { useCurrentPageContext } from "../../../App";
 
 const AlbumCard = ({
   id,
@@ -13,12 +14,15 @@ const AlbumCard = ({
   name: string;
   artistName: string;
 }) => {
+  const { setCurrentPage } = useCurrentPageContext();
+
   const navigate = useNavigate();
+  function handleOnClickAlbum() {
+    setCurrentPage("Album");
+    navigate("/album/" + id);
+  }
   return (
-    <div
-      className="album-card-container"
-      onClick={() => navigate("/album/" + id)}
-    >
+    <div className="album-card-container" onClick={handleOnClickAlbum}>
       <div className="ac-img-container">
         <AsyncImg src={imgUrl} proportions={1} />
         {/* <img src={imgUrl} alt="" /> */}

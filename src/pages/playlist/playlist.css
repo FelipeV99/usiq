@@ -1,0 +1,48 @@
+.playlist-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-bottom: 122px;
+}
+
+.playlist-header {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+
+.ph-img-container {
+  display: flex;
+  width: 220px;
+  height: 220px;
+}
+
+.ph-img-container img {
+  border-radius: 4px;
+}
+
+.ph-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ph-details {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ph-description {
+  margin-top: 16px;
+}
+
+.playlist-header .btn-round {
+  margin-top: 8px;
+}
+
+.playlist-tracks-container {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}

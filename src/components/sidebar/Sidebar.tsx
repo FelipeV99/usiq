@@ -5,6 +5,7 @@ import SidebarOptn from "./SidebarOptn";
 const Sidebar = () => {
   const navigate = useNavigate();
   return (
+    // <div className="sidebar-outer-container">
     <div className="sidebar-container">
       <div className="logo-container" onClick={() => navigate("/")}>
         <img src={require("../../assets/usic logo.svg").default} alt="" />
@@ -47,6 +48,7 @@ const Sidebar = () => {
         </div>
       </div>
     </div>
+    // </div>
   );
 };
 

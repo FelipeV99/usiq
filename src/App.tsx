@@ -10,6 +10,9 @@ import DiscoverSkeleton from "./pages/discover/DiscoverSkeleton";
 import MyArtistsSkeleton from "./pages/my artists/MyArtistsSkeleton";
 import MyAlbumsSkeleton from "./pages/my albums/MyAlbumsSkeleton";
 import MySongsSkeleton from "./pages/my songs/MySongsSkeleton";
+import ArtistSkeleton from "./pages/artist/ArtistSkeleton";
+import AlbumSkeleton from "./pages/album/AlbumSkeleton";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 // import axios from "axios";
 // import { setClientToken } from "./config/spotify";
 
@@ -84,7 +87,7 @@ function App() {
     name?: string;
     artist?: string;
   }>({});
-  const [currentPage, setCurrentPage] = useState<string>("Home");
+  const [currentPage, setCurrentPage] = useState<string>("");
   const { state } = useNavigation();
   // const [isQueueVisible, setIsQueueVisible] = useState<boolean>(false);
 
@@ -123,10 +126,16 @@ function App() {
         return <MyAlbumsSkeleton />;
       case "Songs":
         return <MySongsSkeleton />;
+      case "Artist":
+        return <ArtistSkeleton />;
+      case "Album":
+        return <AlbumSkeleton />;
+      case "Playlist":
+        return <AlbumSkeleton />;
     }
   }
 
-  console.log("state!", state, "and current page = ", currentPage);
+  // console.log("state!", state, "and current page = ", currentPage);
 
   return (
     <TokenContext.Provider value={{ token, setToken }}>
@@ -134,11 +143,12 @@ function App() {
         <TrackStackContext.Provider value={{ trackStack, setTrackStack }}>
           <CurrentPageContext.Provider value={{ currentPage, setCurrentPage }}>
             <div className="page-container">
-              {token === "" ? (
+              {token === "" || token === "undefined" ? (
                 <Login />
               ) : (
                 <>
                   <Sidebar />
+                  <ScrollToTop />
                   <div className="right-container">
                     <div>
                       <Topbar />
@@ -146,6 +156,7 @@ function App() {
                     <div className="content-container">
                       {state === "loading" ? loadSkeleton() : <Outlet />}
                     </div>
+                    {/* <AlbumSkeleton /> */}
                   </div>
                   <Player />
                   <div className="bg">

@@ -2,10 +2,16 @@ import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 import { fetchWebApi } from "../../config/spotify";
 import "./my-artists.css";
 import AsyncImg from "../../components/async img/AsyncImg";
+import { useCurrentPageContext } from "../../App";
 const MyArtists = () => {
   const myArtists: any = useLoaderData();
+  const { currentPage, setCurrentPage } = useCurrentPageContext();
   const navigate = useNavigate();
   console.log("my artists from component", myArtists);
+  function handleOnClickArtist(artistID: string) {
+    setCurrentPage("Artist");
+    navigate("/artist/" + artistID);
+  }
   return (
     <div>
       <h2>My Artists</h2>
@@ -15,7 +21,9 @@ const MyArtists = () => {
             <div
               key={artist.id}
               className="artist-card-2"
-              onClick={() => navigate("/artist/" + artist.id)}
+              onClick={() => {
+                handleOnClickArtist(artist.id);
+              }}
             >
               <div className="ac2-img-container">
                 <AsyncImg src={artist.images[0].url} proportions={1} />
@@ -24,16 +32,6 @@ const MyArtists = () => {
             </div>
           );
         })}
-        {/* {myArtists.items.map((artistObj: { [key: string]: any }) => {
-          return (
-            <ArtistCard
-              key={artistObj.id}
-              name={artistObj.name}
-              ID={artistObj.id}
-              imgUrl={artistObj.images[0].url}
-            />
-          );
-        })} */}
       </div>
     </div>
   );

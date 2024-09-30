@@ -1,7 +1,7 @@
 import "./my-albums.css";
 
 import { fetchWebApi } from "../../config/spotify";
-import { Link, redirect, useLoaderData } from "react-router-dom";
+import { redirect, useLoaderData } from "react-router-dom";
 import AlbumCard from "../../components/cards/album card/AlbumCard";
 
 const MyAlbums = () => {
@@ -14,24 +14,12 @@ const MyAlbums = () => {
         {myAlbums.items.map((albumObj: { [key: string]: any }) => {
           return (
             <AlbumCard
+              key={albumObj.album.id}
               id={albumObj.album.id}
               name={albumObj.album.name}
               artistName={albumObj.album.artists[0].name}
               imgUrl={albumObj.album.images[0].url}
             />
-            // <Link
-            //   to={"/album/" + albumObj.album.id}
-            //   key={albumObj.album.id}
-            //   className="album-card"
-            // >
-            //   <div className="ac-img-container">
-            //     <img src={albumObj.album.images[0].url} alt="" />
-            //   </div>
-            //   <div className="ac-info">
-            //     <p className="bold">{albumObj.album.name}</p>
-            //     <p className="other-p">{albumObj.album.artists[0].name}</p>
-            //   </div>
-            // </Link>
           );
         })}
       </div>

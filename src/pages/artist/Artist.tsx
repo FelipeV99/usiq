@@ -3,16 +3,22 @@ import { fetchWebApi } from "../../config/spotify";
 import "./artist.css";
 import { useEffect, useState } from "react";
 import Tracklist from "../../components/tracklist/Tracklist";
+import { useCurrentSongContext, useTrackstackContext } from "../../App";
 
 const Artist = () => {
   const artist: any = useLoaderData();
-  const [topTracks, setTopTracks] = useState<{}[]>([]);
+
+  const { currentSong, setCurrentSong } = useCurrentSongContext();
+  const { trackStack, setTrackStack } = useTrackstackContext();
+
+  const [topTracks, setTopTracks] = useState<any>([]);
+  const [isUserFollowing, setIsUserFollowing] = useState<boolean>(false);
+  const token = window.localStorage.getItem("token") || "";
 
   useEffect(() => {
     async function getTopTracks() {
       let isError = false;
       let topTracksReq: { [key: string]: any } = {};
-      const token = window.localStorage.getItem("token") || "";
       await fetchWebApi(
         `v1/artists/${artist.id}/top-tracks`,
         "GET",
@@ -33,9 +39,57 @@ const Artist = () => {
       });
     }
     getTopTracks();
+    async function checkIsFollowing() {
+      await fetchWebApi(
+        "v1/me/following/contains?type=artist&ids=" + artist.id,
+        "GET",
+        token
+      ).then((res) => {
+        console.log("is user folllowing this artist?", res[0]);
+        setIsUserFollowing(res[0]);
+      });
+    }
+    checkIsFollowing();
   }, []);
 
-  console.log("artist from component", artist);
+  async function handleOnClickFollowUnfollow() {
+    try {
+      if (isUserFollowing) {
+        await fetchWebApi(
+          "v1/me/following?type=artist&ids=" + artist.id,
+          "DELETE",
+          token
+        );
+        setIsUserFollowing(false);
+      } else {
+        await fetchWebApi(
+          "v1/me/following?type=artist&ids=" + artist.id,
+          "PUT",
+          token
+        );
+        setIsUserFollowing(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function handleOnClickPlayArtist() {
+    setCurrentSong({
+      indexInStack: 0,
+      songUrl: topTracks[0].preview_url,
+      imgUrl: topTracks[0].imgUrl,
+      name: topTracks[0].name,
+      artist: topTracks[0].artists[0].name,
+      trackDurationMs: topTracks[0].duration_ms,
+    });
+    const newTrackStack = topTracks.map((track: { [key: string]: any }) => {
+      const active = track.preview_url === topTracks[0].preview_url;
+      //   console.log("returning obj: ", { ...track, isActive: active });
+      return { ...track, isActive: active };
+    });
+    setTrackStack(newTrackStack);
+  }
 
   return (
     <div className="artist-container">
@@ -60,8 +114,13 @@ const Artist = () => {
           <div className="followers-container">
             <p>{artist.followers.total.toLocaleString()} Followers</p>
             <div className="header-btns">
-              <button className="btn-secondary">FOLLOW</button>
-              <button className="btn-round">
+              <button
+                className="btn-secondary"
+                onClick={handleOnClickFollowUnfollow}
+              >
+                {isUserFollowing ? "FOLLOWING" : "FOLLOW"}
+              </button>
+              <button className="btn-round" onClick={handleOnClickPlayArtist}>
                 <img
                   src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplay.svg?alt=media&token=19b6a1a6-2445-42e7-be85-5b2f79584042"
                   alt=""

@@ -3,28 +3,22 @@ import "./search-results.css";
 import Tracklist from "../../components/tracklist/Tracklist";
 import { fetchWebApi } from "../../config/spotify";
 import { Link, redirect, useLoaderData } from "react-router-dom";
+import AlbumCard from "../../components/cards/album card/AlbumCard";
 
 const SearchResults = () => {
-  const searchResults: any = useLoaderData();
-  console.log("artists from search results", searchResults.artists);
-  // console.log()
-
+  const { songResults, artistResults, albumResults }: any = useLoaderData();
+  console.log("search results", songResults, artistResults, albumResults);
   return (
     <div className="search-results-container">
-      <h2>SearchResults</h2>
-      <div>
+      {/* <h2>Search Results</h2> */}
+      <div className="song-results-outer-container">
         <h4>tracks</h4>
-        <Tracklist tracks={searchResults.tracks.items} />
-        {/* <div>
-          {searchResults.tracks.items.map((track: { [key: string]: any }) => {
-            return <p key={track.id}>{track.name}</p>;
-          })}
-        </div> */}
+        <Tracklist tracks={songResults} />
       </div>
-      <div>
+      <div className="artist-results-outer-container">
         <h4>artists</h4>
         <div className="artists-results-container">
-          {searchResults.artists.items.map((artist: { [key: string]: any }) => {
+          {artistResults.map((artist: { [key: string]: any }) => {
             return (
               <Link
                 to={"/artist/" + artist.id}
@@ -38,34 +32,57 @@ const SearchResults = () => {
           })}
         </div>
       </div>
+      <div className="album-results-outer-container">
+        <h4>Albums</h4>
+        <div className="album-results-container">
+          {albumResults.map((album: { [key: string]: any }) => {
+            return (
+              <AlbumCard
+                id={album.id}
+                imgUrl={album.images[0].url}
+                name={album.name}
+                artistName={album.artists[0].name}
+              />
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };
 
 export async function searchResultsLoader({ params }: { [key: string]: any }) {
   const token = window.localStorage.getItem("token") || "";
-  let searchResults: { [key: string]: any } = {};
+  let songResults: { [key: string]: any } = {};
+  let artistResults: { [key: string]: any } = {};
+  let albumResults: { [key: string]: any } = {};
 
   let isError = false;
   await fetchWebApi(
-    `v1/search?q=${params.queryTerm}&type=track,artist,album&limit=5`,
+    `v1/search?q=${params.queryTerm}&type=track,artist,album&limit=6`,
     "GET",
     token
   ).then((res) => {
     if (res.error) {
-      window.localStorage.setItem("token", "undefined");
+      window.localStorage.setItem("token", "");
       isError = true;
     } else {
-      console.log("search results", res);
-      searchResults = res;
+      songResults = res.tracks.items.map((track: { [key: string]: any }) => {
+        return { ...track, imgUrl: track.album.images[0].url };
+      });
+      songResults = songResults.filter((track: { [key: string]: any }) => {
+        return track.preview_url !== null;
+      });
+      artistResults = res.artists.items;
+      albumResults = res.albums.items;
+      // searchResults = res;
     }
-    // console.log("search results", res)
   });
 
   if (isError) {
     return redirect("http://localhost:3000/login");
   } else {
-    return searchResults;
+    return { songResults, artistResults, albumResults };
   }
 }
 

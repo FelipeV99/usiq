@@ -172,6 +172,9 @@ const Player = () =>
     }
 
     function handleOnVolumeChange(e: React.FormEvent<HTMLInputElement>) {
+      if (isMuted) {
+        setIsMuted(false);
+      }
       setVolume(Number(e.currentTarget.value));
       audioRef.current.volume = Number(e.currentTarget.value) / 100;
     }

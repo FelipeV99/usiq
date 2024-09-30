@@ -1,10 +1,26 @@
 .search-results-container {
   padding-bottom: 124px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.song-results-outer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.artist-results-outer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .artists-results-container {
-  display: flex;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(180px, auto));
+  row-gap: 32px;
+  /* justify-content: space-between; */
 }
 
 .artist-result {
@@ -21,4 +37,18 @@
   width: 160px;
   height: 160px;
   object-fit: cover;
+}
+
+.album-results-outer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.album-results-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(182px, auto));
+  column-gap: 22px;
+  row-gap: 22px;
 }

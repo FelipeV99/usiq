@@ -73,3 +73,11 @@
   display: flex;
   gap: 12px;
 }
+
+.artist-content-container h2.skeleton {
+  width: 280px;
+}
+
+.my-songs-container.skeleton {
+  padding-top: 16px;
+}
