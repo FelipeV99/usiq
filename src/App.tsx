@@ -135,8 +135,6 @@ function App() {
     }
   }
 
-  // console.log("state!", state, "and current page = ", currentPage);
-
   return (
     <TokenContext.Provider value={{ token, setToken }}>
       <CurrentSongContext.Provider value={{ currentSong, setCurrentSong }}>
