@@ -13,19 +13,33 @@
 }
 
 .song-row-two.playing {
-  background-color: var(--dark-blue-600);
+  background-color: rgba(162, 212, 216, 0.1);
   transition: all 0.3s ease-in-out;
 }
 
+.song-row-two.playing .bold {
+  color: var(--light-blue-500);
+}
 .song-row-two.hover {
   background-color: var(--dark-blue-800);
   transition: all 0.3s ease-in-out;
 }
+
 .srt-left {
   display: flex;
   gap: 16px;
   align-items: center;
   width: 580px;
+}
+
+.srt-img-container {
+  display: flex;
+  height: 50px;
+  width: 50px;
+}
+
+.srt-img-container img {
+  border-radius: 2px;
 }
 
 .srt-index {
@@ -35,4 +49,8 @@
 
 .srt-replays p {
   text-align: right;
+}
+
+.srt-middle {
+  width: 190px;
 }

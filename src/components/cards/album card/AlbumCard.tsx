@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./album-card.css";
 import AsyncImg from "../../async img/AsyncImg";
 import { useCurrentPageContext } from "../../../App";
+import { useState } from "react";
 
 const AlbumCard = ({
   id,
@@ -15,6 +16,7 @@ const AlbumCard = ({
   artistName: string;
 }) => {
   const { setCurrentPage } = useCurrentPageContext();
+  const [isHover, setIsHover] = useState<boolean>(false);
 
   const navigate = useNavigate();
   function handleOnClickAlbum() {
@@ -22,9 +24,19 @@ const AlbumCard = ({
     navigate("/album/" + id);
   }
   return (
-    <div className="album-card-container" onClick={handleOnClickAlbum}>
+    <div
+      className="album-card-container"
+      onClick={handleOnClickAlbum}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+    >
       <div className="ac-img-container">
-        <AsyncImg src={imgUrl} proportions={1} />
+        <AsyncImg
+          src={imgUrl}
+          proportions={1}
+          clickableImg={true}
+          isMouseOver={isHover}
+        />
         {/* <img src={imgUrl} alt="" /> */}
       </div>
       <div className="ac-info">

@@ -1,5 +1,6 @@
 import { useCurrentSongContext, useTrackstackContext } from "../../App";
 import AsyncImg from "../../components/async img/AsyncImg";
+import SongrowTwo from "../../components/song row/SongrowTwo";
 
 export default function RecentTracks({ tracks }: { [key: string]: any }) {
   const { currentSong, setCurrentSong } = useCurrentSongContext();
@@ -45,7 +46,7 @@ export default function RecentTracks({ tracks }: { [key: string]: any }) {
   return (
     <div className="rt-container">
       <div className="rt-grid">
-        {tracks.map((track: { [key: string]: any }, index: number) => {
+        {/* {tracks.map((track: { [key: string]: any }, index: number) => {
           return (
             <div
               className="song-row-2"
@@ -63,7 +64,6 @@ export default function RecentTracks({ tracks }: { [key: string]: any }) {
             >
               <div className="sr2-left">
                 <div className="sr2-img-container">
-                  {/* <img src={track.imgUrl} alt="" /> */}
                   <AsyncImg src={track.imgUrl} proportions={1} />
                 </div>
                 <div className="sr2-info">
@@ -75,6 +75,22 @@ export default function RecentTracks({ tracks }: { [key: string]: any }) {
                 <p className="other-p">{msToHMS(track.duration_ms)}</p>
               </div>
             </div>
+          );
+        })} */}
+        {tracks.map((track: { [key: string]: any }, index: number) => {
+          return (
+            <SongrowTwo
+              key={index}
+              index={index}
+              song={track.name}
+              artist={track.artists[0].name}
+              duration={track.duration_ms}
+              imgUrl={track.imgUrl}
+              songUrl={track.preview_url}
+              handleOnPlay={handleOnPlay}
+              includeIndex={false}
+              includeImg={true}
+            />
           );
         })}
       </div>

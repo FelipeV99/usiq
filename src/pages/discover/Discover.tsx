@@ -25,24 +25,26 @@ const Discover = () => {
             handleOnClickPlaylist(playlist1.id);
           }}
         >
-          <div className="fpc-top">
-            <div className="fpc-bg">
-              <AsyncImg
-                src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg.svg?alt=media&token=a289cf8c-a745-4f70-b6dd-36777a5e14fb"
-                proportions={1}
-              />
-            </div>
-            <img
-              src={
-                "https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fasterisk.svg?alt=media&token=f84978b2-4804-4021-8220-09678afdc5e0"
-              }
-              alt=""
-              className="symbol"
+          <div className="fpc-bg">
+            <AsyncImg
+              src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg.svg?alt=media&token=a289cf8c-a745-4f70-b6dd-36777a5e14fb"
+              proportions={1}
             />
           </div>
-          <div className="fpc-bottom">
-            <h2>{playlist1.name}</h2>
-            <p className="other-p">{playlist1.description}</p>
+          <div className="fpc-content">
+            <div className="fpc-top">
+              <img
+                src={
+                  "https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fasterisk.svg?alt=media&token=f84978b2-4804-4021-8220-09678afdc5e0"
+                }
+                alt=""
+                className="symbol"
+              />
+            </div>
+            <div className="fpc-bottom">
+              <h2>{playlist1.name}</h2>
+              <p className="other-p">{playlist1.description}</p>
+            </div>
           </div>
         </div>
         <div
@@ -51,24 +53,26 @@ const Discover = () => {
             handleOnClickPlaylist(playlist2.id);
           }}
         >
-          <div className="fpc-top">
-            <div className="fpc-bg">
-              <AsyncImg
-                src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg2.svg?alt=media&token=cba2b0f4-3e4f-4eaf-8af0-580c93ab77b4"
-                proportions={1}
-              />
-            </div>
-            <img
-              src={
-                "https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-shape3.svg?alt=media&token=a4774387-ea07-455f-9508-b3316728cf99"
-              }
-              alt=""
-              className="symbol"
+          <div className="fpc-bg">
+            <AsyncImg
+              src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg2.svg?alt=media&token=cba2b0f4-3e4f-4eaf-8af0-580c93ab77b4"
+              proportions={1}
             />
           </div>
-          <div className="fpc-bottom">
-            <h2>{playlist2.name}</h2>
-            <p className="other-p">{playlist2.description}</p>
+          <div className="fpc-content">
+            <div className="fpc-top">
+              <img
+                src={
+                  "https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-shape3.svg?alt=media&token=a4774387-ea07-455f-9508-b3316728cf99"
+                }
+                alt=""
+                className="symbol"
+              />
+            </div>
+            <div className="fpc-bottom">
+              <h2>{playlist2.name}</h2>
+              <p className="other-p">{playlist2.description}</p>
+            </div>
           </div>
         </div>
         <div
@@ -77,50 +81,54 @@ const Discover = () => {
             handleOnClickPlaylist(playlist3.id);
           }}
         >
-          <div className="fpc-top">
-            <div className="fpc-bg">
-              <AsyncImg
-                src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg3.svg?alt=media&token=91ff1a56-3e3c-44dd-8f73-27edee4740a7"
-                proportions={1}
-              />
-            </div>
-            <img
-              src={
-                "https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-shape.svg?alt=media&token=d9458b9d-294b-49c1-835d-4f4ec774461f"
-              }
-              alt=""
-              className="symbol"
+          <div className="fpc-bg">
+            <AsyncImg
+              src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg3.svg?alt=media&token=91ff1a56-3e3c-44dd-8f73-27edee4740a7"
+              proportions={1}
             />
           </div>
-          <div className="fpc-bottom">
-            <h2>{playlist3.name}</h2>
-            <p className="other-p">{playlist3.description}</p>
+          <div className="fpc-content">
+            <div className="fpc-top">
+              <img
+                src={
+                  "https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-shape.svg?alt=media&token=d9458b9d-294b-49c1-835d-4f4ec774461f"
+                }
+                alt=""
+                className="symbol"
+              />
+            </div>
+            <div className="fpc-bottom">
+              <h2>{playlist3.name}</h2>
+              <p className="other-p">{playlist3.description}</p>
+            </div>
           </div>
         </div>
         <div
-          className="featured-playlist-card fpc4"
+          className="featured-playlist-card fpc1"
           onClick={() => {
             handleOnClickPlaylist(playlist4.id);
           }}
         >
-          <div className="fpc-top">
-            <div className="fpc-bg">
-              <AsyncImg
-                src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg4.svg?alt=media&token=1609b761-aa0c-45b0-8953-07952c434b02"
-                proportions={1}
-              />
-            </div>
-            <img
-              src={
-                "https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-shape2.svg?alt=media&token=eb93653c-aecc-4b1f-80bb-712f1b8502b7"
-              }
-              alt=""
-              className="symbol"
+          <div className="fpc-bg">
+            <AsyncImg
+              src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-bg4.svg?alt=media&token=1609b761-aa0c-45b0-8953-07952c434b02"
+              proportions={1}
             />
           </div>
-          <div className="fpc-bottom">
-            <h2>{playlist4.name}</h2>
-            <p className="other-p">{playlist4.description}</p>
+          <div className="fpc-content">
+            <div className="fpc-top">
+              <img
+                src={
+                  "https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplaylist-shape2.svg?alt=media&token=eb93653c-aecc-4b1f-80bb-712f1b8502b7"
+                }
+                alt=""
+                className="symbol"
+              />
+            </div>
+            <div className="fpc-bottom">
+              <h2>{playlist4.name}</h2>
+              <p className="other-p">{playlist4.description}</p>
+            </div>
           </div>
         </div>
       </div>

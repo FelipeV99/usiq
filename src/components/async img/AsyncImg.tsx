@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./async-img.css";
 const AsyncImg = ({
   src = "",
-  proportions = 1.5,
+  proportions = 1,
   clickableImg = false,
   isMouseOver = false,
 }) => {
@@ -37,9 +37,9 @@ const AsyncImg = ({
           isHover && clickableImg ? "img-overlay" : "img-overlay-trans"
         }
       ></div>
-      {isHover && clickableImg ? (
+      {/* {isHover && clickableImg ? (
         <div className="img-overlay"></div>
-      ) : undefined}
+      ) : undefined} */}
       {/* colocar un alt */}
       <img
         className={`${isHover && clickableImg ? "img-focus" : ""}`}

@@ -1,21 +1,30 @@
 import { useEffect, useState } from "react";
 import "./song-row-two.css";
 import { useCurrentSongContext } from "../../App";
+import AsyncImg from "../async img/AsyncImg";
 const SongrowTwo = ({
   song,
+  album,
   artist,
   duration,
   index,
   songUrl,
   imgUrl,
+  includeIndex = true,
+  includeImg = false,
+  includeAlbum = false,
   handleOnPlay,
 }: {
   song: string;
+  album?: string;
   artist: string;
   duration: number;
   index: number;
   songUrl: string;
   imgUrl: string;
+  includeIndex?: boolean;
+  includeImg?: boolean;
+  includeAlbum?: boolean;
   handleOnPlay: (
     indexInStack: number,
     songUrl: string,
@@ -33,9 +42,6 @@ const SongrowTwo = ({
     setIsPlaying(false);
     if (currentSong.indexInStack === index && currentSong.songUrl === songUrl) {
       setIsPlaying(true);
-      console.log("active tune is", song);
-    } else {
-      console.log("the following song is not active", song);
     }
   }, [currentSong]);
 
@@ -64,12 +70,32 @@ const SongrowTwo = ({
       onMouseLeave={() => setIsHover(false)}
     >
       <div className="srt-left">
-        <p className="other-p srt-index">{index + 1}</p>
+        {includeIndex ? (
+          <p className="other-p srt-index">{index + 1}</p>
+        ) : (
+          <></>
+        )}
+        {includeImg ? (
+          <div className="srt-img-container">
+            <AsyncImg src={imgUrl} proportions={1} />
+          </div>
+        ) : (
+          <></>
+        )}
+
         <div>
           <p className="bold">{song}</p>
           <p>{artist}</p>
         </div>
       </div>
+      {includeAlbum ? (
+        <div className="srt-middle">
+          <p className="other-p">{album}</p>
+        </div>
+      ) : (
+        <></>
+      )}
+
       <div>
         <p className="other-p">{msToHMS(duration)}</p>
       </div>

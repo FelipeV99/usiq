@@ -79,6 +79,8 @@ const Player = () =>
     }
 
     function handleOnPlayPrevious() {
+      audioRef.current.currentTime = 0;
+
       setSongProgress(0);
 
       //maybe i need the current track index and from there i can substract 1 to it and get the repvious track
@@ -125,7 +127,9 @@ const Player = () =>
 
     function handleOnPlayNext() {
       if (currentSong.indexInStack !== trackStack.length - 1) {
+        // console.log("moving onto next track");
         setSongProgress(0);
+        audioRef.current.currentTime = 0;
 
         const nextTrack = trackStack.filter(
           (track: { [key: string]: any }, index: number) => {
@@ -141,6 +145,7 @@ const Player = () =>
           artist: nextTrack.artists[0].name,
           trackDurationMs: nextTrack.duration_ms,
         };
+        // audioRef.current.
 
         setCurrentSong(newCurrentSong);
         //now update the track stack

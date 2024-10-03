@@ -145,16 +145,18 @@ const Home = () => {
           <div className="favorite-artists-container">
             {isFavoriteArtistsLoading
               ? placeFavoriteArtistsSkeleton()
-              : favoriteArtists.map((artist: { [key: string]: any }) => {
-                  return (
-                    <ArtistCard
-                      key={artist.id}
-                      ID={artist.id}
-                      imgUrl={artist.images[0].url}
-                      name={artist.name}
-                    />
-                  );
-                })}
+              : favoriteArtists.map(
+                  (artist: { [key: string]: any }, index: number) => {
+                    return (
+                      <ArtistCard
+                        key={index}
+                        ID={artist.id}
+                        imgUrl={artist.images[0].url}
+                        name={artist.name}
+                      />
+                    );
+                  }
+                )}
           </div>
         </div>
 

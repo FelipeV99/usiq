@@ -13,6 +13,7 @@ const Songrow = ({
   index,
   handleOnPlay,
   isActive,
+  includeIndex,
 }: {
   id: string;
   previewUrl: string;
@@ -23,6 +24,7 @@ const Songrow = ({
   durationMS: number;
   index: number;
   isActive: boolean;
+  includeIndex?: boolean;
   handleOnPlay: (
     indexInStack: number,
     songUrl: string,

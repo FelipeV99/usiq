@@ -10,6 +10,9 @@
   --dark-blue-600: #363a44;
   --dark-blue-500: #414651;
 
+  --light-blue-100: #e1edee;
+  --light-blue-200: #c2e3e6;
+  --light-blue-300: #a2d4d8;
   --light-blue-400: #81c4ca;
   --light-blue-500: #99ecf2;
 
@@ -22,6 +25,10 @@
 body {
   background-color: var(--dark-blue-900);
   /* overflow-x: hidden; */
+}
+
+#root {
+  min-width: 1256px;
 }
 
 @font-face {
@@ -101,9 +108,11 @@ input:focus {
 .page-container {
   position: relative;
   display: flex;
-  min-height: 100vh;
+  /* min-height: 100vh; */
+  /* max-height: 100vh; */
   justify-content: center;
   min-width: 1256px;
+  min-height: 800px;
 }
 
 .subheader {
@@ -142,6 +151,7 @@ input:focus {
 
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 16px;
   width: 162px;
 
@@ -188,6 +198,9 @@ input:focus {
   min-width: 1032px;
   max-width: 1440px;
   margin-left: 224px;
+  /* max-height: 100vh;
+  overflow-y: scroll;
+  overflow-x: scroll; */
 }
 .content-container {
   width: 100%;
@@ -197,6 +210,9 @@ input:focus {
 .bg {
   position: absolute;
   width: 100vw;
+  max-width: 1440px;
+  min-width: 1032px;
+
   height: 100vh;
   z-index: -100;
 }
@@ -213,10 +229,10 @@ input:focus {
     var(--dark-blue-900) 100%
   );
   overflow: visible;
-  box-shadow: 0 0 150px 30px rgb(150, 155, 163);
+  box-shadow: 0 0 150px 30px rgba(150, 155, 163, 0.6);
 }
 
-.bubble-2 {
+/* .bubble-2 {
   position: absolute;
   left: 120px;
   top: 180px;
@@ -229,16 +245,16 @@ input:focus {
   );
   overflow: visible;
   box-shadow: 0 0 120px 30px rgb(150, 155, 163);
-}
+} */
 
 .bubble-3 {
   position: absolute;
-  left: 400px;
+  left: 500px;
   top: 480px;
   width: 1px;
   height: 1px;
   overflow: visible;
-  box-shadow: 0 0 160px 30px rgb(142, 151, 159);
+  box-shadow: 0 0 160px 30px rgba(142, 151, 159, 0.4);
 }
 
 .bold.skeleton {

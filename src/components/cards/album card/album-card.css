@@ -16,6 +16,8 @@
   display: flex;
   width: 100%;
   min-height: 182px;
+  border-radius: 2px;
+  overflow: hidden;
 }
 
 .ac-img-container img {

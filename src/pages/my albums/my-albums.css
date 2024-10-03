@@ -12,3 +12,9 @@
   column-gap: 22px;
   row-gap: 22px;
 }
+
+@media (max-width: 1500px) {
+  .my-albums-container {
+    grid-template-columns: repeat(5, minmax(182px, auto));
+  }
+}

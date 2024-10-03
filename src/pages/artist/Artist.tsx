@@ -8,8 +8,8 @@ import { useCurrentSongContext, useTrackstackContext } from "../../App";
 const Artist = () => {
   const artist: any = useLoaderData();
 
-  const { currentSong, setCurrentSong } = useCurrentSongContext();
-  const { trackStack, setTrackStack } = useTrackstackContext();
+  const { setCurrentSong } = useCurrentSongContext();
+  const { setTrackStack } = useTrackstackContext();
 
   const [topTracks, setTopTracks] = useState<any>([]);
   const [isUserFollowing, setIsUserFollowing] = useState<boolean>(false);
@@ -131,7 +131,7 @@ const Artist = () => {
         </div>
       </div>
       <div className="artist-content-container">
-        <h2>popular songs</h2>
+        <h4>popular songs</h4>
         <Tracklist tracks={topTracks} />
       </div>
     </div>

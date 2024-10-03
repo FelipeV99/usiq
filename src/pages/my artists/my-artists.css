@@ -39,3 +39,9 @@
   object-fit: cover;
   min-width: 100%;
 }
+
+@media (max-width: 1500px) {
+  .my-artists-container {
+    grid-template-columns: repeat(5, minmax(182px, auto));
+  }
+}

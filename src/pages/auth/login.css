@@ -1,0 +1,27 @@
+.login-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  align-items: center;
+  padding-top: 64px;
+}
+
+.login-container .logo-vertical {
+  display: flex;
+  width: 38px;
+}
+
+.login-text {
+  width: 350px;
+  text-align: center;
+}
+.login-container .btn-primary {
+  background-color: #1bd472;
+  width: 220px;
+}
+
+.btn-primary img {
+  width: 22px;
+}

@@ -1,11 +1,11 @@
 import "./tracklist.css";
 
 import { useCurrentSongContext, useTrackstackContext } from "../../App";
-import Songrow from "../song row/Songrow";
+import SongrowTwo from "../song row/SongrowTwo";
 
 const Tracklist = ({ tracks }: { [key: string]: any }) => {
-  const { currentSong, setCurrentSong } = useCurrentSongContext();
-  const { trackStack, setTrackStack } = useTrackstackContext();
+  const { setCurrentSong } = useCurrentSongContext();
+  const { setTrackStack } = useTrackstackContext();
 
   function handleOnPlay(
     indexInStack: number,
@@ -35,18 +35,18 @@ const Tracklist = ({ tracks }: { [key: string]: any }) => {
     <div className="tracklist-container">
       {tracks.map((track: { [key: string]: any }, index: number) => {
         return (
-          <Songrow
-            key={track.id}
-            id={track.id}
-            previewUrl={track.preview_url}
-            imgUrl={track.imgUrl}
-            name={track.name}
-            albumName={track.album.name}
-            artistName={track.artists[0].name}
-            durationMS={track.duration_ms}
+          <SongrowTwo
             index={index}
+            song={track.name}
+            album={track.album.name}
+            artist={track.artists[0].name}
+            duration={track.duration_ms}
+            imgUrl={track.imgUrl}
+            songUrl={track.preview_url}
             handleOnPlay={handleOnPlay}
-            isActive={track.isActive}
+            includeIndex={true}
+            includeImg={true}
+            includeAlbum={true}
           />
         );
       })}

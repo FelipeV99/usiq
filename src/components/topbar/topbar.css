@@ -4,6 +4,8 @@
   padding-top: 18px;
   padding-bottom: 18px;
   justify-content: space-between;
+  max-width: 1440px;
+  min-width: 1032px;
 }
 
 .profile-img-container {
