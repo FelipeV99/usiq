@@ -153,10 +153,10 @@ function App() {
                     <div>
                       <Topbar />
                     </div>
-                    <div className="content-container">
+                    {/* <div className="content-container">
                       {state === "loading" ? loadSkeleton() : <Outlet />}
-                    </div>
-                    {/* <AlbumSkeleton /> */}
+                    </div> */}
+                    <DiscoverSkeleton />
                   </div>
                   <Player />
                   <div className="bg">

@@ -67,6 +67,9 @@
 
 .featured-playlist-card.skeleton {
   background-color: var(--dark-blue-800);
+  /* width: 340px; */
+  min-width: 300px;
+  min-height: 300px;
 }
 
 .fpc-bg {
