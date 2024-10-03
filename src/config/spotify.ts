@@ -4,7 +4,7 @@ const clientID: string = process.env.REACT_APP_CLIENT_ID || "";
 const redirectURI: string =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000/"
-    : "https://usiq.netlify.app/";
+    : "http://usiq.netlify.app/";
 const authEndpoint: string = "https://accounts.spotify.com/authorize?";
 const scope = [
   "user-library-read",
