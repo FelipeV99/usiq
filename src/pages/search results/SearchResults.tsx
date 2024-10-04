@@ -7,7 +7,7 @@ import AlbumCard from "../../components/cards/album card/AlbumCard";
 
 const SearchResults = () => {
   const { songResults, artistResults, albumResults }: any = useLoaderData();
-  console.log("search results", songResults, artistResults, albumResults);
+  // console.log("search results", songResults, artistResults, albumResults);
   return (
     <div className="search-results-container">
       {/* <h2>Search Results</h2> */}
@@ -38,6 +38,7 @@ const SearchResults = () => {
           {albumResults.map((album: { [key: string]: any }) => {
             return (
               <AlbumCard
+                key={album.id}
                 id={album.id}
                 imgUrl={album.images[0].url}
                 name={album.name}

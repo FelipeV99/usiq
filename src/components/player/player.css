@@ -91,6 +91,10 @@
   cursor: pointer;
 }
 
+.play-pause-container.disabled img {
+  opacity: 0.2;
+}
+
 .player-main-btns-bottom {
   display: flex;
   gap: 8px;
@@ -230,11 +234,21 @@ progress[value]::-moz-progress-bar {
 }
 
 .skip-back-container {
+  padding-top: 8px;
   cursor: pointer;
+}
+
+.skip-back-container.disabled {
+  opacity: 0.4;
 }
 
 .skip-forward-container {
   cursor: pointer;
+  padding-top: 8px;
+}
+
+.skip-forward-container.disabled {
+  opacity: 0.4;
 }
 
 .mute-unmute-container img {

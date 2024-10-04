@@ -3,21 +3,8 @@ import SongrowTwo from "../../components/song row/SongrowTwo";
 import { Song } from "../../App";
 
 export default function RecentTracks({ tracks }: { [key: string]: any }) {
-  const { currentSong, setCurrentSong } = useCurrentSongContext();
-  const { trackStack, setTrackStack } = useTrackstackContext();
-
-  function msToHMS(ms: number) {
-    const minutes = Math.floor((ms / 60000) % 60);
-
-    const seconds = Math.floor((ms / 1000) % 60);
-
-    const timeResult = [
-      minutes.toString().padStart(2, "0"),
-      seconds.toString().padStart(2, "0"),
-    ].join(":");
-
-    return timeResult;
-  }
+  const { setCurrentSong } = useCurrentSongContext();
+  const { setTrackStack } = useTrackstackContext();
 
   function handleOnPlay(song: Song) {
     setCurrentSong(song);
@@ -32,37 +19,6 @@ export default function RecentTracks({ tracks }: { [key: string]: any }) {
   return (
     <div className="rt-container">
       <div className="rt-grid">
-        {/* {tracks.map((track: { [key: string]: any }, index: number) => {
-          return (
-            <div
-              className="song-row-2"
-              onClick={() =>
-                handleOnPlay(
-                  index,
-                  track.preview_url,
-                  track.imgUrl,
-                  track.name,
-                  track.artists[0].name,
-                  track.duration_ms
-                )
-              }
-              key={index}
-            >
-              <div className="sr2-left">
-                <div className="sr2-img-container">
-                  <AsyncImg src={track.imgUrl} proportions={1} />
-                </div>
-                <div className="sr2-info">
-                  <p className="bold">{track.name}</p>
-                  <p className="other-p">{track.artists[0].name}</p>
-                </div>
-              </div>
-              <div className="sr2-right">
-                <p className="other-p">{msToHMS(track.duration_ms)}</p>
-              </div>
-            </div>
-          );
-        })} */}
         {tracks.map((track: { [key: string]: any }, index: number) => {
           return (
             <SongrowTwo

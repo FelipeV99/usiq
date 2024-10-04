@@ -1,14 +1,14 @@
 import "./topbar.css";
 import Searchbar from "../searchbar/Searchbar";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetchWebApi } from "../../config/spotify";
-import { useTokenContext } from "../../App";
 
 const Topbar = () => {
-  const { token, setToken } = useTokenContext();
-  const [userProfileImgUrl, setUserProfileImgUrl] = useState<string>("");
+  // const [userProfileImgUrl, setUserProfileImgUrl] = useState<string>("");
 
   useEffect(() => {
+    const token = window.localStorage.getItem("token") || "";
+
     async function getUser() {
       fetchWebApi("v1/me", "GET", token).then((res) => {
         if (res.error) {
@@ -21,7 +21,7 @@ const Topbar = () => {
     }
 
     getUser();
-  }, [token]);
+  }, []);
 
   return (
     <div className="topbar-container">

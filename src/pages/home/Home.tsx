@@ -1,7 +1,6 @@
 import "./home.css";
 
 import { useEffect, useState } from "react";
-import { useTokenContext } from "../../App";
 import { fetchWebApi } from "../../config/spotify";
 import Banner from "../../components/cards/banner/Banner";
 import ArtistCard from "../../components/cards/artist card/ArtistCard";
@@ -9,11 +8,11 @@ import RecentTracks from "./RecentTracks";
 import AlbumCard from "../../components/cards/album card/AlbumCard";
 import AsyncImg from "../../components/async img/AsyncImg";
 
-const Home = () => {
-  const { token, setToken } = useTokenContext();
+import { Song } from "../../App";
 
+const Home = () => {
   const [newAlbums, setNewAlbums] = useState<{}[]>([]);
-  const [recentTracks, setRecentTracks] = useState<{}[]>([]);
+  const [recentTracks, setRecentTracks] = useState<Song[]>([]);
   const [isRecentTracksLoading, setIsRecentTracksLoading] =
     useState<boolean>(false);
   const [favoriteArtists, setFavoriteArtists] = useState<{}[]>([]);
@@ -21,6 +20,7 @@ const Home = () => {
     useState<boolean>(false);
 
   useEffect(() => {
+    const token = window.localStorage.getItem("token") || "";
     async function getRecentlyPlayedTracks() {
       setIsRecentTracksLoading(true);
       await fetchWebApi(
@@ -40,7 +40,7 @@ const Home = () => {
           setRecentTracks(recentTracksFormatted);
           setIsRecentTracksLoading(false);
         } else {
-          console.log("there was an error getitng recent tracks");
+          // console.log("there was an error getitng recent tracks");
           setIsRecentTracksLoading(false);
         }
       });
@@ -68,7 +68,6 @@ const Home = () => {
       ).then((res) => {
         if (res.error) {
           console.log("error in new albums", res.error);
-          setToken("");
           window.localStorage.setItem("token", "");
         } else {
           setNewAlbums(res.albums.items);
@@ -80,16 +79,15 @@ const Home = () => {
       getRecentlyPlayedTracks();
       getFavoriteArtists();
     }
-  }, [token]);
+  }, []);
 
   function placeRecentTracksSkeleton() {
     const recentCards = [];
     for (let index = 0; index < 6; index++) {
       recentCards.push(
-        <div className="song-row-2">
+        <div className="song-row-2" key={index}>
           <div className="sr2-left">
             <div className="sr2-img-container">
-              {/* <img src={track.imgUrl} alt="" /> */}
               <AsyncImg src={""} proportions={1} />
             </div>
             <div className="sr2-info">
@@ -110,7 +108,7 @@ const Home = () => {
     const favCards = [];
     for (let index = 0; index < 9; index++) {
       favCards.push(
-        <div className={`artist-home-card`}>
+        <div className={`artist-home-card`} key={index}>
           <div className="artist-img-container">
             <AsyncImg src={""} proportions={1} />
           </div>
@@ -174,10 +172,10 @@ const Home = () => {
           <div className="new-releases-outer-container">
             <h4>New releases</h4>
             <div className="new-releases-container">
-              {newAlbums.map((album: { [index: string]: any }) => {
+              {newAlbums.map((album: { [key: string]: any }, index: number) => {
                 return (
                   <AlbumCard
-                    key={album.id}
+                    key={index}
                     id={album.id}
                     imgUrl={album.images[0].url}
                     name={album.name}

@@ -10,7 +10,6 @@ import { Outlet, useNavigation } from "react-router-dom";
 import Player from "./components/player/Player";
 import Login from "./pages/auth/Login";
 import Sidebar from "./components/sidebar/Sidebar";
-// import Queue from "./components/queue/Queue";
 import Topbar from "./components/topbar/Topbar";
 import HomeSkeleton from "./pages/home/HomeSkeleton";
 import DiscoverSkeleton from "./pages/discover/DiscoverSkeleton";
@@ -20,8 +19,6 @@ import MySongsSkeleton from "./pages/my songs/MySongsSkeleton";
 import ArtistSkeleton from "./pages/artist/ArtistSkeleton";
 import AlbumSkeleton from "./pages/album/AlbumSkeleton";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
-// import axios from "axios";
-// import { setClientToken } from "./config/spotify";
 
 type Playlist = { [key: string]: any };
 type Artist = { [key: string]: any };
@@ -34,10 +31,7 @@ export type Song = {
   artist: string;
   trackDurationMs: number;
 };
-type TokenContextType = {
-  token: string;
-  setToken: any;
-};
+
 type CurrentSongContextType = {
   currentSong: Song;
   setCurrentSong: Dispatch<SetStateAction<Song>>;
@@ -50,19 +44,9 @@ type CurrentPageContextType = {
   setCurrentPage: Dispatch<SetStateAction<string>>;
 };
 
-const TokenContext = createContext<TokenContextType | null>(null);
 const CurrentSongContext = createContext<CurrentSongContextType | null>(null);
 const TrackStackContext = createContext<TrackStackContextType | null>(null);
 const CurrentPageContext = createContext<CurrentPageContextType | null>(null);
-
-export function useTokenContext() {
-  const theTokenContext = useContext(TokenContext);
-  //this is only true when trying to use context outside of provider
-  if (theTokenContext == null) {
-    throw new Error("must use within provider");
-  }
-  return theTokenContext;
-}
 
 export function useCurrentSongContext() {
   const theCurrentSongContext = useContext(CurrentSongContext);
@@ -104,7 +88,6 @@ function App() {
   });
   const [currentPage, setCurrentPage] = useState<string>("");
   const { state } = useNavigation();
-  // const [isQueueVisible, setIsQueueVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const thereIsHash = window.location.hash;
@@ -123,7 +106,6 @@ function App() {
         window.localStorage.setItem("token", _token);
         setToken(_token);
       } else {
-        // console.log("pullin token up from local storage");
         setToken(_token);
       }
     }
@@ -151,38 +133,36 @@ function App() {
   }
 
   return (
-    <TokenContext.Provider value={{ token, setToken }}>
-      <CurrentSongContext.Provider value={{ currentSong, setCurrentSong }}>
-        <TrackStackContext.Provider value={{ trackStack, setTrackStack }}>
-          <CurrentPageContext.Provider value={{ currentPage, setCurrentPage }}>
-            <div className="page-container">
-              {token === "" || token === "undefined" ? (
-                <Login />
-              ) : (
-                <>
-                  <Sidebar />
-                  <ScrollToTop />
-                  <div className="right-container">
-                    <div>
-                      <Topbar />
-                    </div>
-                    <div className="content-container">
-                      {state === "loading" ? loadSkeleton() : <Outlet />}
-                    </div>
+    <CurrentSongContext.Provider value={{ currentSong, setCurrentSong }}>
+      <TrackStackContext.Provider value={{ trackStack, setTrackStack }}>
+        <CurrentPageContext.Provider value={{ currentPage, setCurrentPage }}>
+          <div className="page-container">
+            {token === "" || token === "undefined" ? (
+              <Login />
+            ) : (
+              <>
+                <Sidebar />
+                <ScrollToTop />
+                <div className="right-container">
+                  <div>
+                    <Topbar />
                   </div>
-                  <Player />
-                  <div className="bg">
-                    <div className="bubble-1"></div>
-                    <div className="bubble-2"></div>
-                    <div className="bubble-3"></div>
+                  <div className="content-container">
+                    {state === "loading" ? loadSkeleton() : <Outlet />}
                   </div>
-                </>
-              )}
-            </div>
-          </CurrentPageContext.Provider>
-        </TrackStackContext.Provider>
-      </CurrentSongContext.Provider>
-    </TokenContext.Provider>
+                </div>
+                <Player />
+                <div className="bg">
+                  <div className="bubble-1"></div>
+                  <div className="bubble-2"></div>
+                  <div className="bubble-3"></div>
+                </div>
+              </>
+            )}
+          </div>
+        </CurrentPageContext.Provider>
+      </TrackStackContext.Provider>
+    </CurrentSongContext.Provider>
   );
 }
 

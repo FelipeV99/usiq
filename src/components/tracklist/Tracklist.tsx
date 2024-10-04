@@ -23,6 +23,7 @@ const Tracklist = ({ tracks }: { [key: string]: any }) => {
       {tracks.map((track: { [key: string]: any }, index: number) => {
         return (
           <SongrowTwo
+            key={index}
             index={index}
             song={track.name}
             album={track.album.name}
