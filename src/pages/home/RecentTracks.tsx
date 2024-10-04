@@ -1,6 +1,6 @@
 import { useCurrentSongContext, useTrackstackContext } from "../../App";
-import AsyncImg from "../../components/async img/AsyncImg";
 import SongrowTwo from "../../components/song row/SongrowTwo";
+import { Song } from "../../App";
 
 export default function RecentTracks({ tracks }: { [key: string]: any }) {
   const { currentSong, setCurrentSong } = useCurrentSongContext();
@@ -19,24 +19,10 @@ export default function RecentTracks({ tracks }: { [key: string]: any }) {
     return timeResult;
   }
 
-  function handleOnPlay(
-    indexInStack: number,
-    songUrl: string,
-    imgUrl: string,
-    name: string,
-    artist: string,
-    trackDurationMs: number
-  ) {
-    setCurrentSong({
-      indexInStack,
-      songUrl,
-      imgUrl,
-      name,
-      artist,
-      trackDurationMs,
-    });
+  function handleOnPlay(song: Song) {
+    setCurrentSong(song);
     const newTrackStack = tracks.map((track: { [key: string]: any }) => {
-      const active = track.preview_url === songUrl;
+      const active = track.preview_url === song.songUrl;
       //   console.log("returning obj: ", { ...track, isActive: active });
       return { ...track, isActive: active };
     });

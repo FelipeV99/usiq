@@ -7,6 +7,7 @@ import SongrowTwo from "../../components/song row/SongrowTwo";
 import { useCurrentSongContext, useTrackstackContext } from "../../App";
 import { useEffect } from "react";
 
+import { Song } from "../../App";
 const Album = () => {
   const album: any = useLoaderData();
   //   console.log("album from laoder data", album);
@@ -22,35 +23,21 @@ const Album = () => {
   // console.log("location state from album", location.state);
   useEffect(() => {
     if (location.state?.autoplay === true) {
-      handleOnPlay(
-        0,
-        albumWithImg[0].preview_url,
-        albumWithImg[0].imgUrl,
-        albumWithImg[0].name,
-        albumWithImg[0].artists[0].name,
-        albumWithImg[0].duration_ms
-      );
+      handleOnPlay({
+        indexInStack: 0,
+        songUrl: albumWithImg[0].preview_url,
+        imgUrl: albumWithImg[0].imgUrl,
+        name: albumWithImg[0].name,
+        artist: albumWithImg[0].artists[0].name,
+        trackDurationMs: albumWithImg[0].duration_ms,
+      });
     }
   }, []);
 
-  function handleOnPlay(
-    indexInStack: number,
-    songUrl: string,
-    imgUrl: string,
-    name: string,
-    artist: string,
-    trackDurationMs: number
-  ) {
-    setCurrentSong({
-      indexInStack,
-      songUrl,
-      imgUrl,
-      name,
-      artist,
-      trackDurationMs,
-    });
+  function handleOnPlay(song: Song) {
+    setCurrentSong(song);
     const newTrackStack = albumWithImg.map((track: { [key: string]: any }) => {
-      const active = track.preview_url === songUrl;
+      const active = track.preview_url === song.songUrl;
       //   console.log("returning obj: ", { ...track, isActive: active });
       return { ...track, isActive: active };
     });
@@ -74,14 +61,14 @@ const Album = () => {
           <button
             className="btn-round"
             onClick={() => {
-              handleOnPlay(
-                0,
-                albumWithImg[0].preview_url,
-                albumWithImg[0].imgUrl,
-                albumWithImg[0].name,
-                albumWithImg[0].artists[0].name,
-                albumWithImg[0].duration_ms
-              );
+              handleOnPlay({
+                indexInStack: 0,
+                songUrl: albumWithImg[0].preview_url,
+                imgUrl: albumWithImg[0].imgUrl,
+                name: albumWithImg[0].name,
+                artist: albumWithImg[0].artists[0].name,
+                trackDurationMs: albumWithImg[0].duration_ms,
+              });
             }}
           >
             {" "}

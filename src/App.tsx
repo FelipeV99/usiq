@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Outlet, useNavigation } from "react-router-dom";
 import Player from "./components/player/Player";
 import Login from "./pages/auth/Login";
@@ -18,23 +25,29 @@ import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 type Playlist = { [key: string]: any };
 type Artist = { [key: string]: any };
+
+export type Song = {
+  indexInStack: number;
+  songUrl: string;
+  imgUrl: string;
+  name: string;
+  artist: string;
+  trackDurationMs: number;
+};
 type TokenContextType = {
   token: string;
   setToken: any;
 };
-// type CurrentSongContextType = {
-//   name: string;
-//   artist: string;
-//   album: string;
-//   progress: number;
-//   state: "playing" | "paused";
-//   imgUrl: string;
-// };
-type CurrentSongContextType = { [index: string]: any };
+type CurrentSongContextType = {
+  currentSong: Song;
+  setCurrentSong: Dispatch<SetStateAction<Song>>;
+};
+
 type TrackStackContextType = { [index: string]: any };
+
 type CurrentPageContextType = {
   currentPage: string;
-  setCurrentPage: any;
+  setCurrentPage: Dispatch<SetStateAction<string>>;
 };
 
 const TokenContext = createContext<TokenContextType | null>(null);
@@ -81,12 +94,14 @@ export function useCurrentPageContext() {
 function App() {
   const [token, setToken] = useState<string>("");
   const [trackStack, setTrackStack] = useState<{}[]>([]);
-  const [currentSong, setCurrentSong] = useState<{
-    songUrl?: string;
-    imgUrl?: string;
-    name?: string;
-    artist?: string;
-  }>({});
+  const [currentSong, setCurrentSong] = useState<Song>({
+    indexInStack: 0,
+    name: "",
+    artist: "",
+    imgUrl: "",
+    songUrl: "",
+    trackDurationMs: 0,
+  });
   const [currentPage, setCurrentPage] = useState<string>("");
   const { state } = useNavigation();
   // const [isQueueVisible, setIsQueueVisible] = useState<boolean>(false);

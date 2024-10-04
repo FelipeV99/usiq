@@ -4,6 +4,7 @@ import "./playlist.css";
 import AsyncImg from "../../components/async img/AsyncImg";
 import SongrowTwo from "../../components/song row/SongrowTwo";
 import { useCurrentSongContext, useTrackstackContext } from "../../App";
+import { Song } from "../../App";
 
 const Playlist = () => {
   const { playlist, playlistTracksFormatted }: any = useLoaderData();
@@ -16,25 +17,11 @@ const Playlist = () => {
   //     return { ...trackObj.track, imgUrl: trackObj.track.album.images[0].url };
   //   }
   // );
-  function handleOnPlay(
-    indexInStack: number,
-    songUrl: string,
-    imgUrl: string,
-    name: string,
-    artist: string,
-    trackDurationMs: number
-  ) {
-    setCurrentSong({
-      indexInStack,
-      songUrl,
-      imgUrl,
-      name,
-      artist,
-      trackDurationMs,
-    });
+  function handleOnPlay(song: Song) {
+    setCurrentSong(song);
     const newTrackStack = playlistTracksFormatted.map(
       (track: { [key: string]: any }) => {
-        const active = track.preview_url === songUrl;
+        const active = track.preview_url === song.songUrl;
         return { ...track, isActive: active };
       }
     );
@@ -58,14 +45,14 @@ const Playlist = () => {
           <button
             className="btn-round"
             onClick={() => {
-              handleOnPlay(
-                0,
-                playlistTracksFormatted[0].preview_url,
-                playlistTracksFormatted[0].imgUrl,
-                playlistTracksFormatted[0].name,
-                playlistTracksFormatted[0].artists[0].name,
-                playlistTracksFormatted[0].duration_ms
-              );
+              handleOnPlay({
+                indexInStack: 0,
+                songUrl: playlistTracksFormatted[0].preview_url,
+                imgUrl: playlistTracksFormatted[0].imgUrl,
+                name: playlistTracksFormatted[0].name,
+                artist: playlistTracksFormatted[0].artists[0].name,
+                trackDurationMs: playlistTracksFormatted[0].duration_ms,
+              });
             }}
           >
             <img

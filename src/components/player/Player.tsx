@@ -2,6 +2,8 @@ import "./player.css";
 import { useCurrentSongContext, useTrackstackContext } from "../../App";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { Song } from "../../App";
+
 const Player = () =>
   // {isQueueVisible, setIsQueueVisible}: {isQueueVisible: boolean, setIsQueueVisible: React.Dispatch<React.SetStateAction<boolean>>}
   {
@@ -91,7 +93,7 @@ const Player = () =>
           }
         )[0];
         // console.log("this is the previous track", previousTrack);
-        const newCurrentSong: { [key: string]: any } = {
+        const newCurrentSong: Song = {
           indexInStack: currentSong.indexInStack - 1,
           songUrl: previousTrack.preview_url,
           imgUrl: previousTrack.imgUrl,
@@ -137,7 +139,7 @@ const Player = () =>
           }
         )[0];
         // console.log("this is the next track", nextTrack);
-        const newCurrentSong: { [key: string]: any } = {
+        const newCurrentSong: Song = {
           indexInStack: currentSong.indexInStack + 1,
           songUrl: nextTrack.preview_url,
           imgUrl: nextTrack.imgUrl,

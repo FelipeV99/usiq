@@ -3,28 +3,15 @@ import "./tracklist.css";
 import { useCurrentSongContext, useTrackstackContext } from "../../App";
 import SongrowTwo from "../song row/SongrowTwo";
 
+import { Song } from "../../App";
 const Tracklist = ({ tracks }: { [key: string]: any }) => {
   const { setCurrentSong } = useCurrentSongContext();
   const { setTrackStack } = useTrackstackContext();
 
-  function handleOnPlay(
-    indexInStack: number,
-    songUrl: string,
-    imgUrl: string,
-    name: string,
-    artist: string,
-    trackDurationMs: number
-  ) {
-    setCurrentSong({
-      indexInStack,
-      songUrl,
-      imgUrl,
-      name,
-      artist,
-      trackDurationMs,
-    });
+  function handleOnPlay(song: Song) {
+    setCurrentSong(song);
     const newTrackStack = tracks.map((track: { [key: string]: any }) => {
-      const active = track.preview_url === songUrl;
+      const active = track.preview_url === song.songUrl;
       //   console.log("returning obj: ", { ...track, isActive: active });
       return { ...track, isActive: active };
     });

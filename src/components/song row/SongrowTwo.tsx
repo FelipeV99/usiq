@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./song-row-two.css";
 import { useCurrentSongContext } from "../../App";
 import AsyncImg from "../async img/AsyncImg";
+import { Song } from "../../App";
 const SongrowTwo = ({
   song,
   album,
@@ -25,14 +26,7 @@ const SongrowTwo = ({
   includeIndex?: boolean;
   includeImg?: boolean;
   includeAlbum?: boolean;
-  handleOnPlay: (
-    indexInStack: number,
-    songUrl: string,
-    imgUrl: string,
-    name: string,
-    artist: string,
-    trackDurationMs: number
-  ) => void;
+  handleOnPlay: (song: Song) => void;
 }) => {
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -57,6 +51,14 @@ const SongrowTwo = ({
 
     return timeResult;
   }
+  // const yes: Song = {
+  //   indexInStack: 1,
+  //   songUrl: "string",
+  //   imgUrl: "string",
+  //   name: "string",
+  //   artist: "string",
+  //   trackDurationMs: 2,
+  // };
 
   return (
     <div
@@ -64,7 +66,14 @@ const SongrowTwo = ({
         isPlaying ? "playing" : isHover ? "hover" : ""
       }`}
       onClick={() =>
-        handleOnPlay(index, songUrl, imgUrl, song, artist, duration)
+        handleOnPlay({
+          indexInStack: index,
+          songUrl,
+          imgUrl,
+          name: song,
+          artist,
+          trackDurationMs: duration,
+        })
       }
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
