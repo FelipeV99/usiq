@@ -8,7 +8,7 @@ import RecentTracks from "./RecentTracks";
 import AlbumCard from "../../components/cards/album card/AlbumCard";
 import AsyncImg from "../../components/async img/AsyncImg";
 
-import { Song, useTokenContext } from "../../App";
+import { Song, ArtistType, useTokenContext } from "../../App";
 
 const Home = () => {
   const { token, setToken } = useTokenContext();
@@ -16,13 +16,11 @@ const Home = () => {
   const [recentTracks, setRecentTracks] = useState<Song[]>([]);
   const [isRecentTracksLoading, setIsRecentTracksLoading] =
     useState<boolean>(false);
-  const [favoriteArtists, setFavoriteArtists] = useState<{}[]>([]);
+  const [favoriteArtists, setFavoriteArtists] = useState<ArtistType[]>([]);
   const [isFavoriteArtistsLoading, setIsFavoriteArtistsLoading] =
     useState<boolean>(false);
 
   useEffect(() => {
-    // const token = window.localStorage.getItem("token") || "";
-
     async function getRecentlyPlayedTracks() {
       setIsRecentTracksLoading(true);
       await fetchWebApi(
@@ -33,7 +31,7 @@ const Home = () => {
         if (!res.error) {
           const recentTracksFormatted = res.items.map(
             (item: { [key: string]: any }, index: number) => {
-              console.log("track obj", item.track);
+              // console.log("track obj", item.track);
               return {
                 indexInStack: index,
                 name: item.track.name,
@@ -65,7 +63,18 @@ const Home = () => {
         token
       ).then((res) => {
         if (!res.error) {
-          setFavoriteArtists(res.items);
+          // console.log("artists from request: ", res.items);
+          const favArtistsFormatted = res.items.map(
+            (artist: { [key: string]: any }) => {
+              return {
+                ID: artist.id,
+                name: artist.name,
+                imgUrl: artist.images[0].url,
+                totalFollowers: artist.followers.total,
+              };
+            }
+          );
+          setFavoriteArtists(favArtistsFormatted);
         } else {
           window.localStorage.setItem("token", "");
           setToken("");
@@ -158,18 +167,16 @@ const Home = () => {
           <div className="favorite-artists-container">
             {isFavoriteArtistsLoading
               ? placeFavoriteArtistsSkeleton()
-              : favoriteArtists.map(
-                  (artist: { [key: string]: any }, index: number) => {
-                    return (
-                      <ArtistCard
-                        key={index}
-                        ID={artist.id}
-                        imgUrl={artist.images[0].url}
-                        name={artist.name}
-                      />
-                    );
-                  }
-                )}
+              : favoriteArtists.map((artist: ArtistType, index: number) => {
+                  return (
+                    <ArtistCard
+                      key={index}
+                      ID={artist.ID}
+                      imgUrl={artist.imgUrl}
+                      name={artist.name}
+                    />
+                  );
+                })}
           </div>
         </div>
 

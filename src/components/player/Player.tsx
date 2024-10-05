@@ -44,7 +44,7 @@ const Player = () => {
   }, [isPlaying]);
 
   const startAnimation = useCallback(() => {
-    console.log("started animation");
+    // console.log("started animation");
     const animate = () => {
       updateProgress();
       playAnimationRef.current = requestAnimationFrame(animate);

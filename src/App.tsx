@@ -30,6 +30,13 @@ export type Song = {
   trackDurationMs: number;
 };
 
+export type ArtistType = {
+  ID: string;
+  name: string;
+  imgUrl: string;
+  totalFollowers: number;
+};
+
 type TokenContextType = {
   token: string;
   setToken: Dispatch<SetStateAction<string>>;

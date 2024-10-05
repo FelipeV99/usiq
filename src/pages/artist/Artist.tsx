@@ -8,7 +8,7 @@ import {
   useTokenContext,
   useTrackstackContext,
 } from "../../App";
-import { Song } from "../../App";
+import { Song, ArtistType } from "../../App";
 
 const Artist = () => {
   const artist: any = useLoaderData();
@@ -19,12 +19,11 @@ const Artist = () => {
 
   const [topTracks, setTopTracks] = useState<Song[]>([]);
   const [isUserFollowing, setIsUserFollowing] = useState<boolean>(false);
-  // const token = window.localStorage.getItem("token") || "";
 
   useEffect(() => {
     async function getTopTracks() {
       await fetchWebApi(
-        `v1/artists/${artist.id}/top-tracks`,
+        `v1/artists/${artist.ID}/top-tracks`,
         "GET",
         token
       ).then((res) => {
@@ -52,11 +51,10 @@ const Artist = () => {
     getTopTracks();
     async function checkIsFollowing() {
       await fetchWebApi(
-        "v1/me/following/contains?type=artist&ids=" + artist.id,
+        "v1/me/following/contains?type=artist&ids=" + artist.ID,
         "GET",
         token
       ).then((res) => {
-        console.log("is user folllowing this artist?", res[0]);
         setIsUserFollowing(res[0]);
       });
     }
@@ -67,14 +65,14 @@ const Artist = () => {
     try {
       if (isUserFollowing) {
         await fetchWebApi(
-          "v1/me/following?type=artist&ids=" + artist.id,
+          "v1/me/following?type=artist&ids=" + artist.ID,
           "DELETE",
           token
         );
         setIsUserFollowing(false);
       } else {
         await fetchWebApi(
-          "v1/me/following?type=artist&ids=" + artist.id,
+          "v1/me/following?type=artist&ids=" + artist.ID,
           "PUT",
           token
         );
@@ -101,7 +99,7 @@ const Artist = () => {
         <div
           className="header-background"
           style={{
-            background: `url(${artist.images[0].url}) no-repeat`,
+            background: `url(${artist.imgUrl}) no-repeat`,
             backgroundSize: "cover",
             backgroundPositionY: "50%",
           }}
@@ -109,14 +107,14 @@ const Artist = () => {
         <div className="background-overlay"></div>
 
         <div className="ah-img-container">
-          <img src={artist.images[0].url} alt="" />
+          <img src={artist.imgUrl} alt="" />
         </div>
         <div className="ah-info">
           <div>
             <h1>{artist.name}</h1>
           </div>
           <div className="followers-container">
-            <p>{artist.followers.total.toLocaleString()} Followers</p>
+            <p>{artist.totalFollowers.toLocaleString()} Followers</p>
             <div className="header-btns">
               <button
                 className="btn-secondary"
@@ -144,14 +142,24 @@ const Artist = () => {
 
 export async function artistLoader({ params }: { [key: string]: any }) {
   const token = window.localStorage.getItem("token") || "";
-  let artist: { [key: string]: any } = {};
+  let artist: ArtistType = {
+    ID: "",
+    name: "",
+    imgUrl: "",
+    totalFollowers: 0,
+  };
   let isError = false;
   await fetchWebApi("v1/artists/" + params.id, "GET", token).then((res) => {
     if (res.error) {
-      window.localStorage.setItem("token", "undefined");
+      window.localStorage.setItem("token", "");
       isError = true;
     } else {
-      artist = res;
+      artist = {
+        ID: res.id,
+        name: res.name,
+        imgUrl: res.images[0].url,
+        totalFollowers: res.followers.total,
+      };
     }
   });
 

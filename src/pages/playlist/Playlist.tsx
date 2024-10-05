@@ -13,12 +13,10 @@ const Playlist = () => {
 
   function handleOnPlay(song: Song) {
     setCurrentSong(song);
-    const newTrackStack = playlist.tracks.map(
-      (track: { [key: string]: any }) => {
-        const active = track.songUrl === song.songUrl;
-        return { ...track, isActive: active };
-      }
-    );
+    const newTrackStack = playlist.tracks.map((track: Song) => {
+      const active = track.songUrl === song.songUrl;
+      return { ...track, isActive: active };
+    });
     setTrackStack(newTrackStack);
   }
 
@@ -34,8 +32,6 @@ const Playlist = () => {
           <div className="ph-details">
             <p className="other-p">{playlist.totalTracks} tracks</p>
           </div>
-          {/* <p className="other-p ph-description">{playlist.description}</p> */}
-
           <button
             className="btn-round"
             onClick={() => {
