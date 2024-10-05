@@ -4,7 +4,7 @@ import { useCurrentSongContext, useTrackstackContext } from "../../App";
 import SongrowTwo from "../song row/SongrowTwo";
 
 import { Song } from "../../App";
-const Tracklist = ({ tracks }: { [key: string]: any }) => {
+const Tracklist = ({ tracks }: { tracks: Song[] }) => {
   const { setCurrentSong } = useCurrentSongContext();
   const { setTrackStack } = useTrackstackContext();
 
@@ -20,17 +20,11 @@ const Tracklist = ({ tracks }: { [key: string]: any }) => {
 
   return (
     <div className="tracklist-container">
-      {tracks.map((track: { [key: string]: any }, index: number) => {
+      {tracks.map((track: Song, index: number) => {
         return (
           <SongrowTwo
             key={index}
-            index={index}
-            song={track.name}
-            album={track.album.name}
-            artist={track.artists[0].name}
-            duration={track.duration_ms}
-            imgUrl={track.imgUrl}
-            songUrl={track.preview_url}
+            song={track}
             handleOnPlay={handleOnPlay}
             includeIndex={true}
             includeImg={true}

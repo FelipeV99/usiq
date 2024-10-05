@@ -87,11 +87,12 @@ const Player = () => {
         // console.log("this is the previous track", previousTrack);
         const newCurrentSong: Song = {
           indexInStack: currentSong.indexInStack - 1,
-          songUrl: previousTrack.preview_url,
+          songUrl: previousTrack.songUrl,
           imgUrl: previousTrack.imgUrl,
           name: previousTrack.name,
-          artist: previousTrack.artists[0].name,
-          trackDurationMs: previousTrack.duration_ms,
+          album: previousTrack.album,
+          artist: previousTrack.artist,
+          trackDurationMs: previousTrack.trackDurationMs,
         };
 
         setCurrentSong(newCurrentSong);
@@ -135,11 +136,12 @@ const Player = () => {
         // console.log("this is the next track", nextTrack);
         const newCurrentSong: Song = {
           indexInStack: currentSong.indexInStack + 1,
-          songUrl: nextTrack.preview_url,
+          songUrl: nextTrack.songUrl,
           imgUrl: nextTrack.imgUrl,
           name: nextTrack.name,
-          artist: nextTrack.artists[0].name,
-          trackDurationMs: nextTrack.duration_ms,
+          album: nextTrack.album,
+          artist: nextTrack.artist,
+          trackDurationMs: nextTrack.trackDurationMs,
         };
         // audioRef.current.
 

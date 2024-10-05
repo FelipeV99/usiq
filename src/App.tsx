@@ -20,16 +20,19 @@ import ArtistSkeleton from "./pages/artist/ArtistSkeleton";
 import AlbumSkeleton from "./pages/album/AlbumSkeleton";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
-type Playlist = { [key: string]: any };
-type Artist = { [key: string]: any };
-
 export type Song = {
   indexInStack: number;
   songUrl: string;
   imgUrl: string;
   name: string;
+  album: string;
   artist: string;
   trackDurationMs: number;
+};
+
+type TokenContextType = {
+  token: string;
+  setToken: Dispatch<SetStateAction<string>>;
 };
 
 type CurrentSongContextType = {
@@ -47,6 +50,7 @@ type CurrentPageContextType = {
 const CurrentSongContext = createContext<CurrentSongContextType | null>(null);
 const TrackStackContext = createContext<TrackStackContextType | null>(null);
 const CurrentPageContext = createContext<CurrentPageContextType | null>(null);
+const TokenContext = createContext<TokenContextType | null>(null);
 
 export function useCurrentSongContext() {
   const theCurrentSongContext = useContext(CurrentSongContext);
@@ -75,13 +79,24 @@ export function useCurrentPageContext() {
   return theCurrentPageContext;
 }
 
+export function useTokenContext() {
+  const theTokenContext = useContext(TokenContext);
+  if (theTokenContext == null) {
+    throw new Error("must use within provider");
+  }
+  return theTokenContext;
+}
+
 function App() {
   const [token, setToken] = useState<string>("");
-  const [trackStack, setTrackStack] = useState<{}[]>([]);
+  const [trackStack, setTrackStack] = useState<
+    { song: Song; isActive: boolean }[]
+  >([]);
   const [currentSong, setCurrentSong] = useState<Song>({
     indexInStack: 0,
     name: "",
     artist: "",
+    album: "",
     imgUrl: "",
     songUrl: "",
     trackDurationMs: 0,
@@ -136,30 +151,32 @@ function App() {
     <CurrentSongContext.Provider value={{ currentSong, setCurrentSong }}>
       <TrackStackContext.Provider value={{ trackStack, setTrackStack }}>
         <CurrentPageContext.Provider value={{ currentPage, setCurrentPage }}>
-          <div className="page-container">
-            {token === "" || token === "undefined" ? (
-              <Login />
-            ) : (
-              <>
-                <Sidebar />
-                <ScrollToTop />
-                <div className="right-container">
-                  <div>
-                    <Topbar />
+          <TokenContext.Provider value={{ token, setToken }}>
+            <div className="page-container">
+              {token === "" || token === "undefined" ? (
+                <Login />
+              ) : (
+                <>
+                  <Sidebar />
+                  <ScrollToTop />
+                  <div className="right-container">
+                    <div>
+                      <Topbar />
+                    </div>
+                    <div className="content-container">
+                      {state === "loading" ? loadSkeleton() : <Outlet />}
+                    </div>
                   </div>
-                  <div className="content-container">
-                    {state === "loading" ? loadSkeleton() : <Outlet />}
+                  <Player />
+                  <div className="bg">
+                    <div className="bubble-1"></div>
+                    <div className="bubble-2"></div>
+                    <div className="bubble-3"></div>
                   </div>
-                </div>
-                <Player />
-                <div className="bg">
-                  <div className="bubble-1"></div>
-                  <div className="bubble-2"></div>
-                  <div className="bubble-3"></div>
-                </div>
-              </>
-            )}
-          </div>
+                </>
+              )}
+            </div>
+          </TokenContext.Provider>
         </CurrentPageContext.Provider>
       </TrackStackContext.Provider>
     </CurrentSongContext.Provider>

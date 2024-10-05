@@ -2,7 +2,7 @@ import { useCurrentSongContext, useTrackstackContext } from "../../App";
 import SongrowTwo from "../../components/song row/SongrowTwo";
 import { Song } from "../../App";
 
-export default function RecentTracks({ tracks }: { [key: string]: any }) {
+export default function RecentTracks({ tracks }: { tracks: Song[] }) {
   const { setCurrentSong } = useCurrentSongContext();
   const { setTrackStack } = useTrackstackContext();
 
@@ -15,20 +15,16 @@ export default function RecentTracks({ tracks }: { [key: string]: any }) {
     });
     setTrackStack(newTrackStack);
   }
+  console.log("tracks from recent tracks as sent by props", tracks);
 
   return (
     <div className="rt-container">
       <div className="rt-grid">
-        {tracks.map((track: { [key: string]: any }, index: number) => {
+        {tracks.map((track: Song, index: number) => {
           return (
             <SongrowTwo
               key={index}
-              index={index}
-              song={track.name}
-              artist={track.artists[0].name}
-              duration={track.duration_ms}
-              imgUrl={track.imgUrl}
-              songUrl={track.preview_url}
+              song={track}
               handleOnPlay={handleOnPlay}
               includeIndex={false}
               includeImg={true}

@@ -8,9 +8,10 @@ import RecentTracks from "./RecentTracks";
 import AlbumCard from "../../components/cards/album card/AlbumCard";
 import AsyncImg from "../../components/async img/AsyncImg";
 
-import { Song } from "../../App";
+import { Song, useTokenContext } from "../../App";
 
 const Home = () => {
+  const { token, setToken } = useTokenContext();
   const [newAlbums, setNewAlbums] = useState<{}[]>([]);
   const [recentTracks, setRecentTracks] = useState<Song[]>([]);
   const [isRecentTracksLoading, setIsRecentTracksLoading] =
@@ -20,7 +21,8 @@ const Home = () => {
     useState<boolean>(false);
 
   useEffect(() => {
-    const token = window.localStorage.getItem("token") || "";
+    // const token = window.localStorage.getItem("token") || "";
+
     async function getRecentlyPlayedTracks() {
       setIsRecentTracksLoading(true);
       await fetchWebApi(
@@ -30,18 +32,27 @@ const Home = () => {
       ).then((res) => {
         if (!res.error) {
           const recentTracksFormatted = res.items.map(
-            (item: { [key: string]: any }) => {
+            (item: { [key: string]: any }, index: number) => {
+              console.log("track obj", item.track);
               return {
-                ...item.track,
+                indexInStack: index,
+                name: item.track.name,
+                album: item.track.album.name,
+                artist: item.track.artists[0].name,
                 imgUrl: item.track.album.images[0].url,
+                songUrl: item.track.preview_url,
+                trackDurationMs: item.track.duration_ms,
               };
             }
           );
           setRecentTracks(recentTracksFormatted);
           setIsRecentTracksLoading(false);
         } else {
-          // console.log("there was an error getitng recent tracks");
+          console.log("there was an error getitng recent tracks");
+          window.localStorage.setItem("token", "");
+
           setIsRecentTracksLoading(false);
+          setToken("");
         }
       });
     }
@@ -55,6 +66,9 @@ const Home = () => {
       ).then((res) => {
         if (!res.error) {
           setFavoriteArtists(res.items);
+        } else {
+          window.localStorage.setItem("token", "");
+          setToken("");
         }
         setIsFavoriteArtistsLoading(false);
       });
@@ -69,6 +83,7 @@ const Home = () => {
         if (res.error) {
           console.log("error in new albums", res.error);
           window.localStorage.setItem("token", "");
+          setToken("");
         } else {
           setNewAlbums(res.albums.items);
         }

@@ -170,10 +170,15 @@ export async function discoverLoader() {
     return redirect("/login");
   } else {
     const recentTracksFormatted = data[4].items.map(
-      (item: { [key: string]: any }) => {
+      (item: { [key: string]: any }, index: number) => {
         return {
-          ...item.track,
+          indexInStack: index,
+          name: item.track.name,
+          album: item.track.album.name,
+          artist: item.track.artists[0].name,
           imgUrl: item.track.album.images[0].url,
+          songUrl: item.track.preview_url,
+          trackDurationMs: item.track.duration_ms,
         };
       }
     );

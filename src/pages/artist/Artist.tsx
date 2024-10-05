@@ -3,38 +3,49 @@ import { fetchWebApi } from "../../config/spotify";
 import "./artist.css";
 import { useEffect, useState } from "react";
 import Tracklist from "../../components/tracklist/Tracklist";
-import { useCurrentSongContext, useTrackstackContext } from "../../App";
+import {
+  useCurrentSongContext,
+  useTokenContext,
+  useTrackstackContext,
+} from "../../App";
+import { Song } from "../../App";
 
 const Artist = () => {
   const artist: any = useLoaderData();
 
   const { setCurrentSong } = useCurrentSongContext();
   const { setTrackStack } = useTrackstackContext();
+  const { token, setToken } = useTokenContext();
 
-  const [topTracks, setTopTracks] = useState<any>([]);
+  const [topTracks, setTopTracks] = useState<Song[]>([]);
   const [isUserFollowing, setIsUserFollowing] = useState<boolean>(false);
-  const token = window.localStorage.getItem("token") || "";
+  // const token = window.localStorage.getItem("token") || "";
 
   useEffect(() => {
     async function getTopTracks() {
-      let isError = false;
-      let topTracksReq: { [key: string]: any } = {};
       await fetchWebApi(
         `v1/artists/${artist.id}/top-tracks`,
         "GET",
         token
       ).then((res) => {
         if (res.error) {
-          window.localStorage.setItem("token", "undefined");
-          isError = true;
+          window.localStorage.setItem("token", "");
+          setToken("");
         } else {
-          topTracksReq = res;
-          const topTracksWithImage = topTracksReq.tracks.map(
-            (track: { [key: string]: any }) => {
-              return { ...track, imgUrl: track.album.images[0].url };
+          const topTracksFormatted = res.tracks.map(
+            (track: { [key: string]: any }, index: number) => {
+              return {
+                indexInStack: index,
+                name: track.name,
+                album: track.album.name,
+                artist: track.artists[0].name,
+                imgUrl: track.album.images[0].url,
+                songUrl: track.preview_url,
+                trackDurationMs: track.duration_ms,
+              };
             }
           );
-          setTopTracks(topTracksWithImage);
+          setTopTracks(topTracksFormatted);
         }
       });
     }
@@ -75,16 +86,9 @@ const Artist = () => {
   }
 
   function handleOnClickPlayArtist() {
-    setCurrentSong({
-      indexInStack: 0,
-      songUrl: topTracks[0].preview_url,
-      imgUrl: topTracks[0].imgUrl,
-      name: topTracks[0].name,
-      artist: topTracks[0].artists[0].name,
-      trackDurationMs: topTracks[0].duration_ms,
-    });
+    setCurrentSong(topTracks[0]);
     const newTrackStack = topTracks.map((track: { [key: string]: any }) => {
-      const active = track.preview_url === topTracks[0].preview_url;
+      const active = track.songUrl === topTracks[0].songUrl;
       //   console.log("returning obj: ", { ...track, isActive: active });
       return { ...track, isActive: active };
     });

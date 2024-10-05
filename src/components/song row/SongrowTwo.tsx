@@ -5,24 +5,12 @@ import AsyncImg from "../async img/AsyncImg";
 import { Song } from "../../App";
 const SongrowTwo = ({
   song,
-  album,
-  artist,
-  duration,
-  index,
-  songUrl,
-  imgUrl,
   includeIndex = true,
   includeImg = false,
   includeAlbum = false,
   handleOnPlay,
 }: {
-  song: string;
-  album?: string;
-  artist: string;
-  duration: number;
-  index: number;
-  songUrl: string;
-  imgUrl: string;
+  song: Song;
   includeIndex?: boolean;
   includeImg?: boolean;
   includeAlbum?: boolean;
@@ -34,7 +22,10 @@ const SongrowTwo = ({
 
   useEffect(() => {
     setIsPlaying(false);
-    if (currentSong.indexInStack === index && currentSong.songUrl === songUrl) {
+    if (
+      currentSong.indexInStack === song.indexInStack &&
+      currentSong.songUrl === song.songUrl
+    ) {
       setIsPlaying(true);
     }
   }, [currentSong]);
@@ -51,62 +42,45 @@ const SongrowTwo = ({
 
     return timeResult;
   }
-  // const yes: Song = {
-  //   indexInStack: 1,
-  //   songUrl: "string",
-  //   imgUrl: "string",
-  //   name: "string",
-  //   artist: "string",
-  //   trackDurationMs: 2,
-  // };
 
   return (
     <div
       className={`song-row-two ${
         isPlaying ? "playing" : isHover ? "hover" : ""
       }`}
-      onClick={() =>
-        handleOnPlay({
-          indexInStack: index,
-          songUrl,
-          imgUrl,
-          name: song,
-          artist,
-          trackDurationMs: duration,
-        })
-      }
+      onClick={() => handleOnPlay(song)}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
       <div className="srt-left">
         {includeIndex ? (
-          <p className="other-p srt-index">{index + 1}</p>
+          <p className="other-p srt-index">{song.indexInStack + 1}</p>
         ) : (
           <></>
         )}
         {includeImg ? (
           <div className="srt-img-container">
-            <AsyncImg src={imgUrl} proportions={1} />
+            <AsyncImg src={song.imgUrl} proportions={1} />
           </div>
         ) : (
           <></>
         )}
 
         <div>
-          <p className="bold">{song}</p>
-          <p>{artist}</p>
+          <p className="bold">{song.name}</p>
+          <p>{song.artist}</p>
         </div>
       </div>
       {includeAlbum ? (
         <div className="srt-middle">
-          <p className="other-p">{album}</p>
+          <p className="other-p">{song.album}</p>
         </div>
       ) : (
         <></>
       )}
 
       <div>
-        <p className="other-p">{msToHMS(duration)}</p>
+        <p className="other-p">{msToHMS(song.trackDurationMs)}</p>
       </div>
     </div>
   );
