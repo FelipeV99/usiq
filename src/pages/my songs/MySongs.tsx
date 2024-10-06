@@ -5,7 +5,7 @@ import Tracklist from "../../components/tracklist/Tracklist";
 import { Song } from "../../App";
 
 const MySongs = () => {
-  const mySongs: any = useLoaderData();
+  const mySongs = useLoaderData() as Song[];
   return (
     <div>
       <h2>My Songs</h2>

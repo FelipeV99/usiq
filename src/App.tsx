@@ -44,7 +44,7 @@ export type AlbumType = {
   totalTracks?: number;
   imgUrl: string;
   releaseDate?: string;
-  tracks?: Song[];
+  tracks: Song[] | [];
 };
 
 export type PlaylistType = {
@@ -54,7 +54,7 @@ export type PlaylistType = {
   totalTracks?: number;
   description: string;
   imgUrl: string;
-  tracks?: Song[];
+  tracks: Song[] | [];
 };
 
 type TokenContextType = {

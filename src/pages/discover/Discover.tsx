@@ -152,7 +152,14 @@ export async function discoverLoader() {
     "v1/me/player/recently-played?limit=6",
   ];
   let playlists: PlaylistType[] = [
-    { id: "", name: "", ownerName: "", description: "", imgUrl: "" },
+    {
+      id: "",
+      name: "",
+      ownerName: "",
+      description: "",
+      imgUrl: "",
+      tracks: [],
+    },
   ];
 
   const promises = endpoints.map((endpoint) => {
@@ -191,6 +198,7 @@ export async function discoverLoader() {
         ownerName: data[index].owner.display_name,
         description: data[index].description,
         imgUrl: "",
+        tracks: [],
       });
     }
     return {

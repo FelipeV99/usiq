@@ -7,7 +7,8 @@ import { PlaylistType, useTStackCSongContext } from "../../App";
 import { Song } from "../../App";
 
 const Playlist = () => {
-  const playlist: any = useLoaderData();
+  //return type of useloaderData is unknown
+  const playlist = useLoaderData() as PlaylistType;
   const { setCurrentSong, setTrackStack } = useTStackCSongContext();
 
   function handleOnPlay(song: Song) {
@@ -65,6 +66,7 @@ export async function playlistLoader({ params }: { [key: string]: any }) {
     totalTracks: 0,
     description: "",
     imgUrl: "",
+    tracks: [],
   };
   let isError = false;
   await fetchWebApi("v1/playlists/" + params.id, "GET", token).then((res) => {

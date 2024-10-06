@@ -7,8 +7,7 @@ import { useTokenContext, useTStackCSongContext } from "../../App";
 import { Song, ArtistType } from "../../App";
 
 const Artist = () => {
-  const artist: any = useLoaderData();
-
+  const artist = useLoaderData() as ArtistType;
   const { setCurrentSong, setTrackStack } = useTStackCSongContext();
   const { token, setToken } = useTokenContext();
 

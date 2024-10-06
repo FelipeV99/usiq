@@ -6,7 +6,7 @@ import AlbumCard from "../../components/cards/album card/AlbumCard";
 import { AlbumType } from "../../App";
 
 const MyAlbums = () => {
-  const myAlbums: any = useLoaderData();
+  const myAlbums = useLoaderData() as AlbumType[];
   return (
     <div className="my-albums-outer-container">
       <h2>My Albums</h2>
@@ -29,6 +29,7 @@ export async function myAlbumsLoader() {
       totalTracks: 0,
       imgUrl: "",
       releaseDate: "",
+      tracks: [],
     },
   ];
   let isError = false;

@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { Song, AlbumType } from "../../App";
 
 const Album = () => {
-  const album: any = useLoaderData();
+  const album = useLoaderData() as AlbumType;
 
   const { setCurrentSong, setTrackStack } = useTStackCSongContext();
 
@@ -39,7 +39,7 @@ const Album = () => {
           <h1>{album.name}</h1>
           <p className="bold">{album.artist}</p>
           <div className="alh-details">
-            <p className="other-p">{album.releaseDate.split("-")[0]}</p>
+            <p className="other-p">{album.releaseDate?.split("-")[0]}</p>
             <div className="dot-separator"></div>
             <p className="other-p">{album.totalTracks} tracks</p>
           </div>
@@ -78,6 +78,7 @@ export async function albumLoader({ params }: { [key: string]: any }) {
     totalTracks: 0,
     imgUrl: "",
     releaseDate: "",
+    tracks: [],
   };
   let isError = false;
   await fetchWebApi("v1/albums/" + params.id, "GET", token).then((res) => {

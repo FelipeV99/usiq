@@ -4,7 +4,7 @@ import "./my-artists.css";
 import ArtistCard from "../../components/cards/artist card/ArtistCard";
 import { ArtistType } from "../../App";
 const MyArtists = () => {
-  const myArtists: any = useLoaderData();
+  const myArtists = useLoaderData() as ArtistType[];
   return (
     <div>
       <h2>My Artists</h2>

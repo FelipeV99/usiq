@@ -72,6 +72,7 @@ export async function searchResultsLoader({ params }: { [key: string]: any }) {
       totalTracks: 0,
       imgUrl: "",
       releaseDate: "",
+      tracks: [],
     },
   ];
 

@@ -12,6 +12,7 @@ const SidebarOptn = ({
   text: string;
 }) => {
   const [isHover, setIsHover] = useState<boolean>(false);
+
   const { currentPage, setCurrentPage } = useCurrentPageContext();
 
   return (
