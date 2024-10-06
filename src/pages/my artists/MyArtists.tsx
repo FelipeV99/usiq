@@ -41,7 +41,6 @@ export async function myArtistsLoader() {
       if (res.error) {
         isError = true;
       } else {
-        console.log("what artists res looks like", res);
         const artistsFormatted = res.artists.items.map(
           (artist: { [key: string]: any }) => {
             return {

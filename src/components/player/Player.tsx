@@ -2,13 +2,14 @@ import "./player.css";
 import { useTStackCSongContext } from "../../App";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Song } from "../../App";
-
 const Player = () => {
   const { trackStack, setTrackStack, currentSong, setCurrentSong } =
     useTStackCSongContext();
-  const audioRef = useRef<any>();
 
+  const audioRef = useRef<HTMLAudioElement>(null);
   const playAnimationRef = useRef<number | null>(null);
+  const valueRef = useRef(0);
+  valueRef.current = 2;
 
   const [volume, setVolume] = useState<number>(100);
   const [songProgress, setSongProgress] = useState<number>(0);
@@ -69,11 +70,11 @@ const Player = () => {
     if (isThereSong) {
       if (isPlaying === false) {
         setIsPlaying(true);
-        audioRef.current.play();
+        audioRef.current?.play();
         startAnimation();
       } else {
         setIsPlaying(false);
-        audioRef.current.pause();
+        audioRef.current?.pause();
         // console.log("trying to cancel animation");
         if (playAnimationRef.current !== null) {
           // console.log("cancel animation");
@@ -86,18 +87,18 @@ const Player = () => {
 
   function handleOnPlayPrevious() {
     if (isThereSong) {
-      audioRef.current.currentTime = 0;
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+      }
 
       setSongProgress(0);
 
-      //maybe i need the current track index and from there i can substract 1 to it and get the repvious track
       if (currentSong.indexInStack !== 0) {
         const previousTrack = trackStack.filter(
           (track: { [key: string]: any }, index: number) => {
             return index === currentSong.indexInStack - 1;
           }
         )[0];
-        // console.log("this is the previous track", previousTrack);
         const newCurrentSong: { song: Song; isActive: boolean } = {
           song: {
             indexInStack: currentSong.indexInStack - 1,
@@ -114,7 +115,6 @@ const Player = () => {
         setCurrentSong(newCurrentSong.song);
         //now update the track stack
         setTrackStack((currentTrackStack: { [key: string]: any }) => {
-          // console.log("current track stack from the prev", currentTrackStack);
           return currentTrackStack.map(
             (track: { [key: string]: any }, index: number) => {
               if (index === currentSong.indexInStack) {
@@ -128,13 +128,11 @@ const Player = () => {
           );
         });
       } else {
-        audioRef.current.currentTime = 0;
+        if (audioRef.current) {
+          audioRef.current.currentTime = 0;
+        }
       }
     }
-    // const previousTrackFormatted = {previousTrack.}
-    // setCurrentSong({ indexInStack, songUrl, imgUrl, name, artist });
-
-    // console.log("this is the previous song:", gonnagetit);
   }
 
   function handleOnPlayNext() {
@@ -142,7 +140,9 @@ const Player = () => {
       if (currentSong.indexInStack !== trackStack.length - 1) {
         // console.log("moving onto next track");
         setSongProgress(0);
-        audioRef.current.currentTime = 0;
+        if (audioRef.current) {
+          audioRef.current.currentTime = 0;
+        }
 
         const nextTrack = trackStack.filter(
           (track: { [key: string]: any }, index: number) => {
@@ -185,12 +185,14 @@ const Player = () => {
   }
 
   function handleOnMuteUnmute() {
-    if (audioRef.current.volume === 0) {
-      audioRef.current.volume = volume / 100;
-      setIsMuted(false);
-    } else {
-      audioRef.current.volume = 0;
-      setIsMuted(true);
+    if (audioRef.current) {
+      if (audioRef.current.volume === 0) {
+        audioRef.current.volume = volume / 100;
+        setIsMuted(false);
+      } else {
+        audioRef.current.volume = 0;
+        setIsMuted(true);
+      }
     }
   }
 
@@ -199,13 +201,16 @@ const Player = () => {
       setIsMuted(false);
     }
     setVolume(Number(e.currentTarget.value));
-    audioRef.current.volume = Number(e.currentTarget.value) / 100;
+    if (audioRef.current) {
+      audioRef.current.volume = Number(e.currentTarget.value) / 100;
+    }
   }
 
   function handleOnProgressChange(e: React.FormEvent<HTMLInputElement>) {
     setSongProgress(Number(e.currentTarget.value));
-
-    audioRef.current.currentTime = Number(e.currentTarget.value);
+    if (audioRef.current) {
+      audioRef.current.currentTime = Number(e.currentTarget.value);
+    }
   }
 
   function formatTime(time: number) {
@@ -372,9 +377,6 @@ const Player = () => {
             </div>
           </div>
         </div>
-
-        {/* <p>{song}</p>
-      <p>{artist}</p> */}
       </div>
     </div>
   );

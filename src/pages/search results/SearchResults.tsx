@@ -85,10 +85,12 @@ export async function searchResultsLoader({ params }: { [key: string]: any }) {
       window.localStorage.setItem("token", "");
       isError = true;
     } else {
-      songResults = songResults.filter((track: { [key: string]: any }) => {
+      //remove tracks that provide no preview url, problem from spotify
+      songResults = res.tracks.items.filter((track: { [key: string]: any }) => {
         return track.preview_url !== null;
       });
-      songResults = res.tracks.items.map(
+      //format the tracks so they conform Song type
+      songResults = songResults.map(
         (track: { [key: string]: any }, index: number) => {
           return {
             indexInStack: index,

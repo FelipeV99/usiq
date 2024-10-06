@@ -215,43 +215,4 @@ const Home = () => {
     </div>
   );
 };
-
-// export async function homeLoader() {
-//   let error = "";
-//   const token = window.localStorage.getItem("token") || "";
-//   const endpoints = [
-//     "v1/me/top/artists?limit=9&offset=8",
-//     "v1/me/player/recently-played?limit=6",
-//   ];
-//   const promises = endpoints.map((endpoint) => {
-//     return fetchWebApi(endpoint, "GET", token).then((res) => {
-//       if (res.error) {
-//         console.log("error while requesting home data", res.error);
-//         window.localStorage.setItem("token", "");
-//         error = res.error;
-//       } else {
-//         return res;
-//       }
-//     });
-//   });
-//   const data = await Promise.all(promises);
-//   if (error !== "") {
-//     console.log("error on home loader, redirecting...");
-//     return redirect("/login");
-//   } else {
-//     const recentTracksFormatted = data[1].items.map(
-//       (item: { [key: string]: any }) => {
-//         return {
-//           ...item.track,
-//           imgUrl: item.track.album.images[0].url,
-//         };
-//       }
-//     );
-//     return {
-//       favoriteArtists: data[0].items,
-//       recentTracks: recentTracksFormatted,
-//     };
-//   }
-// }
-
 export default Home;

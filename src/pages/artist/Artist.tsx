@@ -82,7 +82,6 @@ const Artist = () => {
     setCurrentSong(topTracks[0]);
     const newTrackStack = topTracks.map((track: Song) => {
       const active = track.songUrl === topTracks[0].songUrl;
-      //   console.log("returning obj: ", { ...track, isActive: active });
       return { song: { ...track }, isActive: active };
     });
     setTrackStack(newTrackStack);

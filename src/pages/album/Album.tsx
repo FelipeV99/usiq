@@ -24,7 +24,6 @@ const Album = () => {
     setCurrentSong(song);
     const newTrackStack = album.tracks.map((track: Song) => {
       const active = track.songUrl === song.songUrl;
-      //   console.log("returning obj: ", { ...track, isActive: active });
       return { song: { ...track }, isActive: active };
     });
     setTrackStack(newTrackStack);

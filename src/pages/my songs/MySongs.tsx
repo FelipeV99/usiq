@@ -2,10 +2,10 @@ import { redirect, useLoaderData } from "react-router-dom";
 import { fetchWebApi } from "../../config/spotify";
 import "./my-songs.css";
 import Tracklist from "../../components/tracklist/Tracklist";
-// import { Song } from "../../App";
+import { Song } from "../../App";
+
 const MySongs = () => {
   const mySongs: any = useLoaderData();
-  console.log("mysongs from component", mySongs);
   return (
     <div>
       <h2>My Songs</h2>
@@ -18,7 +18,17 @@ const MySongs = () => {
 
 export async function mySongsLoader() {
   const token = window.localStorage.getItem("token") || "";
-  let mySongs: { [key: string]: any } = {};
+  let mySongs: Song[] = [
+    {
+      indexInStack: 0,
+      name: "",
+      album: "",
+      artist: "",
+      imgUrl: "",
+      songUrl: "",
+      trackDurationMs: 0,
+    },
+  ];
   let isError = false;
   await fetchWebApi("v1/me/tracks?limit=50", "GET", token).then((res) => {
     if (res.error) {

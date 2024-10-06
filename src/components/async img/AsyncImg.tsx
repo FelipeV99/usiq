@@ -9,10 +9,12 @@ const AsyncImg = ({
   const [imgSrc, setImgSrc] = useState("");
   const [divHeight, setDivHeight] = useState(0);
   const [isHover, setIsHover] = useState(isMouseOver);
-  const divRef = useRef<any>();
+  const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setDivHeight(divRef.current.clientWidth / proportions);
+    if (divRef.current) {
+      setDivHeight(divRef.current.clientWidth / proportions);
+    }
     const img = new Image();
     img.src = src;
     img.onload = () => {

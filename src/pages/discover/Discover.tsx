@@ -152,7 +152,7 @@ export async function discoverLoader() {
     "v1/me/player/recently-played?limit=6",
   ];
   let playlists: PlaylistType[] = [
-    { id: "", name: "", ownerName: "", description: "" },
+    { id: "", name: "", ownerName: "", description: "", imgUrl: "" },
   ];
 
   const promises = endpoints.map((endpoint) => {
@@ -185,12 +185,12 @@ export async function discoverLoader() {
     );
     playlists.pop();
     for (let index = 0; index < 4; index++) {
-      console.log(data[index]);
       playlists.push({
         id: data[index].id,
         name: data[index].name,
         ownerName: data[index].owner.display_name,
         description: data[index].description,
+        imgUrl: "",
       });
     }
     return {

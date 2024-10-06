@@ -53,6 +53,7 @@ export type PlaylistType = {
   ownerName: string;
   totalTracks?: number;
   description: string;
+  imgUrl: string;
   tracks?: Song[];
 };
 
@@ -162,8 +163,6 @@ function App() {
         return <AlbumSkeleton />;
     }
   }
-
-  console.log("track stack:", trackStack);
 
   return (
     <TStackCSongContext.Provider

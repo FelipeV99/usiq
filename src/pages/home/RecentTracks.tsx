@@ -9,7 +9,6 @@ export default function RecentTracks({ tracks }: { tracks: Song[] }) {
     setCurrentSong(song);
     const newTrackStack = tracks.map((track: Song) => {
       const active = track.songUrl === song.songUrl;
-      //   console.log("returning obj: ", { ...track, isActive: active });
       return { song: { ...track }, isActive: active };
     });
     setTrackStack(newTrackStack);

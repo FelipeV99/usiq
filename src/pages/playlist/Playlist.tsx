@@ -3,7 +3,7 @@ import { fetchWebApi } from "../../config/spotify";
 import "./playlist.css";
 import AsyncImg from "../../components/async img/AsyncImg";
 import SongrowTwo from "../../components/song row/SongrowTwo";
-import { useTStackCSongContext } from "../../App";
+import { PlaylistType, useTStackCSongContext } from "../../App";
 import { Song } from "../../App";
 
 const Playlist = () => {
@@ -23,7 +23,7 @@ const Playlist = () => {
     <div className="playlist-container">
       <div className="playlist-header">
         <div className="ph-img-container">
-          <AsyncImg src={playlist.playlistImgUrl} proportions={1} />
+          <AsyncImg src={playlist.imgUrl} proportions={1} />
         </div>
         <div className="ph-info">
           <h1>{playlist.name}</h1>
@@ -58,44 +58,49 @@ const Playlist = () => {
 
 export async function playlistLoader({ params }: { [key: string]: any }) {
   const token = window.localStorage.getItem("token") || "";
-  let playlist: { [key: string]: any } = {};
+  let playlist: PlaylistType = {
+    id: "",
+    name: "",
+    ownerName: "",
+    totalTracks: 0,
+    description: "",
+    imgUrl: "",
+  };
   let isError = false;
   await fetchWebApi("v1/playlists/" + params.id, "GET", token).then((res) => {
     if (res.error) {
       window.localStorage.setItem("token", "");
       isError = true;
     } else {
-      console.log("returning playlist", res);
-      playlist = res;
+      const playlistTracks = res.tracks.items.map(
+        (trackObj: { [key: string]: any }, index: number) => {
+          return {
+            indexInStack: index,
+            name: trackObj.track.name,
+            album: trackObj.track.album.name,
+            artist: trackObj.track.artists[0].name,
+            imgUrl: trackObj.track.album.images[0].url,
+            songUrl: trackObj.track.preview_url,
+            trackDurationMs: trackObj.track.duration_ms,
+          };
+        }
+      );
+      playlist = {
+        id: res.id,
+        name: res.name,
+        ownerName: res.owner.display_name,
+        totalTracks: res.tracks.total,
+        description: res.description,
+        imgUrl: res.images[0].url,
+        tracks: playlistTracks,
+      };
     }
   });
 
   if (isError) {
     return redirect("http://localhost:3000/login");
   } else {
-    const playlistTracks = playlist.tracks.items.map(
-      (trackObj: { [key: string]: any }, index: number) => {
-        return {
-          // ...trackObj.track,
-          indexInStack: index,
-          imgUrl: trackObj.track.album.images[0].url,
-          songUrl: trackObj.track.preview_url,
-          name: trackObj.track.name,
-          album: trackObj.track.album.name,
-          artist: trackObj.track.artists[0].name,
-          trackDurationMs: trackObj.track.duration_ms,
-        };
-      }
-    );
-    const formattedPlaylist = {
-      name: playlist.name,
-      playlistImgUrl: playlist.images[0].url,
-      totalTracks: playlist.tracks.total,
-      ownerName: playlist.owner.display_name,
-      tracks: playlistTracks,
-    };
-
-    return formattedPlaylist;
+    return playlist;
   }
 }
 
