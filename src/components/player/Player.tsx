@@ -8,8 +8,6 @@ const Player = () => {
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const playAnimationRef = useRef<number | null>(null);
-  const valueRef = useRef(0);
-  valueRef.current = 2;
 
   const [volume, setVolume] = useState<number>(100);
   const [songProgress, setSongProgress] = useState<number>(0);
@@ -113,19 +111,21 @@ const Player = () => {
 
         setCurrentSong(newCurrentSong.song);
         //now update the track stack
-        setTrackStack((currentTrackStack: { [key: string]: any }) => {
-          return currentTrackStack.map(
-            (track: { [key: string]: any }, index: number) => {
-              if (index === currentSong.indexInStack) {
-                return { ...track, isActive: false };
+        setTrackStack(
+          (currentTrackStack: { song: Song; isActive: boolean }[]) => {
+            return currentTrackStack.map(
+              (track: { song: Song; isActive: boolean }, index: number) => {
+                if (index === currentSong.indexInStack) {
+                  return { song: { ...track.song }, isActive: false };
+                }
+                if (index === currentSong.indexInStack - 1) {
+                  return { song: { ...track.song }, isActive: true };
+                }
+                return { ...track };
               }
-              if (index === currentSong.indexInStack - 1) {
-                return { ...track, isActive: true };
-              }
-              return { ...track };
-            }
-          );
-        });
+            );
+          }
+        );
       } else {
         if (audioRef.current) {
           audioRef.current.currentTime = 0;
@@ -137,7 +137,6 @@ const Player = () => {
   function handleOnPlayNext() {
     if (isThereSong) {
       if (currentSong.indexInStack !== trackStack.length - 1) {
-        // console.log("moving onto next track");
         setSongProgress(0);
         if (audioRef.current) {
           audioRef.current.currentTime = 0;
@@ -148,7 +147,6 @@ const Player = () => {
             return index === currentSong.indexInStack + 1;
           }
         )[0];
-        // console.log("this is the next track", nextTrack);
         const newCurrentSong: { song: Song; isActive: boolean } = {
           song: {
             indexInStack: currentSong.indexInStack + 1,
@@ -161,24 +159,24 @@ const Player = () => {
           },
           isActive: true,
         };
-        // audioRef.current.
 
         setCurrentSong(newCurrentSong.song);
         //now update the track stack
-        setTrackStack((currentTrackStack: { [key: string]: any }) => {
-          // console.log("current track stack from the prev", currentTrackStack);
-          return currentTrackStack.map(
-            (track: { [key: string]: any }, index: number) => {
-              if (index === currentSong.indexInStack) {
-                return { ...track, isActive: false };
+        setTrackStack(
+          (currentTrackStack: { song: Song; isActive: boolean }[]) => {
+            return currentTrackStack.map(
+              (track: { song: Song; isActive: boolean }, index: number) => {
+                if (index === currentSong.indexInStack) {
+                  return { song: { ...track.song }, isActive: false };
+                }
+                if (index === currentSong.indexInStack + 1) {
+                  return { song: { ...track.song }, isActive: true };
+                }
+                return { ...track };
               }
-              if (index === currentSong.indexInStack + 1) {
-                return { ...track, isActive: true };
-              }
-              return { ...track };
-            }
-          );
-        });
+            );
+          }
+        );
       }
     }
   }
