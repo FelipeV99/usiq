@@ -5,7 +5,7 @@ const AlbumSkeleton = () => {
   function placeSongs() {
     const songCards = [];
     for (let i = 0; i < 10; i++) {
-      songCards.push(<div className="track-row skeleton"></div>);
+      songCards.push(<div className="track-row skeleton" key={i}></div>);
     }
     return songCards;
   }

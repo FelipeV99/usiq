@@ -37,44 +37,53 @@ export type ArtistType = {
   totalFollowers: number;
 };
 
+export type AlbumType = {
+  id: string;
+  name: string;
+  artist: string;
+  totalTracks?: number;
+  imgUrl: string;
+  releaseDate?: string;
+  tracks?: Song[];
+};
+
+export type PlaylistType = {
+  id: string;
+  name: string;
+  ownerName: string;
+  totalTracks?: number;
+  description: string;
+  tracks?: Song[];
+};
+
 type TokenContextType = {
   token: string;
   setToken: Dispatch<SetStateAction<string>>;
 };
 
-type CurrentSongContextType = {
+type TStackCSongContextType = {
+  trackStack: { song: Song; isActive: boolean }[];
+  setTrackStack: Dispatch<SetStateAction<{ song: Song; isActive: boolean }[]>>;
   currentSong: Song;
   setCurrentSong: Dispatch<SetStateAction<Song>>;
 };
-
-type TrackStackContextType = { [index: string]: any };
 
 type CurrentPageContextType = {
   currentPage: string;
   setCurrentPage: Dispatch<SetStateAction<string>>;
 };
 
-const CurrentSongContext = createContext<CurrentSongContextType | null>(null);
-const TrackStackContext = createContext<TrackStackContextType | null>(null);
+const TStackCSongContext = createContext<TStackCSongContextType | null>(null);
 const CurrentPageContext = createContext<CurrentPageContextType | null>(null);
 const TokenContext = createContext<TokenContextType | null>(null);
 
-export function useCurrentSongContext() {
-  const theCurrentSongContext = useContext(CurrentSongContext);
+export function useTStackCSongContext() {
+  const theTStackCSongContext = useContext(TStackCSongContext);
   //this is only true when trying to use context outside of provider
-  if (theCurrentSongContext == null) {
+  if (theTStackCSongContext == null) {
     throw new Error("must use within provider");
   }
-  return theCurrentSongContext;
-}
-
-export function useTrackstackContext() {
-  const theTrackStackContext = useContext(TrackStackContext);
-  //this is only true when trying to use context outside of provider
-  if (theTrackStackContext == null) {
-    throw new Error("must use within provider");
-  }
-  return theTrackStackContext;
+  return theTStackCSongContext;
 }
 
 export function useCurrentPageContext() {
@@ -154,39 +163,41 @@ function App() {
     }
   }
 
+  console.log("track stack:", trackStack);
+
   return (
-    <CurrentSongContext.Provider value={{ currentSong, setCurrentSong }}>
-      <TrackStackContext.Provider value={{ trackStack, setTrackStack }}>
-        <CurrentPageContext.Provider value={{ currentPage, setCurrentPage }}>
-          <TokenContext.Provider value={{ token, setToken }}>
-            <div className="page-container">
-              {token === "" || token === "undefined" ? (
-                <Login />
-              ) : (
-                <>
-                  <Sidebar />
-                  <ScrollToTop />
-                  <div className="right-container">
-                    <div>
-                      <Topbar />
-                    </div>
-                    <div className="content-container">
-                      {state === "loading" ? loadSkeleton() : <Outlet />}
-                    </div>
+    <TStackCSongContext.Provider
+      value={{ trackStack, setTrackStack, currentSong, setCurrentSong }}
+    >
+      <CurrentPageContext.Provider value={{ currentPage, setCurrentPage }}>
+        <TokenContext.Provider value={{ token, setToken }}>
+          <div className="page-container">
+            {token === "" || token === "undefined" ? (
+              <Login />
+            ) : (
+              <>
+                <Sidebar />
+                <ScrollToTop />
+                <div className="right-container">
+                  <div>
+                    <Topbar />
                   </div>
-                  <Player />
-                  <div className="bg">
-                    <div className="bubble-1"></div>
-                    <div className="bubble-2"></div>
-                    <div className="bubble-3"></div>
+                  <div className="content-container">
+                    {state === "loading" ? loadSkeleton() : <Outlet />}
                   </div>
-                </>
-              )}
-            </div>
-          </TokenContext.Provider>
-        </CurrentPageContext.Provider>
-      </TrackStackContext.Provider>
-    </CurrentSongContext.Provider>
+                </div>
+                <Player />
+                <div className="bg">
+                  <div className="bubble-1"></div>
+                  <div className="bubble-2"></div>
+                  <div className="bubble-3"></div>
+                </div>
+              </>
+            )}
+          </div>
+        </TokenContext.Provider>
+      </CurrentPageContext.Provider>
+    </TStackCSongContext.Provider>
   );
 }
 

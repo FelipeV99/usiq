@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useTrackstackContext } from "../../App";
+import { useTStackCSongContext } from "../../App";
 import Tracklist from "../tracklist/Tracklist";
 import "./queue.css";
 const Queue = () => {
-  const { trackStack, setTrackStack } = useTrackstackContext();
+  const { trackStack, setTrackStack } = useTStackCSongContext();
+
   const [queue, setQueue] = useState<{}[]>([]);
   console.log("trackstack", trackStack);
   useEffect(() => {

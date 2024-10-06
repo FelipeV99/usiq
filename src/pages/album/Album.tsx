@@ -4,17 +4,16 @@ import { redirect, useLoaderData, useLocation } from "react-router-dom";
 import { fetchWebApi } from "../../config/spotify";
 import AsyncImg from "../../components/async img/AsyncImg";
 import SongrowTwo from "../../components/song row/SongrowTwo";
-import { useCurrentSongContext, useTrackstackContext } from "../../App";
+import { useTStackCSongContext } from "../../App";
 import { useEffect } from "react";
+import { Song, AlbumType } from "../../App";
 
-import { Song } from "../../App";
 const Album = () => {
   const album: any = useLoaderData();
-  const { setCurrentSong } = useCurrentSongContext();
-  const { setTrackStack } = useTrackstackContext();
+
+  const { setCurrentSong, setTrackStack } = useTStackCSongContext();
 
   const location = useLocation();
-  // console.log("location state from album", location.state);
   useEffect(() => {
     if (location.state?.autoplay === true) {
       handleOnPlay(album.tracks[0]);
@@ -26,7 +25,7 @@ const Album = () => {
     const newTrackStack = album.tracks.map((track: Song) => {
       const active = track.songUrl === song.songUrl;
       //   console.log("returning obj: ", { ...track, isActive: active });
-      return { ...track, isActive: active };
+      return { song: { ...track }, isActive: active };
     });
     setTrackStack(newTrackStack);
   }
@@ -35,7 +34,7 @@ const Album = () => {
     <div className="album-container">
       <div className="album-header">
         <div className="alh-img-container">
-          <AsyncImg src={album.albumImgUrl} proportions={1} />
+          <AsyncImg src={album.imgUrl} proportions={1} />
         </div>
         <div className="alh-info">
           <h1>{album.name}</h1>
@@ -57,15 +56,7 @@ const Album = () => {
             />
           </button>
         </div>
-        <div className="alh-btns">
-          {/* <button className="btn-round">
-            {" "}
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fplay.svg?alt=media&token=19b6a1a6-2445-42e7-be85-5b2f79584042"
-              alt=""
-            />
-          </button> */}
-        </div>
+        <div className="alh-btns"></div>
       </div>
       <div className="album-tracks-container">
         {album.tracks.map((track: Song, index: number) => {
@@ -81,7 +72,14 @@ const Album = () => {
 
 export async function albumLoader({ params }: { [key: string]: any }) {
   const token = window.localStorage.getItem("token") || "";
-  let album: { [key: string]: any } = {};
+  let album: AlbumType = {
+    id: "",
+    name: "",
+    artist: "",
+    totalTracks: 0,
+    imgUrl: "",
+    releaseDate: "",
+  };
   let isError = false;
   await fetchWebApi("v1/albums/" + params.id, "GET", token).then((res) => {
     if (res.error) {
@@ -101,13 +99,13 @@ export async function albumLoader({ params }: { [key: string]: any }) {
           };
         }
       );
-      // console.log("album in laoder:", res);
       const formattedAlbum = {
+        id: res.id,
         name: res.name,
         artist: res.artists[0].name,
         totalTracks: res.total_tracks,
         releaseDate: res.release_date,
-        albumImgUrl: res.images[0].url,
+        imgUrl: res.images[0].url,
         tracks: formattedAlbumTracks,
       };
       album = formattedAlbum;

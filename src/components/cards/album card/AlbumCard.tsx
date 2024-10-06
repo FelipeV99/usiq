@@ -3,25 +3,16 @@ import "./album-card.css";
 import AsyncImg from "../../async img/AsyncImg";
 import { useCurrentPageContext } from "../../../App";
 import { useState } from "react";
+import { AlbumType } from "../../../App";
 
-const AlbumCard = ({
-  id,
-  imgUrl,
-  name,
-  artistName,
-}: {
-  id: string;
-  imgUrl: string;
-  name: string;
-  artistName: string;
-}) => {
+const AlbumCard = ({ album }: { album: AlbumType }) => {
   const { setCurrentPage } = useCurrentPageContext();
   const [isHover, setIsHover] = useState<boolean>(false);
 
   const navigate = useNavigate();
   function handleOnClickAlbum() {
     setCurrentPage("Album");
-    navigate("/album/" + id);
+    navigate("/album/" + album.id);
   }
   return (
     <div
@@ -32,7 +23,7 @@ const AlbumCard = ({
     >
       <div className="ac-img-container">
         <AsyncImg
-          src={imgUrl}
+          src={album.imgUrl}
           proportions={1}
           clickableImg={true}
           isMouseOver={isHover}
@@ -40,8 +31,8 @@ const AlbumCard = ({
         {/* <img src={imgUrl} alt="" /> */}
       </div>
       <div className="ac-info">
-        <p className="bold">{name}</p>
-        <p>{artistName}</p>
+        <p className="bold">{album.name}</p>
+        <p>{album.artist}</p>
       </div>
     </div>
   );

@@ -4,14 +4,12 @@ import Tracklist from "../../components/tracklist/Tracklist";
 import { fetchWebApi } from "../../config/spotify";
 import { Link, redirect, useLoaderData } from "react-router-dom";
 import AlbumCard from "../../components/cards/album card/AlbumCard";
-import { Song, ArtistType } from "../../App";
+import { Song, ArtistType, AlbumType } from "../../App";
 
 const SearchResults = () => {
   const { songResults, artistResults, albumResults }: any = useLoaderData();
-  // console.log("search results", songResults, artistResults, albumResults);
   return (
     <div className="search-results-container">
-      {/* <h2>Search Results</h2> */}
       <div className="song-results-outer-container">
         <h4>tracks</h4>
         <Tracklist tracks={songResults} />
@@ -36,16 +34,8 @@ const SearchResults = () => {
       <div className="album-results-outer-container">
         <h4>Albums</h4>
         <div className="album-results-container">
-          {albumResults.map((album: { [key: string]: any }) => {
-            return (
-              <AlbumCard
-                key={album.id}
-                id={album.id}
-                imgUrl={album.images[0].url}
-                name={album.name}
-                artistName={album.artists[0].name}
-              />
-            );
+          {albumResults.map((album: AlbumType) => {
+            return <AlbumCard key={album.id} album={album} />;
           })}
         </div>
       </div>
@@ -74,7 +64,16 @@ export async function searchResultsLoader({ params }: { [key: string]: any }) {
       totalFollowers: 0,
     },
   ];
-  let albumResults: { [key: string]: any } = {};
+  let albumResults: AlbumType[] = [
+    {
+      id: "",
+      name: "",
+      artist: "",
+      totalTracks: 0,
+      imgUrl: "",
+      releaseDate: "",
+    },
+  ];
 
   let isError = false;
   await fetchWebApi(
@@ -102,7 +101,6 @@ export async function searchResultsLoader({ params }: { [key: string]: any }) {
           };
         }
       );
-      console.log("how aritsts results look like: ", res.artists);
       artistResults = res.artists.items.map(
         (artist: { [key: string]: any }) => {
           return {
@@ -113,8 +111,14 @@ export async function searchResultsLoader({ params }: { [key: string]: any }) {
           };
         }
       );
-      albumResults = res.albums.items;
-      // searchResults = res;
+      albumResults = res.albums.items.map((album: { [key: string]: any }) => {
+        return {
+          id: album.id,
+          name: album.name,
+          artist: album.artists[0].name,
+          imgUrl: album.images[0].url,
+        };
+      });
     }
   });
 

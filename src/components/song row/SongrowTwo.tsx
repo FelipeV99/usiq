@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./song-row-two.css";
-import { useCurrentSongContext } from "../../App";
+import { useTStackCSongContext } from "../../App";
 import AsyncImg from "../async img/AsyncImg";
 import { Song } from "../../App";
 const SongrowTwo = ({
@@ -18,7 +18,7 @@ const SongrowTwo = ({
 }) => {
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const { currentSong } = useCurrentSongContext();
+  const { currentSong } = useTStackCSongContext();
 
   useEffect(() => {
     setIsPlaying(false);

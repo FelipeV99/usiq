@@ -3,19 +3,18 @@ import { fetchWebApi } from "../../config/spotify";
 import "./playlist.css";
 import AsyncImg from "../../components/async img/AsyncImg";
 import SongrowTwo from "../../components/song row/SongrowTwo";
-import { useCurrentSongContext, useTrackstackContext } from "../../App";
+import { useTStackCSongContext } from "../../App";
 import { Song } from "../../App";
 
 const Playlist = () => {
   const playlist: any = useLoaderData();
-  const { setCurrentSong } = useCurrentSongContext();
-  const { setTrackStack } = useTrackstackContext();
+  const { setCurrentSong, setTrackStack } = useTStackCSongContext();
 
   function handleOnPlay(song: Song) {
     setCurrentSong(song);
     const newTrackStack = playlist.tracks.map((track: Song) => {
       const active = track.songUrl === song.songUrl;
-      return { ...track, isActive: active };
+      return { song: { ...track }, isActive: active };
     });
     setTrackStack(newTrackStack);
   }
@@ -91,7 +90,7 @@ export async function playlistLoader({ params }: { [key: string]: any }) {
     const formattedPlaylist = {
       name: playlist.name,
       playlistImgUrl: playlist.images[0].url,
-      totalTracks: playlist.total_tracks,
+      totalTracks: playlist.tracks.total,
       ownerName: playlist.owner.display_name,
       tracks: playlistTracks,
     };

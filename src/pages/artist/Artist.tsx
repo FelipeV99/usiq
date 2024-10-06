@@ -3,18 +3,13 @@ import { fetchWebApi } from "../../config/spotify";
 import "./artist.css";
 import { useEffect, useState } from "react";
 import Tracklist from "../../components/tracklist/Tracklist";
-import {
-  useCurrentSongContext,
-  useTokenContext,
-  useTrackstackContext,
-} from "../../App";
+import { useTokenContext, useTStackCSongContext } from "../../App";
 import { Song, ArtistType } from "../../App";
 
 const Artist = () => {
   const artist: any = useLoaderData();
 
-  const { setCurrentSong } = useCurrentSongContext();
-  const { setTrackStack } = useTrackstackContext();
+  const { setCurrentSong, setTrackStack } = useTStackCSongContext();
   const { token, setToken } = useTokenContext();
 
   const [topTracks, setTopTracks] = useState<Song[]>([]);
@@ -85,10 +80,10 @@ const Artist = () => {
 
   function handleOnClickPlayArtist() {
     setCurrentSong(topTracks[0]);
-    const newTrackStack = topTracks.map((track: { [key: string]: any }) => {
+    const newTrackStack = topTracks.map((track: Song) => {
       const active = track.songUrl === topTracks[0].songUrl;
       //   console.log("returning obj: ", { ...track, isActive: active });
-      return { ...track, isActive: active };
+      return { song: { ...track }, isActive: active };
     });
     setTrackStack(newTrackStack);
   }

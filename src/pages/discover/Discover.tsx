@@ -3,13 +3,12 @@ import { fetchWebApi } from "../../config/spotify";
 import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 import RecentTracks from "../home/RecentTracks";
 import AsyncImg from "../../components/async img/AsyncImg";
-import { useCurrentPageContext } from "../../App";
+import { PlaylistType, useCurrentPageContext } from "../../App";
 
 const Discover = () => {
   const navigate = useNavigate();
   const { setCurrentPage } = useCurrentPageContext();
-  const { playlist1, playlist2, playlist3, playlist4, recommendedTracks }: any =
-    useLoaderData();
+  const { playlists, recommendedTracks }: any = useLoaderData();
 
   function handleOnClickPlaylist(playlistID: string) {
     setCurrentPage("Playlist");
@@ -22,7 +21,7 @@ const Discover = () => {
         <div
           className="featured-playlist-card fpc1"
           onClick={() => {
-            handleOnClickPlaylist(playlist1.id);
+            handleOnClickPlaylist(playlists[0].id);
           }}
         >
           <div className="fpc-bg">
@@ -42,15 +41,15 @@ const Discover = () => {
               />
             </div>
             <div className="fpc-bottom">
-              <h2>{playlist1.name}</h2>
-              <p className="other-p">{playlist1.description}</p>
+              <h2>{playlists[0].name}</h2>
+              <p className="other-p">{playlists[0].description}</p>
             </div>
           </div>
         </div>
         <div
           className="featured-playlist-card fpc2"
           onClick={() => {
-            handleOnClickPlaylist(playlist2.id);
+            handleOnClickPlaylist(playlists[1].id);
           }}
         >
           <div className="fpc-bg">
@@ -70,15 +69,15 @@ const Discover = () => {
               />
             </div>
             <div className="fpc-bottom">
-              <h2>{playlist2.name}</h2>
-              <p className="other-p">{playlist2.description}</p>
+              <h2>{playlists[1].name}</h2>
+              <p className="other-p">{playlists[1].description}</p>
             </div>
           </div>
         </div>
         <div
           className="featured-playlist-card fpc3"
           onClick={() => {
-            handleOnClickPlaylist(playlist3.id);
+            handleOnClickPlaylist(playlists[2].id);
           }}
         >
           <div className="fpc-bg">
@@ -98,15 +97,15 @@ const Discover = () => {
               />
             </div>
             <div className="fpc-bottom">
-              <h2>{playlist3.name}</h2>
-              <p className="other-p">{playlist3.description}</p>
+              <h2>{playlists[2].name}</h2>
+              <p className="other-p">{playlists[2].description}</p>
             </div>
           </div>
         </div>
         <div
           className="featured-playlist-card fpc1"
           onClick={() => {
-            handleOnClickPlaylist(playlist4.id);
+            handleOnClickPlaylist(playlists[3].id);
           }}
         >
           <div className="fpc-bg">
@@ -126,8 +125,8 @@ const Discover = () => {
               />
             </div>
             <div className="fpc-bottom">
-              <h2>{playlist4.name}</h2>
-              <p className="other-p">{playlist4.description}</p>
+              <h2>{playlists[3].name}</h2>
+              <p className="other-p">{playlists[3].description}</p>
             </div>
           </div>
         </div>
@@ -152,6 +151,9 @@ export async function discoverLoader() {
     "v1/playlists/37i9dQZF1DX2SK4ytI2KAZ",
     "v1/me/player/recently-played?limit=6",
   ];
+  let playlists: PlaylistType[] = [
+    { id: "", name: "", ownerName: "", description: "" },
+  ];
 
   const promises = endpoints.map((endpoint) => {
     return fetchWebApi(endpoint, "GET", token).then((res) => {
@@ -165,7 +167,6 @@ export async function discoverLoader() {
     });
   });
   const data = await Promise.all(promises);
-  console.log("from promise . all", data);
   if (error !== "") {
     return redirect("/login");
   } else {
@@ -182,11 +183,18 @@ export async function discoverLoader() {
         };
       }
     );
+    playlists.pop();
+    for (let index = 0; index < 4; index++) {
+      console.log(data[index]);
+      playlists.push({
+        id: data[index].id,
+        name: data[index].name,
+        ownerName: data[index].owner.display_name,
+        description: data[index].description,
+      });
+    }
     return {
-      playlist1: data[0],
-      playlist2: data[1],
-      playlist3: data[2],
-      playlist4: data[3],
+      playlists: playlists,
       recommendedTracks: recentTracksFormatted,
     };
   }

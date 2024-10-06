@@ -8,11 +8,11 @@ import RecentTracks from "./RecentTracks";
 import AlbumCard from "../../components/cards/album card/AlbumCard";
 import AsyncImg from "../../components/async img/AsyncImg";
 
-import { Song, ArtistType, useTokenContext } from "../../App";
+import { Song, ArtistType, AlbumType, useTokenContext } from "../../App";
 
 const Home = () => {
   const { token, setToken } = useTokenContext();
-  const [newAlbums, setNewAlbums] = useState<{}[]>([]);
+  const [newAlbums, setNewAlbums] = useState<AlbumType[]>([]);
   const [recentTracks, setRecentTracks] = useState<Song[]>([]);
   const [isRecentTracksLoading, setIsRecentTracksLoading] =
     useState<boolean>(false);
@@ -58,12 +58,11 @@ const Home = () => {
     async function getFavoriteArtists() {
       setIsFavoriteArtistsLoading(true);
       await fetchWebApi(
-        "v1/me/top/artists?limit=9&offset=8",
+        "v1/me/top/artists?limit=9&offset=7",
         "GET",
         token
       ).then((res) => {
         if (!res.error) {
-          // console.log("artists from request: ", res.items);
           const favArtistsFormatted = res.items.map(
             (artist: { [key: string]: any }) => {
               return {
@@ -94,7 +93,18 @@ const Home = () => {
           window.localStorage.setItem("token", "");
           setToken("");
         } else {
-          setNewAlbums(res.albums.items);
+          const newReleasesFormatted = res.albums.items.map(
+            (album: { [key: string]: any }) => {
+              return {
+                id: album.id,
+                name: album.name,
+                artist: album.artists[0].name,
+                imgUrl: album.images[0].url,
+              };
+            }
+          );
+          // console.log("what res for new releases looks like", res);
+          setNewAlbums(newReleasesFormatted);
         }
       });
     }
@@ -143,6 +153,7 @@ const Home = () => {
     }
     return favCards;
   }
+
   return (
     <div className="home-container">
       <div className="banners-container">
@@ -194,16 +205,8 @@ const Home = () => {
           <div className="new-releases-outer-container">
             <h4>New releases</h4>
             <div className="new-releases-container">
-              {newAlbums.map((album: { [key: string]: any }, index: number) => {
-                return (
-                  <AlbumCard
-                    key={index}
-                    id={album.id}
-                    imgUrl={album.images[0].url}
-                    name={album.name}
-                    artistName={album.artists[0].name}
-                  />
-                );
+              {newAlbums.map((album: AlbumType, index: number) => {
+                return <AlbumCard key={index} album={album} />;
               })}
             </div>
           </div>

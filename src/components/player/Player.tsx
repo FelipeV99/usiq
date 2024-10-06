@@ -1,11 +1,11 @@
 import "./player.css";
-import { useCurrentSongContext, useTrackstackContext } from "../../App";
+import { useTStackCSongContext } from "../../App";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Song } from "../../App";
 
 const Player = () => {
-  const { currentSong, setCurrentSong } = useCurrentSongContext();
-  const { trackStack, setTrackStack } = useTrackstackContext();
+  const { trackStack, setTrackStack, currentSong, setCurrentSong } =
+    useTStackCSongContext();
   const audioRef = useRef<any>();
 
   const playAnimationRef = useRef<number | null>(null);
@@ -17,6 +17,19 @@ const Player = () => {
   const [isSongBarHover, setIsSongBarHover] = useState<boolean>(false);
   const [isVolumeBarHover, setIsVolumeBarHover] = useState<boolean>(false);
   const [isThereSong, setIsThereSong] = useState<boolean>(false);
+
+  useEffect(() => {
+    function keyDownHandler(event: KeyboardEvent) {
+      if (event.code === "Space") {
+        event.preventDefault();
+        handleOnPlayPause();
+      }
+    }
+    document.addEventListener("keydown", keyDownHandler);
+    return function cleanup() {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
+  }, [isPlaying]);
 
   useEffect(() => {
     if (currentSong.name === "") {
@@ -85,17 +98,20 @@ const Player = () => {
           }
         )[0];
         // console.log("this is the previous track", previousTrack);
-        const newCurrentSong: Song = {
-          indexInStack: currentSong.indexInStack - 1,
-          songUrl: previousTrack.songUrl,
-          imgUrl: previousTrack.imgUrl,
-          name: previousTrack.name,
-          album: previousTrack.album,
-          artist: previousTrack.artist,
-          trackDurationMs: previousTrack.trackDurationMs,
+        const newCurrentSong: { song: Song; isActive: boolean } = {
+          song: {
+            indexInStack: currentSong.indexInStack - 1,
+            songUrl: previousTrack.song.songUrl,
+            imgUrl: previousTrack.song.imgUrl,
+            name: previousTrack.song.name,
+            album: previousTrack.song.album,
+            artist: previousTrack.song.artist,
+            trackDurationMs: previousTrack.song.trackDurationMs,
+          },
+          isActive: true,
         };
 
-        setCurrentSong(newCurrentSong);
+        setCurrentSong(newCurrentSong.song);
         //now update the track stack
         setTrackStack((currentTrackStack: { [key: string]: any }) => {
           // console.log("current track stack from the prev", currentTrackStack);
@@ -134,18 +150,21 @@ const Player = () => {
           }
         )[0];
         // console.log("this is the next track", nextTrack);
-        const newCurrentSong: Song = {
-          indexInStack: currentSong.indexInStack + 1,
-          songUrl: nextTrack.songUrl,
-          imgUrl: nextTrack.imgUrl,
-          name: nextTrack.name,
-          album: nextTrack.album,
-          artist: nextTrack.artist,
-          trackDurationMs: nextTrack.trackDurationMs,
+        const newCurrentSong: { song: Song; isActive: boolean } = {
+          song: {
+            indexInStack: currentSong.indexInStack + 1,
+            songUrl: nextTrack.song.songUrl,
+            imgUrl: nextTrack.song.imgUrl,
+            name: nextTrack.song.name,
+            album: nextTrack.song.album,
+            artist: nextTrack.song.artist,
+            trackDurationMs: nextTrack.song.trackDurationMs,
+          },
+          isActive: true,
         };
         // audioRef.current.
 
-        setCurrentSong(newCurrentSong);
+        setCurrentSong(newCurrentSong.song);
         //now update the track stack
         setTrackStack((currentTrackStack: { [key: string]: any }) => {
           // console.log("current track stack from the prev", currentTrackStack);

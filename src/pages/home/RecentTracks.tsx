@@ -1,21 +1,19 @@
-import { useCurrentSongContext, useTrackstackContext } from "../../App";
+import { useTStackCSongContext } from "../../App";
 import SongrowTwo from "../../components/song row/SongrowTwo";
 import { Song } from "../../App";
 
 export default function RecentTracks({ tracks }: { tracks: Song[] }) {
-  const { setCurrentSong } = useCurrentSongContext();
-  const { setTrackStack } = useTrackstackContext();
+  const { setCurrentSong, setTrackStack } = useTStackCSongContext();
 
   function handleOnPlay(song: Song) {
     setCurrentSong(song);
-    const newTrackStack = tracks.map((track: { [key: string]: any }) => {
-      const active = track.preview_url === song.songUrl;
+    const newTrackStack = tracks.map((track: Song) => {
+      const active = track.songUrl === song.songUrl;
       //   console.log("returning obj: ", { ...track, isActive: active });
-      return { ...track, isActive: active };
+      return { song: { ...track }, isActive: active };
     });
     setTrackStack(newTrackStack);
   }
-  console.log("tracks from recent tracks as sent by props", tracks);
 
   return (
     <div className="rt-container">
