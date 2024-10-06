@@ -46,25 +46,25 @@ const Player = () => {
       setSongProgress(0);
       setIsPlaying(true);
       startAnimation();
-      // setIsThereSong(true);
+      setIsThereSong(true);
     }
   }, [currentSong]);
 
-  const updateProgress = useCallback(() => {
-    if (audioRef.current) {
-      const currentTime = audioRef.current.currentTime;
-      setSongProgress(currentTime);
-    }
-  }, [isPlaying]);
-
   const startAnimation = useCallback(() => {
-    // console.log("started animation");
+    console.log("start animation");
     const animate = () => {
-      updateProgress();
+      // updateProgress in DOM elements
+      if (audioRef.current) {
+        const currentTime = audioRef.current.currentTime;
+        setSongProgress(currentTime);
+        // console.log("update animation");
+      }
+      //animate, and store the request ID for cancelling the animation when needed
       playAnimationRef.current = requestAnimationFrame(animate);
     };
+    //call it once to start
     playAnimationRef.current = requestAnimationFrame(animate);
-  }, [isPlaying]);
+  }, []);
 
   function handleOnPlayPause() {
     if (isThereSong) {
@@ -75,9 +75,8 @@ const Player = () => {
       } else {
         setIsPlaying(false);
         audioRef.current?.pause();
-        // console.log("trying to cancel animation");
         if (playAnimationRef.current !== null) {
-          // console.log("cancel animation");
+          console.log("cancel animation");
           cancelAnimationFrame(playAnimationRef.current);
           playAnimationRef.current = null;
         }

@@ -1,5 +1,3 @@
-// import axios from "axios";
-
 const clientID: string = process.env.REACT_APP_CLIENT_ID || "";
 const redirectURI: string =
   process.env.NODE_ENV === "development"
@@ -27,8 +25,6 @@ export async function fetchWebApi(
   token: string,
   body?: {}
 ) {
-  // console.log("body", body);
-  // console.log("bbody stringified", JSON.stringify(body));
   const res = await fetch(`https://api.spotify.com/${endpoint}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -36,9 +32,7 @@ export async function fetchWebApi(
     method,
     body: JSON.stringify(body),
   });
-  // console.log("response to request", method, endpoint, res);
-  // console.log("type of response", typeof res);
-  // console.log(res.status);
+
   if (res.status === 204) {
     return;
   }
