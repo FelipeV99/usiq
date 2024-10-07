@@ -21,6 +21,7 @@ import AlbumSkeleton from "./pages/album/AlbumSkeleton";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 export type Song = {
+  id: string;
   indexInStack: number;
   songUrl: string;
   imgUrl: string;
@@ -110,6 +111,7 @@ function App() {
     { song: Song; isActive: boolean }[]
   >([]);
   const [currentSong, setCurrentSong] = useState<Song>({
+    id: "",
     indexInStack: 0,
     name: "",
     artist: "",

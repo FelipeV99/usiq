@@ -4,21 +4,38 @@ import { redirect, useLoaderData, useLocation } from "react-router-dom";
 import { fetchWebApi } from "../../config/spotify";
 import AsyncImg from "../../components/async img/AsyncImg";
 import SongrowTwo from "../../components/song row/SongrowTwo";
-import { useTStackCSongContext } from "../../App";
+import { useTokenContext, useTStackCSongContext } from "../../App";
 import { useEffect } from "react";
 import { Song, AlbumType } from "../../App";
 
 const Album = () => {
   const album = useLoaderData() as AlbumType;
+  const { token } = useTokenContext();
 
-  const { setCurrentSong, setTrackStack } = useTStackCSongContext();
+  const { setCurrentSong, trackStack, setTrackStack } = useTStackCSongContext();
 
   const location = useLocation();
+
   useEffect(() => {
     if (location.state?.autoplay === true) {
       handleOnPlay(album.tracks[0]);
     }
-    // console.log(location.state);
+    async function checkSavedTracks() {
+      let trackIds = "";
+      album.tracks.map((track: Song) => {
+        trackIds = trackIds + track.id + "%";
+      });
+      // console.log(trackIds);
+      fetchWebApi("v1/me/tracks/contains?" + trackIds, "GET", token).then(
+        (res) => {
+          if (!res.error) {
+            console.log(res);
+          }
+          console.log(res.error);
+        }
+      );
+    }
+    checkSavedTracks();
   }, []);
 
   function handleOnPlay(song: Song) {
@@ -90,6 +107,7 @@ export async function albumLoader({ params }: { [key: string]: any }) {
       const formattedAlbumTracks = res.tracks.items.map(
         (track: { [key: string]: any }, index: number) => {
           return {
+            id: track.id,
             indexInStack: index,
             name: track.name,
             album: res.name,

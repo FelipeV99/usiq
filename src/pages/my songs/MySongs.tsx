@@ -25,6 +25,7 @@ export async function mySongsLoader() {
   const token = window.localStorage.getItem("token") || "";
   let mySongs: Song[] = [
     {
+      id: "",
       indexInStack: 0,
       name: "",
       album: "",
@@ -42,6 +43,7 @@ export async function mySongsLoader() {
       mySongs = res.items.map(
         (songObj: { [key: string]: any }, index: number) => {
           return {
+            id: songObj.track.id,
             indexInStack: index,
             name: songObj.track.name,
             album: songObj.track.album.name,

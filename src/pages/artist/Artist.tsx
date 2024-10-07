@@ -28,6 +28,7 @@ const Artist = () => {
           const topTracksFormatted = res.tracks.map(
             (track: { [key: string]: any }, index: number) => {
               return {
+                id: track.id,
                 indexInStack: index,
                 name: track.name,
                 album: track.album.name,

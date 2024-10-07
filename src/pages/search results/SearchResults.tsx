@@ -47,6 +47,7 @@ export async function searchResultsLoader({ params }: { [key: string]: any }) {
   const token = window.localStorage.getItem("token") || "";
   let songResults: Song[] = [
     {
+      id: "",
       indexInStack: 0,
       songUrl: "",
       imgUrl: "",
@@ -94,6 +95,7 @@ export async function searchResultsLoader({ params }: { [key: string]: any }) {
       songResults = songResults.map(
         (track: { [key: string]: any }, index: number) => {
           return {
+            id: track.id,
             indexInStack: index,
             name: track.name,
             album: track.album.name,

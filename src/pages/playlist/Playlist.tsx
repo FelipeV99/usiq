@@ -77,6 +77,7 @@ export async function playlistLoader({ params }: { [key: string]: any }) {
       const playlistTracks = res.tracks.items.map(
         (trackObj: { [key: string]: any }, index: number) => {
           return {
+            id: trackObj.track.id,
             indexInStack: index,
             name: trackObj.track.name,
             album: trackObj.track.album.name,
