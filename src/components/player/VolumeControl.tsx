@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const VolumeControl = ({ audioRef }: { audioRef: any }) => {
   const [isVolumeBarHover, setIsVolumeBarHover] = useState<boolean>(false);
-  const [volume, setVolume] = useState<number>(60);
+  const [volume, setVolume] = useState<number>(50);
   const [isMuted, setIsMuted] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume / 100;
+    }
+  });
 
   function handleOnMuteUnmute() {
     if (audioRef.current) {

@@ -4,6 +4,7 @@ import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 import RecentTracks from "../home/RecentTracks";
 import AsyncImg from "../../components/async img/AsyncImg";
 import { PlaylistType, useCurrentPageContext } from "../../App";
+import { useEffect } from "react";
 
 const Discover = () => {
   const navigate = useNavigate();
@@ -14,6 +15,10 @@ const Discover = () => {
     setCurrentPage("Playlist");
     navigate("/playlist/" + playlistID);
   }
+
+  useEffect(() => {
+    setCurrentPage("Discover");
+  }, []);
 
   return (
     <div className="discover-container">

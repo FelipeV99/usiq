@@ -2,9 +2,14 @@ import { redirect, useLoaderData } from "react-router-dom";
 import { fetchWebApi } from "../../config/spotify";
 import "./my-artists.css";
 import ArtistCard from "../../components/cards/artist card/ArtistCard";
-import { ArtistType } from "../../App";
+import { ArtistType, useCurrentPageContext } from "../../App";
+import { useEffect } from "react";
 const MyArtists = () => {
   const myArtists = useLoaderData() as ArtistType[];
+  const { setCurrentPage } = useCurrentPageContext();
+  useEffect(() => {
+    setCurrentPage("Artists");
+  }, []);
   return (
     <div>
       <h2>My Artists</h2>

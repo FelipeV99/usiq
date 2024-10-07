@@ -8,10 +8,18 @@ import RecentTracks from "./RecentTracks";
 import AlbumCard from "../../components/cards/album card/AlbumCard";
 import AsyncImg from "../../components/async img/AsyncImg";
 
-import { Song, ArtistType, AlbumType, useTokenContext } from "../../App";
+import {
+  Song,
+  ArtistType,
+  AlbumType,
+  useTokenContext,
+  useCurrentPageContext,
+} from "../../App";
 
 const Home = () => {
   const { token, setToken } = useTokenContext();
+  const { setCurrentPage } = useCurrentPageContext();
+
   const [newAlbums, setNewAlbums] = useState<AlbumType[]>([]);
   const [recentTracks, setRecentTracks] = useState<Song[]>([]);
   const [isRecentTracksLoading, setIsRecentTracksLoading] =
@@ -112,6 +120,7 @@ const Home = () => {
       getRecentlyPlayedTracks();
       getFavoriteArtists();
     }
+    setCurrentPage("Home");
   }, []);
 
   function placeRecentTracksSkeleton() {

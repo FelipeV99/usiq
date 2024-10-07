@@ -3,10 +3,15 @@ import "./my-albums.css";
 import { fetchWebApi } from "../../config/spotify";
 import { redirect, useLoaderData } from "react-router-dom";
 import AlbumCard from "../../components/cards/album card/AlbumCard";
-import { AlbumType } from "../../App";
+import { AlbumType, useCurrentPageContext } from "../../App";
+import { useEffect } from "react";
 
 const MyAlbums = () => {
   const myAlbums = useLoaderData() as AlbumType[];
+  const { setCurrentPage } = useCurrentPageContext();
+  useEffect(() => {
+    setCurrentPage("Albums");
+  }, []);
   return (
     <div className="my-albums-outer-container">
       <h2>My Albums</h2>

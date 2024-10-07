@@ -2,10 +2,15 @@ import { redirect, useLoaderData } from "react-router-dom";
 import { fetchWebApi } from "../../config/spotify";
 import "./my-songs.css";
 import Tracklist from "../../components/tracklist/Tracklist";
-import { Song } from "../../App";
+import { Song, useCurrentPageContext } from "../../App";
+import { useEffect } from "react";
 
 const MySongs = () => {
   const mySongs = useLoaderData() as Song[];
+  const { setCurrentPage } = useCurrentPageContext();
+  useEffect(() => {
+    setCurrentPage("Songs");
+  }, []);
   return (
     <div>
       <h2>My Songs</h2>
