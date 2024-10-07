@@ -50,7 +50,11 @@ export async function mySongsLoader() {
     }
   });
   if (isError) {
-    return redirect("http://localhost:3000/login");
+    const redirectUrl =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000/"
+        : "https://usiq.netlify.app/";
+    return redirect(redirectUrl + "login");
   } else {
     return mySongs;
   }

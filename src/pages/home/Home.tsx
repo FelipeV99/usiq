@@ -46,10 +46,9 @@ const Home = () => {
           setRecentTracks(recentTracksFormatted);
           setIsRecentTracksLoading(false);
         } else {
-          console.log("there was an error getitng recent tracks");
-          window.localStorage.setItem("token", "");
-
+          // console.log("there was an error getitng recent tracks");
           setIsRecentTracksLoading(false);
+          window.localStorage.setItem("token", "");
           setToken("");
         }
       });
@@ -89,7 +88,7 @@ const Home = () => {
         token
       ).then((res) => {
         if (res.error) {
-          console.log("error in new albums", res.error);
+          // console.log("error in new albums", res.error);
           window.localStorage.setItem("token", "");
           setToken("");
         } else {

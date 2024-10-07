@@ -142,7 +142,7 @@ const Discover = () => {
 };
 
 export async function discoverLoader() {
-  let error = "";
+  let error = false;
   const token = window.localStorage.getItem("token") || "";
   const endpoints = [
     "v1/playlists/37i9dQZF1DX4sWSpwq3LiO",
@@ -167,15 +167,19 @@ export async function discoverLoader() {
       if (res.error) {
         console.log("error while requesting discover playlists", res.error);
         window.localStorage.setItem("token", "");
-        error = res.error;
+        error = true;
       } else {
         return res;
       }
     });
   });
   const data = await Promise.all(promises);
-  if (error !== "") {
-    return redirect("/login");
+  if (error) {
+    const redirectUrl =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000/"
+        : "https://usiq.netlify.app/";
+    return redirect(redirectUrl + "login");
   } else {
     const recentTracksFormatted = data[4].items.map(
       (item: { [key: string]: any }, index: number) => {
