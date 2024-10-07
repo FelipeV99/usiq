@@ -26,7 +26,7 @@ const Album = () => {
         trackIds = trackIds + track.id + "%";
       });
       // console.log(trackIds);
-      fetchWebApi("v1/me/tracks/contains?" + trackIds, "GET", token).then(
+      fetchWebApi("v1/me/tracks/contains?ids=" + trackIds, "GET", token).then(
         (res) => {
           if (!res.error) {
             console.log(res);
