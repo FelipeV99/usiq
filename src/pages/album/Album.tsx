@@ -18,6 +18,7 @@ const Album = () => {
     if (location.state?.autoplay === true) {
       handleOnPlay(album.tracks[0]);
     }
+    // console.log(location.state);
   }, []);
 
   function handleOnPlay(song: Song) {

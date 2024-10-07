@@ -2,7 +2,7 @@ import React, { useState } from "react";
 //volume state can be local to here, and have as prop the audioRef
 const VolumeControl = ({ audioRef }: { audioRef: any }) => {
   const [isVolumeBarHover, setIsVolumeBarHover] = useState<boolean>(false);
-  const [volume, setVolume] = useState<number>(100);
+  const [volume, setVolume] = useState<number>(60);
   const [isMuted, setIsMuted] = useState<boolean>(false);
 
   function handleOnMuteUnmute() {

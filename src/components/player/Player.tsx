@@ -3,6 +3,7 @@ import { useTStackCSongContext } from "../../App";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Song } from "../../App";
 import VolumeControl from "./VolumeControl";
+
 const Player = () => {
   const { trackStack, setTrackStack, currentSong, setCurrentSong } =
     useTStackCSongContext();
@@ -15,21 +16,22 @@ const Player = () => {
   const [isSongBarHover, setIsSongBarHover] = useState<boolean>(false);
   const [isThereSong, setIsThereSong] = useState<boolean>(false);
 
-  useEffect(() => {
-    function keyDownHandler(event: KeyboardEvent) {
-      if (event.code === "Space") {
-        event.preventDefault();
-        handleOnPlayPause();
-      }
-    }
-    document.addEventListener("keydown", keyDownHandler);
-    return function cleanup() {
-      document.removeEventListener("keydown", keyDownHandler);
-    };
-  }, [isPlaying]);
+  // useEffect(() => {
+  //   function keyDownHandler(event: KeyboardEvent) {
+  //     if (event.code === "Space") {
+  //       event.preventDefault();
+  //       handleOnPlayPause();
+  //     }
+  //   }
+  //   document.addEventListener("keydown", keyDownHandler);
+  //   return function cleanup() {
+  //     document.removeEventListener("keydown", keyDownHandler);
+  //   };
+  // }, [isPlaying]);
 
   useEffect(() => {
     if (currentSong.name !== "") {
+      console.log("theres a new current song", currentSong);
       setSongProgress(0);
       setIsPlaying(true);
       startAnimation();
