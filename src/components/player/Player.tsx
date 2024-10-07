@@ -2,19 +2,17 @@ import "./player.css";
 import { useTStackCSongContext } from "../../App";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Song } from "../../App";
+import VolumeControl from "./VolumeControl";
 const Player = () => {
   const { trackStack, setTrackStack, currentSong, setCurrentSong } =
     useTStackCSongContext();
 
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const playAnimationRef = useRef<number | null>(null);
 
-  const [volume, setVolume] = useState<number>(100);
   const [songProgress, setSongProgress] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
   const [isSongBarHover, setIsSongBarHover] = useState<boolean>(false);
-  const [isVolumeBarHover, setIsVolumeBarHover] = useState<boolean>(false);
   const [isThereSong, setIsThereSong] = useState<boolean>(false);
 
   useEffect(() => {
@@ -31,50 +29,49 @@ const Player = () => {
   }, [isPlaying]);
 
   useEffect(() => {
-    if (currentSong.name === "") {
-      setIsThereSong(false);
-    } else {
-      setIsThereSong(true);
-    }
-  }, [currentSong]);
-
-  useEffect(() => {
-    const isObjEmpty = currentSong.name === "";
-    if (!isObjEmpty) {
+    if (currentSong.name !== "") {
       setSongProgress(0);
       setIsPlaying(true);
       startAnimation();
       setIsThereSong(true);
+    } else {
+      setIsThereSong(false);
     }
   }, [currentSong]);
 
   const startAnimation = useCallback(() => {
-    console.log("start animation");
+    // console.log("start animation");
     const animate = () => {
       // updateProgress in DOM elements
       if (audioRef.current) {
+        //update input range and progress bar
         const currentTime = audioRef.current.currentTime;
+        //update the audio progress of the Audio HTML tag
         setSongProgress(currentTime);
         // console.log("update animation");
       }
       //animate, and store the request ID for cancelling the animation when needed
       playAnimationRef.current = requestAnimationFrame(animate);
     };
-    //call it once to start
+    //call it once to start, store the request ID for cancelling the animation when needed
     playAnimationRef.current = requestAnimationFrame(animate);
   }, []);
 
   function handleOnPlayPause() {
+    //if there's no song do nothing
     if (isThereSong) {
+      //if the song is not playing then play it
       if (isPlaying === false) {
         setIsPlaying(true);
         audioRef.current?.play();
         startAnimation();
+        //if the song is playing then pause it
       } else {
         setIsPlaying(false);
         audioRef.current?.pause();
+        //cancel animation and delete the request ID by setting the ref.current to null
         if (playAnimationRef.current !== null) {
-          console.log("cancel animation");
+          // console.log("cancel animation");
           cancelAnimationFrame(playAnimationRef.current);
           playAnimationRef.current = null;
         }
@@ -84,32 +81,7 @@ const Player = () => {
 
   function handleOnPlayPrevious() {
     if (isThereSong) {
-      if (audioRef.current) {
-        audioRef.current.currentTime = 0;
-      }
-
-      setSongProgress(0);
-
       if (currentSong.indexInStack !== 0) {
-        const previousTrack = trackStack.filter(
-          (track: { [key: string]: any }, index: number) => {
-            return index === currentSong.indexInStack - 1;
-          }
-        )[0];
-        const newCurrentSong: { song: Song; isActive: boolean } = {
-          song: {
-            indexInStack: currentSong.indexInStack - 1,
-            songUrl: previousTrack.song.songUrl,
-            imgUrl: previousTrack.song.imgUrl,
-            name: previousTrack.song.name,
-            album: previousTrack.song.album,
-            artist: previousTrack.song.artist,
-            trackDurationMs: previousTrack.song.trackDurationMs,
-          },
-          isActive: true,
-        };
-
-        setCurrentSong(newCurrentSong.song);
         //now update the track stack
         setTrackStack(
           (currentTrackStack: { song: Song; isActive: boolean }[]) => {
@@ -119,6 +91,11 @@ const Player = () => {
                   return { song: { ...track.song }, isActive: false };
                 }
                 if (index === currentSong.indexInStack - 1) {
+                  setCurrentSong({ ...track.song });
+                  if (audioRef.current) {
+                    audioRef.current.currentTime = 0;
+                    setSongProgress(0);
+                  }
                   return { song: { ...track.song }, isActive: true };
                 }
                 return { ...track };
@@ -129,6 +106,7 @@ const Player = () => {
       } else {
         if (audioRef.current) {
           audioRef.current.currentTime = 0;
+          setSongProgress(0);
         }
       }
     }
@@ -136,40 +114,26 @@ const Player = () => {
 
   function handleOnPlayNext() {
     if (isThereSong) {
+      //while the current song is not the last in the current stack you can play the next
       if (currentSong.indexInStack !== trackStack.length - 1) {
-        setSongProgress(0);
-        if (audioRef.current) {
-          audioRef.current.currentTime = 0;
-        }
-
-        const nextTrack = trackStack.filter(
-          (track: { [key: string]: any }, index: number) => {
-            return index === currentSong.indexInStack + 1;
-          }
-        )[0];
-        const newCurrentSong: { song: Song; isActive: boolean } = {
-          song: {
-            indexInStack: currentSong.indexInStack + 1,
-            songUrl: nextTrack.song.songUrl,
-            imgUrl: nextTrack.song.imgUrl,
-            name: nextTrack.song.name,
-            album: nextTrack.song.album,
-            artist: nextTrack.song.artist,
-            trackDurationMs: nextTrack.song.trackDurationMs,
-          },
-          isActive: true,
-        };
-
-        setCurrentSong(newCurrentSong.song);
-        //now update the track stack
+        //update the track stack and current song
         setTrackStack(
           (currentTrackStack: { song: Song; isActive: boolean }[]) => {
             return currentTrackStack.map(
               (track: { song: Song; isActive: boolean }, index: number) => {
+                //setting the previous track to inactive
                 if (index === currentSong.indexInStack) {
                   return { song: { ...track.song }, isActive: false };
                 }
+                //setting the new track to active
                 if (index === currentSong.indexInStack + 1) {
+                  setCurrentSong({ ...track.song });
+                  if (audioRef.current) {
+                    audioRef.current.currentTime = 0;
+                    //restarting the song when it's going from song A to song A
+                    audioRef.current.src = "";
+                    audioRef.current.src = track.song.songUrl;
+                  }
                   return { song: { ...track.song }, isActive: true };
                 }
                 return { ...track };
@@ -178,28 +142,6 @@ const Player = () => {
           }
         );
       }
-    }
-  }
-
-  function handleOnMuteUnmute() {
-    if (audioRef.current) {
-      if (audioRef.current.volume === 0) {
-        audioRef.current.volume = volume / 100;
-        setIsMuted(false);
-      } else {
-        audioRef.current.volume = 0;
-        setIsMuted(true);
-      }
-    }
-  }
-
-  function handleOnVolumeChange(e: React.FormEvent<HTMLInputElement>) {
-    if (isMuted) {
-      setIsMuted(false);
-    }
-    setVolume(Number(e.currentTarget.value));
-    if (audioRef.current) {
-      audioRef.current.volume = Number(e.currentTarget.value) / 100;
     }
   }
 
@@ -303,14 +245,15 @@ const Player = () => {
                 <input
                   type="range"
                   // min={0}
-                  max={30.0}
+                  max={audioRef.current ? audioRef.current.duration : 0}
                   value={songProgress}
                   onChange={handleOnProgressChange}
                   className="song-progress-input"
+                  disabled={isThereSong ? false : true}
                 />
                 <progress
                   className="song-progress-progress"
-                  max={30.0}
+                  max={audioRef.current ? audioRef.current.duration : 0}
                   value={songProgress}
                 ></progress>
               </div>
@@ -334,46 +277,7 @@ const Player = () => {
             onEnded={handleOnPlayNext}
           />
         </div>
-        <div className="player-other-btns">
-          {/* <button onClick={()=>setIsQueueVisible((currentValue)=>!currentValue)}>queue</button> */}
-          <div onClick={handleOnMuteUnmute} className="mute-unmute-container">
-            {isMuted ? (
-              <img
-                src={require("../../assets/Icons/volume-x.svg").default}
-                alt=""
-              />
-            ) : (
-              <img
-                src={require("../../assets/Icons/volume.svg").default}
-                alt=""
-              />
-            )}
-          </div>
-
-          <div
-            className="volume-slider-container"
-            onMouseEnter={() => setIsVolumeBarHover(true)}
-            onMouseLeave={() => setIsVolumeBarHover(false)}
-          >
-            <div
-              className={`volume-slider slider ${
-                isVolumeBarHover ? "hover" : ""
-              }`}
-            >
-              <input
-                type="range"
-                value={volume}
-                onChange={handleOnVolumeChange}
-                className="volume-input"
-              />
-              <progress
-                max={100}
-                value={volume}
-                className="volume-progress"
-              ></progress>
-            </div>
-          </div>
-        </div>
+        <VolumeControl audioRef={audioRef} />
       </div>
     </div>
   );
