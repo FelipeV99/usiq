@@ -123,31 +123,19 @@ function App() {
 
   useEffect(() => {
     //first check if there's hash
-    const thereIsHash = window.location.hash;
+    const hash = window.location.hash;
     let _token = "";
 
-    if (thereIsHash) {
-      _token = thereIsHash.split("&")[0].split("=")[1];
+    if (hash) {
+      _token = hash.split("&")[0].split("=")[1];
       setToken(_token);
       window.localStorage.setItem("token", _token);
       window.location.hash = "";
       //otherwise check if the token is stored in the local storage
     } else {
       _token = window.localStorage.getItem("token") || "";
-      console.log(
-        "no token found in hash, therefore looked into LS, which returns: ",
-        _token
-      );
       //set the token to the stored token in LS or to an empty string, if it's empty we'll redirect user to login page
       setToken(_token);
-      // if (_token === "") {
-      //   const hash = window.location.hash;
-      //   _token = hash.split("&")[0].split("=")[1];
-      //   window.localStorage.setItem("token", _token);
-      //   setToken(_token);
-      // } else {
-      //   setToken(_token);
-      // }
     }
   }, []);
 
