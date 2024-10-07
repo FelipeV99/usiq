@@ -12,7 +12,7 @@ const MySongs = () => {
     setCurrentPage("Songs");
   }, []);
   return (
-    <div>
+    <div className="my-songs-outer-container">
       <h2>My Songs</h2>
       <div className="my-songs-container">
         <Tracklist tracks={mySongs} />
