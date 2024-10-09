@@ -19,6 +19,12 @@
   width: 350px;
   text-align: center;
 }
+
+.credentials-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 .login-container .btn-primary {
   background-color: #1bd472;
   width: 220px;

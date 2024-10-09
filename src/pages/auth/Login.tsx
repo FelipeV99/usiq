@@ -12,9 +12,15 @@ const Login = () => {
         className="logo-vertical"
       />
       <p className="login-text">
-        This app uses spotify’s API, which needs an spotify account to make
-        requests, please connect your account
+        Please use these credentials to login to an authorized spotify account.
       </p>
+      <div className="credentials-container">
+        <p className="other-p">mail</p>
+        <p className="bold">mail4spotapi@gmail.com</p>
+        <p className="other-p">password</p>
+        <p className="bold">easyp4sssword</p>
+      </div>
+
       <a href={loginEndpoint}>
         <button
           className="btn-primary"
