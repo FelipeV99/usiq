@@ -10,6 +10,7 @@ const Discover = () => {
   const navigate = useNavigate();
   const { setCurrentPage } = useCurrentPageContext();
   const { playlists, recommendedTracks }: any = useLoaderData();
+  // console.log(recommendedTracks.slice(0, 6));
 
   function handleOnClickPlaylist(playlistID: string) {
     setCurrentPage("Playlist");
@@ -159,7 +160,7 @@ export async function discoverLoader() {
     "v1/playlists/37i9dQZF1DWUVpAXiEPK8P",
     "v1/playlists/37i9dQZF1DX2SK4ytI2KAZ",
     // "v1/me/player/recently-played?limit=6",
-    "v1/recommendations?seed_tracks=0c6xIDDpzE81m2q797ordA",
+    "v1/recommendations?seed_tracks=1pKYYY0dkg23sQQXi0Q5zN",
   ];
   let playlists: PlaylistType[] = [];
 
@@ -183,7 +184,14 @@ export async function discoverLoader() {
         : "https://usiq.netlify.app/";
     return redirect(redirectUrl + "login");
   } else {
-    const recommendedTracksFormatted = data[4].tracks.map(
+    const recommendedTracksFiltered = data[4].tracks.filter((track: any) => {
+      if (track.preview_url) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    const recommendedTracksFormatted = recommendedTracksFiltered.map(
       (track: { [key: string]: any }, index: number) => {
         return {
           indexInStack: index,
@@ -194,16 +202,6 @@ export async function discoverLoader() {
           songUrl: track.preview_url,
           trackDurationMs: track.duration_ms,
         };
-      }
-    );
-
-    const recommendedTracksFiltered = recommendedTracksFormatted.filter(
-      (track: Song) => {
-        if (track.songUrl) {
-          return true;
-        } else {
-          return false;
-        }
       }
     );
 
@@ -219,7 +217,7 @@ export async function discoverLoader() {
     }
     return {
       playlists: playlists,
-      recommendedTracks: recommendedTracksFiltered,
+      recommendedTracks: recommendedTracksFormatted,
     };
   }
 }

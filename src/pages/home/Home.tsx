@@ -38,8 +38,6 @@ const Home = () => {
         token
       ).then((res) => {
         if (!res.error) {
-          console.log("res from recently played tracks", res);
-
           if (res.items.length > 0) {
             const recentTracksFormatted = res.items.map(
               (item: { [key: string]: any }, index: number) => {
@@ -70,7 +68,6 @@ const Home = () => {
       await fetchWebApi("v1/me/top/artists?limit=9", "GET", token).then(
         (res) => {
           if (!res.error) {
-            console.log("res from top artists", res);
             if (res.items.length > 0) {
               const favArtistsFormatted = res.items.map(
                 (artist: { [key: string]: any }) => {
