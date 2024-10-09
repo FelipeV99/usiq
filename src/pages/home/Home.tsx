@@ -15,10 +15,13 @@ import {
   useTokenContext,
   useCurrentPageContext,
 } from "../../App";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { token, setToken } = useTokenContext();
   const { setCurrentPage } = useCurrentPageContext();
+
+  const navigate = useNavigate();
 
   const [newAlbums, setNewAlbums] = useState<AlbumType[]>([]);
   const [recentTracks, setRecentTracks] = useState<Song[]>([]);
@@ -37,66 +40,70 @@ const Home = () => {
         token
       ).then((res) => {
         if (!res.error) {
-          const recentTracksFormatted = res.items.map(
-            (item: { [key: string]: any }, index: number) => {
-              // console.log("track obj", item.track);
-              return {
-                indexInStack: index,
-                name: item.track.name,
-                album: item.track.album.name,
-                artist: item.track.artists[0].name,
-                imgUrl: item.track.album.images[0].url,
-                songUrl: item.track.preview_url,
-                trackDurationMs: item.track.duration_ms,
-              };
-            }
-          );
-          setRecentTracks(recentTracksFormatted);
-          setIsRecentTracksLoading(false);
+          if (res.items.length > 0) {
+            const recentTracksFormatted = res.items.map(
+              (item: { [key: string]: any }, index: number) => {
+                return {
+                  indexInStack: index,
+                  name: item.track.name,
+                  album: item.track.album.name,
+                  artist: item.track.artists[0].name,
+                  imgUrl: item.track.album.images[0].url,
+                  songUrl: item.track.preview_url,
+                  trackDurationMs: item.track.duration_ms,
+                };
+              }
+            );
+            setRecentTracks(recentTracksFormatted);
+          }
         } else {
-          // console.log("there was an error getitng recent tracks");
-          setIsRecentTracksLoading(false);
+          console.log("error while retrieving recent tracks,", res.error);
           window.localStorage.setItem("token", "");
           setToken("");
         }
+        setIsRecentTracksLoading(false);
       });
     }
 
     async function getFavoriteArtists() {
       setIsFavoriteArtistsLoading(true);
-      await fetchWebApi(
-        "v1/me/top/artists?limit=9&offset=7",
-        "GET",
-        token
-      ).then((res) => {
-        if (!res.error) {
-          const favArtistsFormatted = res.items.map(
-            (artist: { [key: string]: any }) => {
-              return {
-                ID: artist.id,
-                name: artist.name,
-                imgUrl: artist.images[0].url,
-                totalFollowers: artist.followers.total,
-              };
+      await fetchWebApi("v1/me/top/artists?limit=9", "GET", token).then(
+        (res) => {
+          if (!res.error) {
+            console.log(res);
+            if (res.items.length > 0) {
+              const favArtistsFormatted = res.items.map(
+                (artist: { [key: string]: any }) => {
+                  return {
+                    ID: artist.id,
+                    name: artist.name,
+                    imgUrl: artist.images[0].url,
+                    totalFollowers: artist.followers.total,
+                  };
+                }
+              );
+              setFavoriteArtists(favArtistsFormatted);
             }
-          );
-          setFavoriteArtists(favArtistsFormatted);
-        } else {
-          window.localStorage.setItem("token", "");
-          setToken("");
+          } else {
+            console.log("error while retrieving favorite artists,", res.error);
+
+            window.localStorage.setItem("token", "");
+            setToken("");
+          }
+          setIsFavoriteArtistsLoading(false);
         }
-        setIsFavoriteArtistsLoading(false);
-      });
+      );
     }
 
     async function getNewAlbumReleases() {
       await fetchWebApi(
-        "v1/browse/new-releases?offset=14&limit=12",
+        "v1/browse/new-releases?limit=12&offset=14",
         "GET",
         token
       ).then((res) => {
         if (res.error) {
-          // console.log("error in new albums", res.error);
+          console.log("error while retrieving new album releases,", res.error);
+
           window.localStorage.setItem("token", "");
           setToken("");
         } else {
@@ -115,7 +122,7 @@ const Home = () => {
         }
       });
     }
-    if (token !== "" && token !== "expired") {
+    if (token !== "") {
       getNewAlbumReleases();
       getRecentlyPlayedTracks();
       getFavoriteArtists();
@@ -180,35 +187,45 @@ const Home = () => {
           albumUrl="2ZwNcWl8h9blysDE8i4juL"
         />
       </div>
-      <div className="home-bottom">
-        <div className="favorite-artists-outer-container">
-          <h4>Your favorite artists</h4>
-          <div className="favorite-artists-container">
-            {isFavoriteArtistsLoading
-              ? placeFavoriteArtistsSkeleton()
-              : favoriteArtists.map((artist: ArtistType, index: number) => {
-                  return (
-                    <ArtistCard
-                      key={index}
-                      ID={artist.ID}
-                      imgUrl={artist.imgUrl}
-                      name={artist.name}
-                    />
-                  );
-                })}
-          </div>
-        </div>
 
-        <div className="recently-played-outer-container">
-          <h4>Recently played tracks</h4>
-          {isRecentTracksLoading ? (
-            <div className="rt-container">
-              <div className="rt-grid">{placeRecentTracksSkeleton()}</div>
+      <div className="home-bottom">
+        {favoriteArtists.length > 0 ? (
+          <div className="favorite-artists-outer-container">
+            <h4>Your favorite artists</h4>
+            <div className="favorite-artists-container">
+              {isFavoriteArtistsLoading
+                ? placeFavoriteArtistsSkeleton()
+                : favoriteArtists.map((artist: ArtistType, index: number) => {
+                    return (
+                      <ArtistCard
+                        key={index}
+                        ID={artist.ID}
+                        imgUrl={artist.imgUrl}
+                        name={artist.name}
+                      />
+                    );
+                  })}
             </div>
-          ) : (
-            <RecentTracks tracks={recentTracks} />
-          )}
-        </div>
+          </div>
+        ) : (
+          <></>
+        )}
+
+        {recentTracks.length > 0 ? (
+          <div className="recently-played-outer-container">
+            <h4>Recently played tracks</h4>
+            {isRecentTracksLoading ? (
+              <div className="rt-container">
+                <div className="rt-grid">{placeRecentTracksSkeleton()}</div>
+              </div>
+            ) : (
+              <RecentTracks tracks={recentTracks} />
+            )}
+          </div>
+        ) : (
+          <></>
+        )}
+
         <div className="home-bottom-right">
           <div className="new-releases-outer-container">
             <h4>New releases</h4>

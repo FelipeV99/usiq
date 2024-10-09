@@ -3,18 +3,37 @@ import { fetchWebApi } from "../../config/spotify";
 import "./artist.css";
 import { useEffect, useState } from "react";
 import Tracklist from "../../components/tracklist/Tracklist";
-import { useTokenContext, useTStackCSongContext } from "../../App";
+import { useTokenContext } from "../../App";
 import { Song, ArtistType } from "../../App";
 
 const Artist = () => {
   const artist = useLoaderData() as ArtistType;
-  const { setCurrentSong, setTrackStack } = useTStackCSongContext();
   const { token, setToken } = useTokenContext();
 
   const [topTracks, setTopTracks] = useState<Song[]>([]);
   const [isUserFollowing, setIsUserFollowing] = useState<boolean>(false);
+  const [areTracksSaved, setAreTracksSaved] = useState<boolean[]>([]);
+  const [clickedPlayArtist, setClickedPlayArtist] = useState<number>(0);
 
   useEffect(() => {
+    async function checkSavedTracks(tracks: Song[]) {
+      let trackIds = "";
+      tracks.map((track: Song) => {
+        trackIds = trackIds + track.id + ",";
+      });
+      await fetchWebApi(
+        "v1/me/tracks/contains?ids=" + trackIds,
+        "GET",
+        token
+      ).then((res) => {
+        if (!res.error) {
+          setAreTracksSaved(res);
+        } else {
+          console.log(res.error);
+        }
+      });
+    }
+
     async function getTopTracks() {
       await fetchWebApi(
         `v1/artists/${artist.ID}/top-tracks`,
@@ -39,6 +58,8 @@ const Artist = () => {
               };
             }
           );
+          checkSavedTracks(topTracksFormatted);
+
           setTopTracks(topTracksFormatted);
         }
       });
@@ -79,12 +100,9 @@ const Artist = () => {
   }
 
   function handleOnClickPlayArtist() {
-    setCurrentSong(topTracks[0]);
-    const newTrackStack = topTracks.map((track: Song) => {
-      const active = track.songUrl === topTracks[0].songUrl;
-      return { song: { ...track }, isActive: active };
+    setClickedPlayArtist((currentNum) => {
+      return currentNum + 1;
     });
-    setTrackStack(newTrackStack);
   }
 
   return (
@@ -128,7 +146,11 @@ const Artist = () => {
       </div>
       <div className="artist-content-container">
         <h4>popular songs</h4>
-        <Tracklist tracks={topTracks} />
+        <Tracklist
+          tracks={topTracks}
+          playFirst={clickedPlayArtist}
+          areTracksSaved={areTracksSaved}
+        />
       </div>
     </div>
   );

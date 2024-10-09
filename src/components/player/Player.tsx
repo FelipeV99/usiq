@@ -31,7 +31,7 @@ const Player = () => {
 
   useEffect(() => {
     if (currentSong.name !== "") {
-      console.log("theres a new current song", currentSong);
+      // console.log("theres a new current song", currentSong);
       setSongProgress(0);
       setIsPlaying(true);
       startAnimation();
@@ -93,12 +93,27 @@ const Player = () => {
                   return { song: { ...track.song }, isActive: false };
                 }
                 if (index === currentSong.indexInStack - 1) {
-                  setCurrentSong({ ...track.song });
-                  if (audioRef.current) {
-                    audioRef.current.currentTime = 0;
-                    setSongProgress(0);
+                  if (!track.song.songUrl) {
+                    setCurrentSong({
+                      id: "",
+                      indexInStack: 0,
+                      name: "",
+                      artist: "",
+                      album: "",
+                      imgUrl: "",
+                      songUrl: "",
+                      trackDurationMs: 0,
+                    });
+                    window.alert("track unavailable right now");
+                    return { song: { ...track.song }, isActive: false };
+                  } else {
+                    setCurrentSong({ ...track.song });
+                    if (audioRef.current) {
+                      audioRef.current.currentTime = 0;
+                      setSongProgress(0);
+                    }
+                    return { song: { ...track.song }, isActive: true };
                   }
-                  return { song: { ...track.song }, isActive: true };
                 }
                 return { ...track };
               }
@@ -129,14 +144,29 @@ const Player = () => {
                 }
                 //setting the new track to active
                 if (index === currentSong.indexInStack + 1) {
-                  setCurrentSong({ ...track.song });
-                  if (audioRef.current) {
-                    audioRef.current.currentTime = 0;
-                    //restarting the song when it's going from song A to song A
-                    audioRef.current.src = "";
-                    audioRef.current.src = track.song.songUrl;
+                  if (!track.song.songUrl) {
+                    setCurrentSong({
+                      id: "",
+                      indexInStack: 0,
+                      name: "",
+                      artist: "",
+                      album: "",
+                      imgUrl: "",
+                      songUrl: "",
+                      trackDurationMs: 0,
+                    });
+                    window.alert("track unavailable right now");
+                    return { song: { ...track.song }, isActive: false };
+                  } else {
+                    setCurrentSong({ ...track.song });
+                    if (audioRef.current) {
+                      audioRef.current.currentTime = 0;
+                      //restarting the song when it's going from song A to song A
+                      audioRef.current.src = "";
+                      audioRef.current.src = track.song.songUrl;
+                    }
+                    return { song: { ...track.song }, isActive: true };
                   }
-                  return { song: { ...track.song }, isActive: true };
                 }
                 return { ...track };
               }

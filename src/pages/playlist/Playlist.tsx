@@ -3,23 +3,55 @@ import { fetchWebApi } from "../../config/spotify";
 import "./playlist.css";
 import AsyncImg from "../../components/async img/AsyncImg";
 import SongrowTwo from "../../components/song row/SongrowTwo";
-import { PlaylistType, useTStackCSongContext } from "../../App";
+import {
+  PlaylistType,
+  useTokenContext,
+  useTStackCSongContext,
+} from "../../App";
 import { Song } from "../../App";
+import { useEffect, useState } from "react";
 
 const Playlist = () => {
   //return type of useloaderData is unknown
   const playlist = useLoaderData() as PlaylistType;
   const { setCurrentSong, setTrackStack } = useTStackCSongContext();
+  const { token } = useTokenContext();
+
+  const [areTracksSaved, setAreTracksSaved] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    async function checkSavedTracks() {
+      let trackIds = "";
+      playlist.tracks.map((track: Song) => {
+        trackIds = trackIds + track.id + ",";
+      });
+      await fetchWebApi(
+        "v1/me/tracks/contains?ids=" + trackIds,
+        "GET",
+        token
+      ).then((res) => {
+        if (!res.error) {
+          setAreTracksSaved(res);
+        } else {
+          console.log(res.error);
+        }
+      });
+    }
+    checkSavedTracks();
+  }, []);
 
   function handleOnPlay(song: Song) {
-    setCurrentSong(song);
-    const newTrackStack = playlist.tracks.map((track: Song) => {
-      const active = track.songUrl === song.songUrl;
-      return { song: { ...track }, isActive: active };
-    });
-    setTrackStack(newTrackStack);
+    if (song.songUrl) {
+      setCurrentSong(song);
+      const newTrackStack = playlist.tracks.map((track: Song) => {
+        const active = track.songUrl === song.songUrl;
+        return { song: { ...track }, isActive: active };
+      });
+      setTrackStack(newTrackStack);
+    } else {
+      window.alert("Track not available at the moment");
+    }
   }
-
   return (
     <div className="playlist-container">
       <div className="playlist-header">
@@ -49,7 +81,16 @@ const Playlist = () => {
       <div className="playlist-tracks-container">
         {playlist.tracks.map((track: Song, index: number) => {
           return (
-            <SongrowTwo key={index} song={track} handleOnPlay={handleOnPlay} />
+            <SongrowTwo
+              key={index}
+              song={track}
+              handleOnPlay={handleOnPlay}
+              isSongSaved={
+                areTracksSaved.length > 1 ? areTracksSaved[index] : undefined
+              }
+              includeImg={true}
+              includeAlbum={true}
+            />
           );
         })}
       </div>
@@ -74,7 +115,7 @@ export async function playlistLoader({ params }: { [key: string]: any }) {
       window.localStorage.setItem("token", "");
       isError = true;
     } else {
-      const playlistTracks = res.tracks.items.map(
+      let playlistTracks = res.tracks.items.map(
         (trackObj: { [key: string]: any }, index: number) => {
           return {
             id: trackObj.track.id,
@@ -88,6 +129,9 @@ export async function playlistLoader({ params }: { [key: string]: any }) {
           };
         }
       );
+      if (playlistTracks.length > 50) {
+        playlistTracks = playlistTracks.slice(0, 50);
+      }
       playlist = {
         id: res.id,
         name: res.name,

@@ -15,28 +15,22 @@ const MyAlbums = () => {
   return (
     <div className="my-albums-outer-container">
       <h2>My Albums</h2>
-      <div className="my-albums-container">
-        {myAlbums.map((album: AlbumType) => {
-          return <AlbumCard key={album.id} album={album} />;
-        })}
-      </div>
+      {myAlbums.length > 0 ? (
+        <div className="my-albums-container">
+          {myAlbums.map((album: AlbumType) => {
+            return <AlbumCard key={album.id} album={album} />;
+          })}
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
 
 export async function myAlbumsLoader() {
   const token = window.localStorage.getItem("token") || "";
-  let myAlbums: AlbumType[] = [
-    {
-      id: "",
-      name: "",
-      artist: "",
-      totalTracks: 0,
-      imgUrl: "",
-      releaseDate: "",
-      tracks: [],
-    },
-  ];
+  let myAlbums: AlbumType[] = [];
   let isError = false;
   await fetchWebApi("v1/me/albums", "GET", token).then((res) => {
     if (res.error) {

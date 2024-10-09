@@ -5,46 +5,51 @@ import { fetchWebApi } from "../../config/spotify";
 import AsyncImg from "../../components/async img/AsyncImg";
 import SongrowTwo from "../../components/song row/SongrowTwo";
 import { useTokenContext, useTStackCSongContext } from "../../App";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Song, AlbumType } from "../../App";
 
 const Album = () => {
   const album = useLoaderData() as AlbumType;
   const { token } = useTokenContext();
-
-  const { setCurrentSong, trackStack, setTrackStack } = useTStackCSongContext();
-
+  const { setCurrentSong, setTrackStack } = useTStackCSongContext();
   const location = useLocation();
+  const [areTracksSaved, setAreTracksSaved] = useState<boolean[]>([]);
 
   useEffect(() => {
-    if (location.state?.autoplay === true) {
+    //autoplay the album if autoplay = true and if the first song of the album has a preview url
+    if (location.state?.autoplay === true && album.tracks[0].songUrl) {
       handleOnPlay(album.tracks[0]);
     }
     async function checkSavedTracks() {
       let trackIds = "";
       album.tracks.map((track: Song) => {
-        trackIds = trackIds + track.id + "%";
+        trackIds = trackIds + track.id + ",";
       });
-      // console.log(trackIds);
-      fetchWebApi("v1/me/tracks/contains?ids=" + trackIds, "GET", token).then(
-        (res) => {
-          if (!res.error) {
-            console.log(res);
-          }
-          console.log(res.error);
+      await fetchWebApi(
+        "v1/me/tracks/contains?ids=" + trackIds,
+        "GET",
+        token
+      ).then((res) => {
+        if (!res.error) {
+          setAreTracksSaved(res);
         }
-      );
+        console.log(res.error);
+      });
     }
     checkSavedTracks();
   }, []);
 
   function handleOnPlay(song: Song) {
-    setCurrentSong(song);
-    const newTrackStack = album.tracks.map((track: Song) => {
-      const active = track.songUrl === song.songUrl;
-      return { song: { ...track }, isActive: active };
-    });
-    setTrackStack(newTrackStack);
+    if (song.songUrl) {
+      setCurrentSong(song);
+      const newTrackStack = album.tracks.map((track: Song) => {
+        const active = track.songUrl === song.songUrl;
+        return { song: { ...track }, isActive: active };
+      });
+      setTrackStack(newTrackStack);
+    } else {
+      window.alert("Track not available at the moment");
+    }
   }
 
   return (
@@ -78,7 +83,14 @@ const Album = () => {
       <div className="album-tracks-container">
         {album.tracks.map((track: Song, index: number) => {
           return (
-            <SongrowTwo key={index} song={track} handleOnPlay={handleOnPlay} />
+            <SongrowTwo
+              key={index}
+              song={track}
+              handleOnPlay={handleOnPlay}
+              isSongSaved={
+                areTracksSaved.length > 1 ? areTracksSaved[index] : undefined
+              }
+            />
           );
         })}
       </div>
@@ -104,6 +116,7 @@ export async function albumLoader({ params }: { [key: string]: any }) {
       window.localStorage.setItem("token", "");
       isError = true;
     } else {
+      console.log("album res", res);
       const formattedAlbumTracks = res.tracks.items.map(
         (track: { [key: string]: any }, index: number) => {
           return {

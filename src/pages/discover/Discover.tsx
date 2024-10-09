@@ -136,12 +136,16 @@ const Discover = () => {
           </div>
         </div>
       </div>
-      <div className="recommended-tracks-outer-container">
-        <h4>You might like</h4>
-        <div className="recommended-tracks-container">
-          <RecentTracks tracks={recommendedTracks} />
+      {recommendedTracks.length > 0 ? (
+        <div className="recommended-tracks-outer-container">
+          <h4>You might like</h4>
+          <div className="recommended-tracks-container">
+            <RecentTracks tracks={recommendedTracks} />
+          </div>
         </div>
-      </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
@@ -156,16 +160,7 @@ export async function discoverLoader() {
     "v1/playlists/37i9dQZF1DX2SK4ytI2KAZ",
     "v1/me/player/recently-played?limit=6",
   ];
-  let playlists: PlaylistType[] = [
-    {
-      id: "",
-      name: "",
-      ownerName: "",
-      description: "",
-      imgUrl: "",
-      tracks: [],
-    },
-  ];
+  let playlists: PlaylistType[] = [];
 
   const promises = endpoints.map((endpoint) => {
     return fetchWebApi(endpoint, "GET", token).then((res) => {
@@ -179,6 +174,8 @@ export async function discoverLoader() {
     });
   });
   const data = await Promise.all(promises);
+  console.log("data", data);
+
   if (error) {
     const redirectUrl =
       process.env.NODE_ENV === "development"
@@ -199,7 +196,6 @@ export async function discoverLoader() {
         };
       }
     );
-    playlists.pop();
     for (let index = 0; index < 4; index++) {
       playlists.push({
         id: data[index].id,

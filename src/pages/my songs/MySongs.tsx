@@ -14,27 +14,20 @@ const MySongs = () => {
   return (
     <div className="my-songs-outer-container">
       <h2>My Songs</h2>
-      <div className="my-songs-container">
-        <Tracklist tracks={mySongs} />
-      </div>
+      {mySongs.length > 0 ? (
+        <div className="my-songs-container">
+          <Tracklist tracks={mySongs} />
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
 
 export async function mySongsLoader() {
   const token = window.localStorage.getItem("token") || "";
-  let mySongs: Song[] = [
-    {
-      id: "",
-      indexInStack: 0,
-      name: "",
-      album: "",
-      artist: "",
-      imgUrl: "",
-      songUrl: "",
-      trackDurationMs: 0,
-    },
-  ];
+  let mySongs: Song[] = [];
   let isError = false;
   await fetchWebApi("v1/me/tracks?limit=50", "GET", token).then((res) => {
     if (res.error) {

@@ -6,6 +6,7 @@ const redirectURI: string =
 const authEndpoint: string = "https://accounts.spotify.com/authorize?";
 const scope = [
   "user-library-read",
+  "user-library-modify",
   "playlist-read-private",
   "user-modify-playback-state",
   "user-read-playback-state",
@@ -32,8 +33,14 @@ export async function fetchWebApi(
     method,
     body: JSON.stringify(body),
   });
+  if (res.status === 401) {
+    window.location.href = redirectURI + "login";
+  }
+  if (res.status !== 200) {
+    return res;
+  }
 
-  if (res.status === 204) {
+  if (method === "PUT" || method === "DELETE") {
     return;
   }
   return await res.json();

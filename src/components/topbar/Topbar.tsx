@@ -6,22 +6,22 @@ import { fetchWebApi } from "../../config/spotify";
 const Topbar = () => {
   // const [userProfileImgUrl, setUserProfileImgUrl] = useState<string>("");
 
-  useEffect(() => {
-    const token = window.localStorage.getItem("token") || "";
+  // useEffect(() => {
+  //   const token = window.localStorage.getItem("token") || "";
 
-    async function getUser() {
-      fetchWebApi("v1/me", "GET", token).then((res) => {
-        if (res.error) {
-          console.log("error reqeusting user profile", res.error);
-        } else {
-          // console.log("user profile", res);
-          // setUserProfileImgUrl();
-        }
-      });
-    }
+  //   async function getUser() {
+  //     fetchWebApi("v1/me", "GET", token).then((res) => {
+  //       if (res.error) {
+  //         console.log("error reqeusting user profile", res.error);
+  //       } else {
+  //         // console.log("user profile", res);
+  //         // setUserProfileImgUrl();
+  //       }
+  //     });
+  //   }
 
-    getUser();
-  }, []);
+  //   getUser();
+  // }, []);
 
   return (
     <div className="topbar-container">

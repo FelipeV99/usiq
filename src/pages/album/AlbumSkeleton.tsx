@@ -24,23 +24,7 @@ const AlbumSkeleton = () => {
         </div>
         <div className="alh-btns"></div>
       </div>
-      <div className="album-tracks-container">
-        {placeSongs()}
-        {/* {albumWithImg.map((track: { [key: string]: any }, index: number) => {
-        return (
-          <SongrowTwo
-            key={track.id}
-            song={track.name}
-            artist={track.artists[0].name}
-            duration={track.duration_ms}
-            index={index}
-            handleOnPlay={handleOnPlay}
-            imgUrl={track.imgUrl}
-            songUrl={track.preview_url}
-          />
-        );
-      })} */}
-      </div>
+      <div className="album-tracks-container">{placeSongs()}</div>
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { Song, ArtistType, AlbumType } from "../../App";
 
 const SearchResults = () => {
   const { songResults, artistResults, albumResults }: any = useLoaderData();
+
   return (
     <div className="search-results-container">
       <div className="song-results-outer-container">

@@ -4,16 +4,42 @@ import { useTStackCSongContext } from "../../App";
 import SongrowTwo from "../song row/SongrowTwo";
 
 import { Song } from "../../App";
-const Tracklist = ({ tracks }: { tracks: Song[] }) => {
+import { useEffect } from "react";
+const Tracklist = ({
+  tracks,
+  playFirst,
+  areTracksSaved,
+}: {
+  tracks: Song[];
+  playFirst?: number;
+  areTracksSaved?: boolean[];
+}) => {
   const { setCurrentSong, setTrackStack } = useTStackCSongContext();
-
-  function handleOnPlay(song: Song) {
-    setCurrentSong(song);
+  useEffect(() => {
+    if (playFirst !== undefined && playFirst > 0) {
+      playFirstTrack();
+    }
+  }, [playFirst]);
+  function playFirstTrack() {
+    setCurrentSong(tracks[0]);
     const newTrackStack = tracks.map((track: Song) => {
-      const active = track.songUrl === song.songUrl;
+      const active = track.songUrl === tracks[0].songUrl;
       return { song: { ...track }, isActive: active };
     });
     setTrackStack(newTrackStack);
+  }
+
+  function handleOnPlay(song: Song) {
+    if (song.songUrl) {
+      setCurrentSong(song);
+      const newTrackStack = tracks.map((track: Song) => {
+        const active = track.songUrl === song.songUrl;
+        return { song: { ...track }, isActive: active };
+      });
+      setTrackStack(newTrackStack);
+    } else {
+      window.alert("Track not available at the moment");
+    }
   }
 
   return (
@@ -27,6 +53,13 @@ const Tracklist = ({ tracks }: { tracks: Song[] }) => {
             includeIndex={true}
             includeImg={true}
             includeAlbum={true}
+            isSongSaved={
+              areTracksSaved
+                ? areTracksSaved.length > 1
+                  ? areTracksSaved[index]
+                  : undefined
+                : undefined
+            }
           />
         );
       })}

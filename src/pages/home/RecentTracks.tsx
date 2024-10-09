@@ -6,12 +6,16 @@ export default function RecentTracks({ tracks }: { tracks: Song[] }) {
   const { setCurrentSong, setTrackStack } = useTStackCSongContext();
 
   function handleOnPlay(song: Song) {
-    setCurrentSong(song);
-    const newTrackStack = tracks.map((track: Song) => {
-      const active = track.songUrl === song.songUrl;
-      return { song: { ...track }, isActive: active };
-    });
-    setTrackStack(newTrackStack);
+    if (song.songUrl) {
+      setCurrentSong(song);
+      const newTrackStack = tracks.map((track: Song) => {
+        const active = track.songUrl === song.songUrl;
+        return { song: { ...track }, isActive: active };
+      });
+      setTrackStack(newTrackStack);
+    } else {
+      window.alert("Track not available at the moment");
+    }
   }
 
   return (

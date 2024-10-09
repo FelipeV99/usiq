@@ -13,33 +13,30 @@ const MyArtists = () => {
   return (
     <div>
       <h2>My Artists</h2>
-      <div className="my-artists-container">
-        {myArtists.map((artist: ArtistType) => {
-          return (
-            <ArtistCard
-              key={artist.ID}
-              ID={artist.ID}
-              imgUrl={artist.imgUrl}
-              name={artist.name}
-              size="big"
-            />
-          );
-        })}
-      </div>
+      {myArtists.length > 0 ? (
+        <div className="my-artists-container">
+          {myArtists.map((artist: ArtistType) => {
+            return (
+              <ArtistCard
+                key={artist.ID}
+                ID={artist.ID}
+                imgUrl={artist.imgUrl}
+                name={artist.name}
+                size="big"
+              />
+            );
+          })}
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
 
 export async function myArtistsLoader() {
   const token = window.localStorage.getItem("token") || "";
-  let myArtists: ArtistType[] = [
-    {
-      ID: "",
-      name: "",
-      imgUrl: "",
-      totalFollowers: 0,
-    },
-  ];
+  let myArtists: ArtistType[] = [];
   let isError = false;
   await fetchWebApi("v1/me/following?type=artist&limit=18", "GET", token).then(
     (res) => {

@@ -168,30 +168,28 @@ function App() {
     >
       <CurrentPageContext.Provider value={{ currentPage, setCurrentPage }}>
         <TokenContext.Provider value={{ token, setToken }}>
-          <div className="page-container">
-            {token === "" || token === "undefined" ? (
-              <Login />
-            ) : (
-              <>
-                <Sidebar />
-                <ScrollToTop />
-                <div className="right-container">
-                  <div>
-                    <Topbar />
-                  </div>
-                  <div className="content-container">
-                    {state === "loading" ? loadSkeleton() : <Outlet />}
-                  </div>
+          {token === "" || token === "undefined" ? (
+            <Login />
+          ) : (
+            <div className="page-container">
+              <Sidebar />
+              <ScrollToTop />
+              <div className="right-container">
+                <div>
+                  <Topbar />
                 </div>
-                <Player />
-                <div className="bg">
-                  <div className="bubble-1"></div>
-                  <div className="bubble-2"></div>
-                  <div className="bubble-3"></div>
+                <div className="content-container">
+                  {state === "loading" ? loadSkeleton() : <Outlet />}
                 </div>
-              </>
-            )}
-          </div>
+              </div>
+              <Player />
+              <div className="bg">
+                <div className="bubble-1"></div>
+                <div className="bubble-2"></div>
+                <div className="bubble-3"></div>
+              </div>
+            </div>
+          )}
         </TokenContext.Provider>
       </CurrentPageContext.Provider>
     </TStackCSongContext.Provider>
