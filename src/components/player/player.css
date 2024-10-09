@@ -55,6 +55,13 @@
   max-width: 260px;
 }
 
+.song-info-right p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+
 .img-fit {
   height: 100%;
   max-height: 76px;

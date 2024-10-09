@@ -3,7 +3,7 @@ import { fetchWebApi } from "../../config/spotify";
 import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 import RecentTracks from "../home/RecentTracks";
 import AsyncImg from "../../components/async img/AsyncImg";
-import { PlaylistType, useCurrentPageContext } from "../../App";
+import { PlaylistType, Song, useCurrentPageContext } from "../../App";
 import { useEffect } from "react";
 
 const Discover = () => {
@@ -140,7 +140,7 @@ const Discover = () => {
         <div className="recommended-tracks-outer-container">
           <h4>You might like</h4>
           <div className="recommended-tracks-container">
-            <RecentTracks tracks={recommendedTracks} />
+            <RecentTracks tracks={recommendedTracks.slice(0, 6)} />
           </div>
         </div>
       ) : (
@@ -158,7 +158,8 @@ export async function discoverLoader() {
     "v1/playlists/37i9dQZF1DX8Kgdykz6OKj",
     "v1/playlists/37i9dQZF1DWUVpAXiEPK8P",
     "v1/playlists/37i9dQZF1DX2SK4ytI2KAZ",
-    "v1/me/player/recently-played?limit=6",
+    // "v1/me/player/recently-played?limit=6",
+    "v1/recommendations?seed_tracks=0c6xIDDpzE81m2q797ordA",
   ];
   let playlists: PlaylistType[] = [];
 
@@ -174,7 +175,6 @@ export async function discoverLoader() {
     });
   });
   const data = await Promise.all(promises);
-  console.log("data", data);
 
   if (error) {
     const redirectUrl =
@@ -183,19 +183,30 @@ export async function discoverLoader() {
         : "https://usiq.netlify.app/";
     return redirect(redirectUrl + "login");
   } else {
-    const recentTracksFormatted = data[4].items.map(
-      (item: { [key: string]: any }, index: number) => {
+    const recommendedTracksFormatted = data[4].tracks.map(
+      (track: { [key: string]: any }, index: number) => {
         return {
           indexInStack: index,
-          name: item.track.name,
-          album: item.track.album.name,
-          artist: item.track.artists[0].name,
-          imgUrl: item.track.album.images[0].url,
-          songUrl: item.track.preview_url,
-          trackDurationMs: item.track.duration_ms,
+          name: track.name,
+          album: track.album.name,
+          artist: track.artists[0].name,
+          imgUrl: track.album.images[0].url,
+          songUrl: track.preview_url,
+          trackDurationMs: track.duration_ms,
         };
       }
     );
+
+    const recommendedTracksFiltered = recommendedTracksFormatted.filter(
+      (track: Song) => {
+        if (track.songUrl) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    );
+
     for (let index = 0; index < 4; index++) {
       playlists.push({
         id: data[index].id,
@@ -208,7 +219,7 @@ export async function discoverLoader() {
     }
     return {
       playlists: playlists,
-      recommendedTracks: recentTracksFormatted,
+      recommendedTracks: recommendedTracksFiltered,
     };
   }
 }

@@ -51,12 +51,26 @@
   width: 20px;
 }
 
+.srt-song-artist p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 400px;
+}
+
 .srt-replays p {
   text-align: right;
 }
 
 .srt-middle {
   width: 190px;
+}
+
+.srt-middle p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 190px;
 }
 
 .like-unlike-container {

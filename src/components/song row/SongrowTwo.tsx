@@ -94,7 +94,7 @@ const SongrowTwo = ({
           <></>
         )}
 
-        <div>
+        <div className="srt-song-artist">
           <p className="bold">{song.name}</p>
           <p>{song.artist}</p>
         </div>
@@ -113,15 +113,16 @@ const SongrowTwo = ({
             className="like-unlike-container liked"
           >
             <img
-              onClickCapture={handleOnClickLike}
               src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fheart-filled.svg?alt=media&token=a0c22667-d829-4c43-9daa-809fe736d097"
               alt=""
             />
           </div>
         ) : (
-          <div className="like-unlike-container not-liked">
+          <div
+            className="like-unlike-container not-liked"
+            onClickCapture={handleOnClickLike}
+          >
             <img
-              onClickCapture={handleOnClickLike}
               src="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2FIcons%2Fheart-outline.svg?alt=media&token=8c749eed-6f1b-448f-90c9-a302e96e4be2"
               alt=""
             />

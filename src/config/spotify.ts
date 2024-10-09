@@ -41,6 +41,7 @@ export async function fetchWebApi(
   }
 
   if (method === "PUT" || method === "DELETE") {
+    console.log(res, method);
     return;
   }
   return await res.json();

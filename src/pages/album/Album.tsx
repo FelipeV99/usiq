@@ -32,8 +32,9 @@ const Album = () => {
       ).then((res) => {
         if (!res.error) {
           setAreTracksSaved(res);
+        } else {
+          console.log(res.error);
         }
-        console.log(res.error);
       });
     }
     checkSavedTracks();
@@ -116,7 +117,6 @@ export async function albumLoader({ params }: { [key: string]: any }) {
       window.localStorage.setItem("token", "");
       isError = true;
     } else {
-      console.log("album res", res);
       const formattedAlbumTracks = res.tracks.items.map(
         (track: { [key: string]: any }, index: number) => {
           return {

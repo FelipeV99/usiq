@@ -15,13 +15,10 @@ import {
   useTokenContext,
   useCurrentPageContext,
 } from "../../App";
-import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { token, setToken } = useTokenContext();
   const { setCurrentPage } = useCurrentPageContext();
-
-  const navigate = useNavigate();
 
   const [newAlbums, setNewAlbums] = useState<AlbumType[]>([]);
   const [recentTracks, setRecentTracks] = useState<Song[]>([]);
@@ -30,6 +27,7 @@ const Home = () => {
   const [favoriteArtists, setFavoriteArtists] = useState<ArtistType[]>([]);
   const [isFavoriteArtistsLoading, setIsFavoriteArtistsLoading] =
     useState<boolean>(false);
+  const [followedArtists, setFollowedArtists] = useState<ArtistType[]>([]);
 
   useEffect(() => {
     async function getRecentlyPlayedTracks() {
@@ -40,6 +38,8 @@ const Home = () => {
         token
       ).then((res) => {
         if (!res.error) {
+          console.log("res from recently played tracks", res);
+
           if (res.items.length > 0) {
             const recentTracksFormatted = res.items.map(
               (item: { [key: string]: any }, index: number) => {
@@ -70,7 +70,7 @@ const Home = () => {
       await fetchWebApi("v1/me/top/artists?limit=9", "GET", token).then(
         (res) => {
           if (!res.error) {
-            console.log(res);
+            console.log("res from top artists", res);
             if (res.items.length > 0) {
               const favArtistsFormatted = res.items.map(
                 (artist: { [key: string]: any }) => {
@@ -93,6 +93,32 @@ const Home = () => {
           setIsFavoriteArtistsLoading(false);
         }
       );
+    }
+
+    async function getFollowedArtists() {
+      await fetchWebApi(
+        "v1/me/following?type=artist&limit=9",
+        "GET",
+        token
+      ).then((res) => {
+        if (res.error) {
+          console.log("error while retrieving followed artists,", res.error);
+          window.localStorage.setItem("token", "");
+          setToken("");
+        } else {
+          const artistsFormatted = res.artists.items.map(
+            (artist: { [key: string]: any }) => {
+              return {
+                ID: artist.id,
+                name: artist.name,
+                imgUrl: artist.images[0].url,
+                totalFollowers: artist.followers.total,
+              };
+            }
+          );
+          setFollowedArtists(artistsFormatted);
+        }
+      });
     }
 
     async function getNewAlbumReleases() {
@@ -126,6 +152,7 @@ const Home = () => {
       getNewAlbumReleases();
       getRecentlyPlayedTracks();
       getFavoriteArtists();
+      getFollowedArtists();
     }
     setCurrentPage("Home");
   }, []);
@@ -180,18 +207,18 @@ const Home = () => {
           albumUrl="4JOmLltFC735tBL7jfHfA7"
         />
         <Banner
-          title="Big Hammer"
-          artist="James Blake"
+          title="Estara"
+          artist="Teebs"
           size="small"
-          imgUrl="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2Fbig-hammer.jpg?alt=media&token=5e9d17b9-a129-4174-8ac1-ea4644b9ff91"
-          albumUrl="2ZwNcWl8h9blysDE8i4juL"
+          imgUrl="https://firebasestorage.googleapis.com/v0/b/news-5462b.appspot.com/o/music%2Festara.jpg?alt=media&token=33cb85f5-44bc-4964-b04e-d5255407313b"
+          albumUrl="350QMGh64zFt7HjSS9xaOH"
         />
       </div>
 
       <div className="home-bottom">
-        {favoriteArtists.length > 0 ? (
-          <div className="favorite-artists-outer-container">
-            <h4>Your favorite artists</h4>
+        <div className="favorite-artists-outer-container">
+          <h4>Your favorite artists</h4>
+          {favoriteArtists.length > 0 ? (
             <div className="favorite-artists-container">
               {isFavoriteArtistsLoading
                 ? placeFavoriteArtistsSkeleton()
@@ -206,10 +233,21 @@ const Home = () => {
                     );
                   })}
             </div>
-          </div>
-        ) : (
-          <></>
-        )}
+          ) : (
+            <div className="favorite-artists-container">
+              {followedArtists.map((artist: ArtistType, index: number) => {
+                return (
+                  <ArtistCard
+                    key={artist.ID}
+                    ID={artist.ID}
+                    imgUrl={artist.imgUrl}
+                    name={artist.name}
+                  />
+                );
+              })}
+            </div>
+          )}
+        </div>
 
         {recentTracks.length > 0 ? (
           <div className="recently-played-outer-container">
