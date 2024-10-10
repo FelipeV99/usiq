@@ -3,7 +3,7 @@ import { fetchWebApi } from "../../config/spotify";
 import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 import RecentTracks from "../home/RecentTracks";
 import AsyncImg from "../../components/async img/AsyncImg";
-import { PlaylistType, Song, useCurrentPageContext } from "../../App";
+import { PlaylistType, useCurrentPageContext } from "../../App";
 import { useEffect } from "react";
 
 const Discover = () => {

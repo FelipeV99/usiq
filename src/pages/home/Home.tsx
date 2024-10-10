@@ -154,6 +154,9 @@ const Home = () => {
     setCurrentPage("Home");
   }, []);
 
+  // console.log(favoriteArtists);
+  // console.log(followedArtists);
+
   function placeRecentTracksSkeleton() {
     const recentCards = [];
     for (let index = 0; index < 6; index++) {
@@ -215,7 +218,7 @@ const Home = () => {
       <div className="home-bottom">
         <div className="favorite-artists-outer-container">
           <h4>Your favorite artists</h4>
-          {favoriteArtists.length > 0 ? (
+          {favoriteArtists.length > 8 ? (
             <div className="favorite-artists-container">
               {isFavoriteArtistsLoading
                 ? placeFavoriteArtistsSkeleton()
