@@ -10,7 +10,7 @@ const HomeSkeleton = () => {
         <div className="banner-container skeleton">
           <div className="banner-left">
             <div className="banner-left-top">
-              <p className="other-p skeleton"></p>
+              <p className="body-3 skeleton"></p>
               <h2 className="skeleton"></h2>
 
               <p className="skeleton"></p>
@@ -26,7 +26,7 @@ const HomeSkeleton = () => {
         <div className="banner-container skeleton">
           <div className="banner-left">
             <div className="banner-left-top">
-              <p className="other-p skeleton"></p>
+              <p className="body-3 skeleton"></p>
               <h2 className="skeleton"></h2>
 
               <p className="skeleton"></p>
@@ -50,7 +50,7 @@ const HomeSkeleton = () => {
                 <AsyncImg src={""} proportions={1} />
               </div>
 
-              <p className="bold skeleton"></p>
+              <p className="body-1 skeleton"></p>
             </div>
             <div className={`artist-home-card`}>
               <div className="artist-img-container">
@@ -58,7 +58,7 @@ const HomeSkeleton = () => {
                 <AsyncImg src={""} proportions={1} />
               </div>
 
-              <p className="bold skeleton"></p>
+              <p className="body-1 skeleton"></p>
             </div>
             <div className={`artist-home-card`}>
               <div className="artist-img-container">
@@ -66,7 +66,7 @@ const HomeSkeleton = () => {
                 <AsyncImg src={""} proportions={1} />
               </div>
 
-              <p className="bold skeleton"></p>
+              <p className="body-1 skeleton"></p>
             </div>
             <div className={`artist-home-card`}>
               <div className="artist-img-container">
@@ -74,7 +74,7 @@ const HomeSkeleton = () => {
                 <AsyncImg src={""} proportions={1} />
               </div>
 
-              <p className="bold skeleton"></p>
+              <p className="body-1 skeleton"></p>
             </div>
             <div className={`artist-home-card`}>
               <div className="artist-img-container">
@@ -82,7 +82,7 @@ const HomeSkeleton = () => {
                 <AsyncImg src={""} proportions={1} />
               </div>
 
-              <p className="bold skeleton"></p>
+              <p className="body-1 skeleton"></p>
             </div>
             <div className={`artist-home-card`}>
               <div className="artist-img-container">
@@ -90,7 +90,7 @@ const HomeSkeleton = () => {
                 <AsyncImg src={""} proportions={1} />
               </div>
 
-              <p className="bold skeleton"></p>
+              <p className="body-1 skeleton"></p>
             </div>
             <div className={`artist-home-card`}>
               <div className="artist-img-container">
@@ -98,7 +98,7 @@ const HomeSkeleton = () => {
                 <AsyncImg src={""} proportions={1} />
               </div>
 
-              <p className="bold skeleton"></p>
+              <p className="body-1 skeleton"></p>
             </div>
             <div className={`artist-home-card`}>
               <div className="artist-img-container">
@@ -106,7 +106,7 @@ const HomeSkeleton = () => {
                 <AsyncImg src={""} proportions={1} />
               </div>
 
-              <p className="bold skeleton"></p>
+              <p className="body-1 skeleton"></p>
             </div>
             <div className={`artist-home-card`}>
               <div className="artist-img-container">
@@ -114,7 +114,7 @@ const HomeSkeleton = () => {
                 <AsyncImg src={""} proportions={1} />
               </div>
 
-              <p className="bold skeleton"></p>
+              <p className="body-1 skeleton"></p>
             </div>
           </div>
         </div>
@@ -130,12 +130,12 @@ const HomeSkeleton = () => {
                     <AsyncImg src={""} proportions={1} />
                   </div>
                   <div className="sr2-info">
-                    <p className="bold skeleton"></p>
-                    <p className="other-p skeleton"></p>
+                    <p className="body-1 skeleton"></p>
+                    <p className="body-3 skeleton"></p>
                   </div>
                 </div>
                 <div className="sr2-right">
-                  <p className="other-p skeleton"></p>
+                  <p className="body-3 skeleton"></p>
                 </div>
               </div>
               <div className="song-row-2">
@@ -145,12 +145,12 @@ const HomeSkeleton = () => {
                     <AsyncImg src={""} proportions={1} />
                   </div>
                   <div className="sr2-info">
-                    <p className="bold skeleton"></p>
-                    <p className="other-p skeleton"></p>
+                    <p className="body-1 skeleton"></p>
+                    <p className="body-3 skeleton"></p>
                   </div>
                 </div>
                 <div className="sr2-right">
-                  <p className="other-p skeleton"></p>
+                  <p className="body-3 skeleton"></p>
                 </div>
               </div>
               <div className="song-row-2">
@@ -160,12 +160,12 @@ const HomeSkeleton = () => {
                     <AsyncImg src={""} proportions={1} />
                   </div>
                   <div className="sr2-info">
-                    <p className="bold skeleton"></p>
-                    <p className="other-p skeleton"></p>
+                    <p className="body-1 skeleton"></p>
+                    <p className="body-3 skeleton"></p>
                   </div>
                 </div>
                 <div className="sr2-right">
-                  <p className="other-p skeleton"></p>
+                  <p className="body-3 skeleton"></p>
                 </div>
               </div>
               <div className="song-row-2">
@@ -175,12 +175,12 @@ const HomeSkeleton = () => {
                     <AsyncImg src={""} proportions={1} />
                   </div>
                   <div className="sr2-info">
-                    <p className="bold skeleton"></p>
-                    <p className="other-p skeleton"></p>
+                    <p className="body-1 skeleton"></p>
+                    <p className="body-3 skeleton"></p>
                   </div>
                 </div>
                 <div className="sr2-right">
-                  <p className="other-p skeleton"></p>
+                  <p className="body-3 skeleton"></p>
                 </div>
               </div>
               <div className="song-row-2">
@@ -190,12 +190,12 @@ const HomeSkeleton = () => {
                     <AsyncImg src={""} proportions={1} />
                   </div>
                   <div className="sr2-info">
-                    <p className="bold skeleton"></p>
-                    <p className="other-p skeleton"></p>
+                    <p className="body-1 skeleton"></p>
+                    <p className="body-3 skeleton"></p>
                   </div>
                 </div>
                 <div className="sr2-right">
-                  <p className="other-p skeleton"></p>
+                  <p className="body-3 skeleton"></p>
                 </div>
               </div>
               <div className="song-row-2">
@@ -205,12 +205,12 @@ const HomeSkeleton = () => {
                     <AsyncImg src={""} proportions={1} />
                   </div>
                   <div className="sr2-info">
-                    <p className="bold skeleton"></p>
-                    <p className="other-p skeleton"></p>
+                    <p className="body-1 skeleton"></p>
+                    <p className="body-3 skeleton"></p>
                   </div>
                 </div>
                 <div className="sr2-right">
-                  <p className="other-p skeleton"></p>
+                  <p className="body-3 skeleton"></p>
                 </div>
               </div>
             </div>

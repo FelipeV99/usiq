@@ -61,11 +61,11 @@ const Album = () => {
         </div>
         <div className="alh-info">
           <h1>{album.name}</h1>
-          <p className="bold">{album.artist}</p>
+          <p className="body-1">{album.artist}</p>
           <div className="alh-details">
-            <p className="other-p">{album.releaseDate?.split("-")[0]}</p>
+            <p className="body-3">{album.releaseDate?.split("-")[0]}</p>
             <div className="dot-separator"></div>
-            <p className="other-p">{album.totalTracks} tracks</p>
+            <p className="body-3">{album.totalTracks} tracks</p>
           </div>
           <button
             className="btn-round"

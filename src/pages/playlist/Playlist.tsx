@@ -60,9 +60,9 @@ const Playlist = () => {
         </div>
         <div className="ph-info">
           <h1>{playlist.name}</h1>
-          <p className="bold">{playlist.ownerName}</p>
+          <p className="body-1">{playlist.ownerName}</p>
           <div className="ph-details">
-            <p className="other-p">{playlist.totalTracks} tracks</p>
+            <p className="body-3">{playlist.totalTracks} tracks</p>
           </div>
           <button
             className="btn-round"

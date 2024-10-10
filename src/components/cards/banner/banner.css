@@ -5,12 +5,14 @@
     var(--dark-blue-800) 0,
     var(--dark-blue-900) 100%
   );
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 18px;
-  padding-bottom: 18px;
-  border-radius: 4px;
-  gap: 32px;
+
+  padding-left: var(--space-m);
+  padding-right: var(--space-m);
+
+  padding-top: var(--space-s);
+  padding-bottom: var(--space-s);
+  border-radius: var(--radius-m);
+  gap: var(--space-l);
   width: 100%;
   min-width: 500px;
   justify-content: space-between;
@@ -20,10 +22,8 @@
   border: 1px solid var(--dark-blue-800);
 }
 
-.banner-small .banner-container {
-  padding-left: 18px;
-  padding-right: 18px;
-  gap: 24px;
+.banner-small.banner-container {
+  gap: var(--space-l);
 }
 
 .banner-container.hover {
@@ -49,11 +49,11 @@
 }
 
 .banner-left h1 {
-  padding-top: 38px;
+  padding-top: var(--space-l);
 }
 
 .banner-left h2 {
-  padding-top: 38px;
+  padding-top: var(--space-l);
 }
 
 .banner-right {
@@ -72,11 +72,11 @@
   background: transparent;
 }
 
-.banner-left .other-p.skeleton {
+.banner-left .body-3.skeleton {
   height: 18px;
   width: 162px;
   background-color: var(--dark-blue-800);
-  border-radius: 2px;
+  border-radius: var(--radius-s);
 }
 
 .banner-left h2.skeleton {
@@ -84,7 +84,7 @@
   width: 240px;
   background-color: var(--dark-blue-800);
   margin-top: 28px;
-  border-radius: 2px;
+  border-radius: var(--radius-s);
 }
 
 .banner-left p.skeleton {
@@ -92,7 +92,7 @@
   width: 212px;
   background-color: var(--dark-blue-800);
   margin-top: 2px;
-  border-radius: 2px;
+  border-radius: var(--radius-s);
 }
 
 .banner-left-bottom .btn-primary.skeleton {

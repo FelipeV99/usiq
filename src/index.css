@@ -20,6 +20,16 @@
   --grey-200: #d3d3d5;
   --grey-300: #a7a8aa;
   --grey-400: #8a8c8f;
+
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-s: 16px;
+  --space-m: 24px;
+  --space-l: 32px;
+  --space-xl: 64px;
+
+  --radius-s: 2px;
+  --radius-m: 4px;
 }
 
 body {
@@ -94,10 +104,6 @@ input {
   color: var(--grey-300);
   font-family: "CenturyGothic";
   font-size: 14px;
-  /* padding-left: 16px;
-  padding-right: 16px;
-  padding-top: 12px;
-  padding-bottom: 12px; */
   border: none;
 }
 
@@ -108,8 +114,6 @@ input:focus {
 .page-container {
   position: relative;
   display: flex;
-  /* min-height: 100vh; */
-  /* max-height: 100vh; */
   justify-content: center;
   min-width: 1256px;
   min-height: 700px;
@@ -121,12 +125,12 @@ input:focus {
   color: var(--grey-300);
 }
 
-.bold {
+.body-1 {
   font-family: "CenturyGothic";
   font-weight: 800;
 }
 
-.other-p {
+.body-3 {
   color: var(--grey-400);
   font-size: 14px;
 }
@@ -134,10 +138,10 @@ input:focus {
 /* .small- */
 
 .btn-primary {
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-left: var(--space-s);
+  padding-right: var(--space-s);
+  padding-top: var(--space-xs);
+  padding-bottom: var(--space-xs);
   cursor: pointer;
 
   font-family: "CenturyGothic";
@@ -152,17 +156,17 @@ input:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: var(--space-s);
   width: 162px;
 
   transition: all 0.2s ease-in-out;
 }
 
 .btn-secondary {
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-left: var(--space-s);
+  padding-right: var(--space-s);
+  padding-top: var(--space-xs);
+  padding-bottom: var(--space-xs);
   cursor: pointer;
 
   font-family: "CenturyGothic";
@@ -175,7 +179,8 @@ input:focus {
 
   display: flex;
   justify-content: space-between;
-  gap: 16px;
+  align-items: center;
+  gap: var(--space-s);
 
   transition: all 0.2s ease-in-out;
 }
@@ -198,6 +203,7 @@ input:focus {
   min-width: 1032px;
   max-width: 1440px;
   margin-left: 224px;
+  padding-bottom: 122px;
   /* max-height: 100vh;
   overflow-y: scroll;
   overflow-x: scroll; */
@@ -257,30 +263,30 @@ input:focus {
   box-shadow: 0 0 160px 30px rgba(142, 151, 159, 0.4);
 }
 
-.bold.skeleton {
+.body-1.skeleton {
   height: 22px;
   min-width: 80px;
   background-color: var(--dark-blue-800);
-  border-radius: 2px;
+  border-radius: var(--radius-s);
 }
 
 p.skeleton {
   height: 22px;
   min-width: 80px;
   background-color: var(--dark-blue-800);
-  border-radius: 2px;
+  border-radius: var(--radius-s);
 }
 
 h1.skeleton {
   height: 48px;
   min-width: 180px;
   background-color: var(--dark-blue-800);
-  border-radius: 2px;
+  border-radius: var(--radius-s);
 }
 
 h2.skeleton {
   height: 44px;
   min-width: 180px;
   background-color: var(--dark-blue-800);
-  border-radius: 2px;
+  border-radius: var(--radius-s);
 }

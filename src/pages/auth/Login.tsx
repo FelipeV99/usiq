@@ -15,10 +15,10 @@ const Login = () => {
         Please use these credentials to login to an authorized spotify account.
       </p>
       <div className="credentials-container">
-        <p className="other-p">mail</p>
-        <p className="bold">mail4spotapi@gmail.com</p>
-        <p className="other-p">password</p>
-        <p className="bold">easyp4sssword</p>
+        <p className="body-3">mail</p>
+        <p className="body-1">mail4spotapi@gmail.com</p>
+        <p className="body-3">password</p>
+        <p className="body-1">easyp4sssword</p>
       </div>
 
       <a href={loginEndpoint}>

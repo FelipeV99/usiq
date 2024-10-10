@@ -37,7 +37,7 @@ const Banner = ({
     >
       <div className="banner-left">
         <div className="banner-left-top">
-          <p className="other-p">Available now</p>
+          <p className="body-3">Available now</p>
           {size === "big" ? <h1>{title}</h1> : <h2>{title}</h2>}
 
           <p>{artist}</p>

@@ -1,5 +1,4 @@
 .home-container {
-  padding-bottom: 122px;
   width: 100%;
 }
 
@@ -12,15 +11,9 @@
 .home-bottom {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding-top: 24px;
+  gap: var(--space-m);
+  padding-top: var(--space-m);
 }
-/* 
-.home-bottom-left {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-} */
 
 .home-bottom-right {
   width: 100%;
@@ -29,7 +22,7 @@
 .favorite-artists-outer-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-xs);
   width: 100%;
   min-width: 960px;
   /* overflow: hidden; */
@@ -37,44 +30,44 @@
 
 .favorite-artists-container {
   display: flex;
-  gap: 16px;
+  gap: var(--space-s);
   justify-content: space-between;
 }
 
 .recently-played-outer-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-xs);
 }
 
 .new-releases-outer-container {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-xs);
 }
 
 .new-releases-container {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(6, minmax(182px, auto));
-  column-gap: 22px;
-  row-gap: 22px;
+  column-gap: var(--space-m);
+  row-gap: var(--space-m);
 }
 
 /* Recent Tracks CSS */
 
 .rt-container {
   display: flex;
-  gap: 32px;
+  gap: var(--space-l);
 }
 
 .rt-grid {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, minmax(320px, auto));
-  row-gap: 16px;
-  column-gap: 32px;
+  row-gap: var(--space-s);
+  column-gap: var(--space-l);
 }
 
 .song-row-2 {
@@ -86,7 +79,7 @@
 
 .sr2-left {
   display: flex;
-  gap: 8px;
+  gap: var(--space-xs);
   align-items: center;
 }
 
@@ -97,36 +90,36 @@
 }
 
 .sr2-img-container img {
-  border-radius: 2px;
+  border-radius: var(--radius-s);
 }
 
-.sr2-info .bold.skeleton {
+.sr2-info .body-1.skeleton {
   background-color: var(--dark-blue-800);
   height: 22px;
   width: 232px;
-  border-radius: 2px;
+  border-radius: var(--radius-s);
 }
 
-.sr2-info .other-p.skeleton {
+.sr2-info .body-3.skeleton {
   background-color: var(--dark-blue-800);
   height: 17px;
   width: 180px;
   margin-top: 2px;
-  border-radius: 2px;
+  border-radius: var(--radius-s);
 }
 
-.sr2-right .other-p.skeleton {
+.sr2-right .body-3.skeleton {
   background-color: var(--dark-blue-800);
   height: 17px;
   width: 32px;
-  border-radius: 2px;
+  border-radius: var(--radius-s);
 }
 
 h4.skeleton {
   height: 19px;
   width: 180px;
   background-color: var(--dark-blue-800);
-  border-radius: 2px;
+  border-radius: var(--radius-s);
 }
 
 @media (max-width: 1500px) {

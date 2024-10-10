@@ -6,11 +6,11 @@ const MyArtistsSkeleton = () => {
     const artistsCards = [];
     for (let index = 0; index < 18; index++) {
       artistsCards.push(
-        <div className="artist-card-2" key={index}>
+        <div className="artist-card" key={index}>
           <div className="ac2-img-container">
             <AsyncImg src={""} proportions={1} />
           </div>
-          <p className="bold skeleton"></p>
+          <p className="body-1 skeleton"></p>
         </div>
       );
     }

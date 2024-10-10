@@ -26,7 +26,7 @@ const SearchResults = () => {
                 className="artist-result"
               >
                 <img src={artist.imgUrl} alt="" />
-                <p className="bold">{artist.name}</p>
+                <p className="body-1">{artist.name}</p>
               </Link>
             );
           })}

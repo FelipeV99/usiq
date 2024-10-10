@@ -3,12 +3,8 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  /* background-color: var(--dark-blue-800); */
-  border-radius: 4px;
+  padding: var(--space-xs);
+  border-radius: var(--radius-s);
   transition: all 0.3s ease-in-out;
 }
 
@@ -21,7 +17,7 @@
   opacity: 0.2;
 }
 
-.song-row-two.playing .bold {
+.song-row-two.playing .body-1 {
   color: var(--light-blue-500);
 }
 .song-row-two.hover {
@@ -31,7 +27,7 @@
 
 .srt-left {
   display: flex;
-  gap: 16px;
+  gap: var(--space-s);
   align-items: center;
   width: 580px;
 }
@@ -43,7 +39,7 @@
 }
 
 .srt-img-container img {
-  border-radius: 2px;
+  border-radius: var(--radius-s);
 }
 
 .srt-index {
@@ -74,7 +70,7 @@
 }
 
 .like-unlike-container {
-  padding: 4px;
+  padding: var(--space-xxs);
   display: flex;
   align-items: center;
   justify-content: center;

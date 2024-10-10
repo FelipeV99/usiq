@@ -41,12 +41,12 @@ const ReleaseCard = ({
           <img src={imgUrl} alt="" />
         </div>
         <div>
-          <p className="bold">{name}</p>
+          <p className="body-1">{name}</p>
           <p>{artistName}</p>
         </div>
       </div>
       <div className="nr-row-right">
-        <p className="other-p">{formatAlbumDate(releaseDate)}</p>
+        <p className="body-3">{formatAlbumDate(releaseDate)}</p>
       </div>
     </div>
   );

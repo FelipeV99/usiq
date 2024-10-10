@@ -11,13 +11,13 @@ const MySongsSkeleton = () => {
             <img src="" alt="" />
           </div>
           <div className="track-row-info">
-            <p className="bold">name</p>
+            <p className="body-1">name</p>
             <p>artistName</p>
           </div>
-          <p className="other-p">albumName</p>
+          <p className="body-3">albumName</p>
         </div>
         <div className="track-row-right">
-          <p className="other-p">12:23</p>
+          <p className="body-3">12:23</p>
         </div> */}
         </div>
       );

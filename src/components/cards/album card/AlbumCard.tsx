@@ -31,7 +31,7 @@ const AlbumCard = ({ album }: { album: AlbumType }) => {
         {/* <img src={imgUrl} alt="" /> */}
       </div>
       <div className="ac-info">
-        <p className="bold">{album.name}</p>
+        <p className="body-1">{album.name}</p>
         <p>{album.artist}</p>
       </div>
     </div>

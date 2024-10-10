@@ -48,7 +48,7 @@ const Discover = () => {
             </div>
             <div className="fpc-bottom">
               <h2>{playlists[0].name}</h2>
-              <p className="other-p">{playlists[0].description}</p>
+              <p className="body-3">{playlists[0].description}</p>
             </div>
           </div>
         </div>
@@ -76,7 +76,7 @@ const Discover = () => {
             </div>
             <div className="fpc-bottom">
               <h2>{playlists[1].name}</h2>
-              <p className="other-p">{playlists[1].description}</p>
+              <p className="body-3">{playlists[1].description}</p>
             </div>
           </div>
         </div>
@@ -104,7 +104,7 @@ const Discover = () => {
             </div>
             <div className="fpc-bottom">
               <h2>{playlists[2].name}</h2>
-              <p className="other-p">{playlists[2].description}</p>
+              <p className="body-3">{playlists[2].description}</p>
             </div>
           </div>
         </div>
@@ -132,7 +132,7 @@ const Discover = () => {
             </div>
             <div className="fpc-bottom">
               <h2>{playlists[3].name}</h2>
-              <p className="other-p">{playlists[3].description}</p>
+              <p className="body-3">{playlists[3].description}</p>
             </div>
           </div>
         </div>

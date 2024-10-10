@@ -205,8 +205,8 @@ const Player = () => {
             )}
           </div>
           <div className="song-info-right">
-            <p className="bold">{currentSong.name}</p>
-            <p className="other-p">{currentSong.artist}</p>
+            <p className="body-1">{currentSong.name}</p>
+            <p className="body-3">{currentSong.artist}</p>
           </div>
         </div>
 
@@ -260,7 +260,7 @@ const Player = () => {
             onMouseLeave={() => setIsSongBarHover(false)}
           >
             {/* <p>{audioRef?.current?.currentTime}</p> */}
-            <p className="other-p">
+            <p className="body-3">
               {audioRef.current
                 ? !isNaN(audioRef.current.currentTime)
                   ? formatTime(audioRef.current.currentTime)
@@ -291,7 +291,7 @@ const Player = () => {
               </div>
             </div>
             {/* <p>{audioRef?.current?.duration}</p> */}
-            <p className="other-p">
+            <p className="body-3">
               {audioRef.current
                 ? !isNaN(audioRef.current.duration)
                   ? formatTime(audioRef.current.duration)

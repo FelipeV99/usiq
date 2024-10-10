@@ -41,7 +41,7 @@ const ArtistCard = ({
         />
       </div>
 
-      <p className="bold">{name}</p>
+      <p className="body-1">{name}</p>
     </div>
   );
 };

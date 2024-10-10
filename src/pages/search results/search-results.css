@@ -1,25 +1,24 @@
 .search-results-container {
-  padding-bottom: 124px;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: var(--space-m);
 }
 
 .song-results-outer-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-xs);
 }
 .artist-results-outer-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-xs);
 }
 
 .artists-results-container {
   display: grid;
   grid-template-columns: repeat(7, minmax(180px, auto));
-  row-gap: 32px;
+  row-gap: var(--space-l);
   /* justify-content: space-between; */
 }
 
@@ -27,7 +26,7 @@
   width: 160px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-xs);
   justify-content: center;
   align-items: center;
 }
@@ -42,13 +41,12 @@
 .album-results-outer-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-xs);
 }
 
 .album-results-container {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(6, minmax(182px, auto));
-  column-gap: 22px;
-  row-gap: 22px;
+  gap: var(--space-m);
 }

@@ -1,6 +1,6 @@
 .tracklist-container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-s);
   width: 100%;
 }

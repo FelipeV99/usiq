@@ -167,12 +167,12 @@ const Home = () => {
               <AsyncImg src={""} proportions={1} />
             </div>
             <div className="sr2-info">
-              <p className="bold skeleton"></p>
-              <p className="other-p skeleton"></p>
+              <p className="body-1 skeleton"></p>
+              <p className="body-3 skeleton"></p>
             </div>
           </div>
           <div className="sr2-right">
-            <p className="other-p skeleton"></p>
+            <p className="body-3 skeleton"></p>
           </div>
         </div>
       );
@@ -189,7 +189,7 @@ const Home = () => {
             <AsyncImg src={""} proportions={1} />
           </div>
 
-          <p className="bold skeleton"></p>
+          <p className="body-1 skeleton"></p>
         </div>
       );
     }

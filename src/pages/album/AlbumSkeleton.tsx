@@ -17,9 +17,9 @@ const AlbumSkeleton = () => {
         </div>
         <div className="alh-info">
           <h1 className="skeleton"></h1>
-          <p className="bold skeleton"></p>
+          <p className="body-1 skeleton"></p>
           <div className="alh-details">
-            <p className="other-p skeleton"></p>
+            <p className="body-3 skeleton"></p>
           </div>
         </div>
         <div className="alh-btns"></div>

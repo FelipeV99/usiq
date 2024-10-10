@@ -1,24 +1,9 @@
 .my-artists-container {
   display: grid;
   grid-template-columns: repeat(6, minmax(180px, auto));
-  gap: 24px;
-  row-gap: 32px;
-  margin-top: 22px;
-  padding-bottom: 120px;
-}
-
-.artist-card-2 {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  /* min-width: 180px; */
-  cursor: pointer;
-  justify-content: center;
-  align-items: center;
-}
-
-.artist-card-2 p {
-  text-align: center;
+  gap: var(--space-m);
+  row-gap: var(--space-l);
+  margin-top: var(--space-m);
 }
 
 .ac2-img-container {

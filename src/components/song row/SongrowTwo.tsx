@@ -82,7 +82,7 @@ const SongrowTwo = ({
     >
       <div className="srt-left">
         {includeIndex ? (
-          <p className="other-p srt-index">{song.indexInStack + 1}</p>
+          <p className="body-3 srt-index">{song.indexInStack + 1}</p>
         ) : (
           <></>
         )}
@@ -95,13 +95,13 @@ const SongrowTwo = ({
         )}
 
         <div className="srt-song-artist">
-          <p className="bold">{song.name}</p>
+          <p className="body-1">{song.name}</p>
           <p>{song.artist}</p>
         </div>
       </div>
       {includeAlbum ? (
         <div className="srt-middle">
-          <p className="other-p">{song.album}</p>
+          <p className="body-3">{song.album}</p>
         </div>
       ) : (
         <></>
@@ -133,7 +133,7 @@ const SongrowTwo = ({
       )}
 
       <div>
-        <p className="other-p">{msToHMS(song.trackDurationMs)}</p>
+        <p className="body-3">{msToHMS(song.trackDurationMs)}</p>
       </div>
     </div>
   );

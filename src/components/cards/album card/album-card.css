@@ -1,7 +1,7 @@
 .album-card-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-xs);
   cursor: pointer;
 }
 
@@ -16,23 +16,23 @@
   display: flex;
   width: 100%;
   min-height: 182px;
-  border-radius: 2px;
+  border-radius: var(--radius-s);
   overflow: hidden;
 }
 
 .ac-img-container img {
-  border-radius: 2px;
+  border-radius: var(--radius-s);
   width: 100%;
 }
 
 .ac-info p.skeleton {
   background-color: var(--dark-blue-800);
-  border-radius: 2px;
+  border-radius: var(--radius-s);
   width: 120px;
 }
 
-.ac-info .bold.skeleton {
+.ac-info .body-1.skeleton {
   background-color: var(--dark-blue-800);
-  border-radius: 2px;
+  border-radius: var(--radius-s);
   width: 180px;
 }

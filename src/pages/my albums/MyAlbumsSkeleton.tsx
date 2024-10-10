@@ -10,7 +10,7 @@ const MyAlbumsSkeleton = () => {
             <AsyncImg src={""} proportions={1} />
           </div>
           <div className="ac-info">
-            <p className="bold skeleton"></p>
+            <p className="body-1 skeleton"></p>
             <p className="skeleton"></p>
           </div>
         </div>
