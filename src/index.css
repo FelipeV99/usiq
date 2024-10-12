@@ -54,6 +54,7 @@ body {
   font-weight: 800;
   font-style: normal;
 }
+
 @font-face {
   font-family: "IDG";
   src: url("../src/assets/IDGrotesk-Semibold.ttf") format("truetype");
